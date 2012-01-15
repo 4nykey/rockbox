@@ -1,0 +1,26 @@
+#!/bin/sh
+
+
+if false; then
+INSTALL_PREFIX=/home/ak/srcs/android DOWNLOAD_DIR=/home/ak/srcs/android \
+../android/installToolchain.sh
+fi
+
+pushd _andr
+ANDROID_SDK_PATH=/opt/android-sdk-update-manager \
+ANDROID_NDK_PATH=/opt/android-ndk \
+../../tools/configure --target=201 --type=n --lcdwidth=480 --lcdheight=800
+popd
+
+ANDROID_SDK_PATH=/opt/android-sdk-update-manager \
+ANDROID_NDK_PATH=/opt/android-ndk \
+make -C _andr veryclean
+
+ANDROID_SDK_PATH=/opt/android-sdk-update-manager \
+ANDROID_NDK_PATH=/opt/android-ndk \
+make -j4 -C _andr
+
+ANDROID_SDK_PATH=/opt/android-sdk-update-manager \
+ANDROID_NDK_PATH=/opt/android-ndk \
+make -C _andr zip apk
+
