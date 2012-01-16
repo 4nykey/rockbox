@@ -24,6 +24,10 @@
 
 #define HAS_BUTTON_HOLD
 
+bool button_hold(void);
+void button_init_device(void);
+void button_use_hold_buttons(bool yesno);
+
 /* Main unit's buttons */
 #define BUTTON_POWER      0x00000001
 #define BUTTON_PLUS       0x00000002
@@ -47,7 +51,18 @@
 #define BUTTON_BOTTOMMIDDLE 0x00000800
 #define BUTTON_BOTTOMRIGHT  0x00001000
 
+/* Main unit's buttons whilst hold switch is on */
+#ifdef HAVE_BUTTONS_IN_HOLD_MODE
+#define BUTTON_HOLDPLUS   0x00002000
+#define BUTTON_HOLDMINUS  0x00004000
+#define BUTTON_HOLDMENU   0x00008000
+#endif
+
+#ifdef HAVE_BUTTONS_IN_HOLD_MODE
+#define BUTTON_MAIN 0xFFFF
+#else
 #define BUTTON_MAIN 0x1FFF
+#endif
 
 /* Software power-off */
 #define POWEROFF_BUTTON BUTTON_POWER

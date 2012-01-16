@@ -1,0 +1,190 @@
+# Theme: rayboradio_OB
+# By: Humberto Santana (humbertosantana@hotmail.com)
+# License: CC-BY-SA 3.0 Creative Commons Attribution-Share Alike 3.0 (http://creativecommons.org/licenses/by-sa/3.0/)
+# Derived from: "rayboradio" CC-BY-SA 3.0 (initial rayboradio graphics by "Immolate", http://forums.rockbox.org/index.php?topic=12478.msg97821#msg97821)
+# rayboradio_OB Iconset derived from the Tango Small Iconset 
+#
+# Version 7.3
+# Last Update: December 1st, 2011
+# First rayboradio_OB version: February 24th, 2008
+# Original version: October 11th(?), 2007
+#
+# WPS File
+#
+# TOUCHSCREEN AREAS
+#
+# Shuffle
+%T(35,200,24,40,shuffle)
+#
+# Menu + Quickscreen
+%T(100,0,120,27,menu)
+%T(100,0,120,27,quickscreen,long_press)
+#
+# Crossfade (TO ENABLE, uncomment the next line -> remove "#")
+# At the time this theme is being uploaded, the icon changes but the real crossfade setting does not change
+#%T(5,200,24,40,setting_inc,crossfade)
+#
+# Previous + REW
+%T(100,200,24,40,rwd,repeat_press)
+%T(100,200,24,40,prev)
+#
+# Files/DB + Context Menu
+%T(152,50,135,47,contextmenu,long_press)
+%T(152,50,135,47,browse)
+#
+# Playlist
+%T(152,116,135,47,playlist)
+#
+# Next + FFW
+%T(196,200,24,40,ffwd,repeat_press)
+%T(196,200,24,40,next)
+#
+# Volume Slider
+%T(240,200,65,16,volume,long_press)
+#
+# Volume
+#%T(230,200,35,40,voldown)
+#%T(230,200,35,40,voldown,long_press)
+#%T(275,200,35,40,volup)
+#%T(275,200,35,40,volup,long_press)
+#
+# Pause/Play + Stop
+%T(141,196,40,44,stop,long_press)
+%T(141,196,40,44,play)
+#
+# Repeat
+%T(66,200,24,40,repmode)
+#
+# Progressbar
+%T(0,182,320,10,progressbar,long_press)
+#
+#
+# Status bar, background
+%wd
+%X(rayboradio_bg.bmp)
+#
+# Additional fonts
+%Fl(2,12-Adobe-Helvetica.fnt,15)
+#
+#
+# Battery
+%xl(a,batt.bmp,0,0,6)
+%V(3,8,23,11,-) 
+%?bp<%?bc<%xd(af)|%xd(ae)>|%?bl<||%xd(aa)|%xd(ab)|%xd(ac)|%xd(ad)|%xd(ad)>>
+%V(30,6,35,13,1)%Vf(B5B5B5)
+%al%bl%%
+#
+# Hold
+%xl(g,hold.bmp,0,0)
+%V(84,6,56,27,-)
+%?mh<%xd(g)|>
+#
+# HDD
+%xl(f,hdd.bmp,0,0)
+%V(227,6,14,15,-)
+%?lh<%xd(f)|>
+#
+# Clock
+%V(259,6,51,25,1)%Vf(B5B5B5)
+%ar%?cf<%cH:%cM|%cl:%cM %cp>
+#
+# AA CONDITIONALS
+%?C<%Vd(a)|%Vd(n)>
+#
+# AA PRESENT
+#
+# Album Art + Frame
+%xl(t,frameTop.bmp,0,0)
+%Vl(a,4,33,146,13,-) 
+%xd(t)
+#
+%xl(l,frameLeft.bmp,0,0)
+%Vl(a,4,46,13,120,-) 
+%xd(l)
+#
+%Cl(0,0,120,120,c,c)
+%Vl(a,17,46,120,120,-) 
+%Cd
+#
+%xl(r,frameRight.bmp,0,0)
+%Vl(a,137,46,16,120,-) 
+%xd(r)
+#
+%xl(b,frameBottom.bmp,0,0)
+%Vl(a,4,166,146,13,-) 
+%xd(b)
+#
+# Current Song Icon
+%xl(c,currentSong.bmp,0,0)
+%Vl(a,156,51,9,11,-)
+%xd(c)
+#
+# Playing Track
+%Vl(a,172,49,143,15,1)%Vf(F58105)
+%t(6)%s%al%?it<%it|%fn>;%t(12)%al%?it<%it|%fn>
+#
+# Artist, Album, extra info
+%Vl(a,155,66,160,15,1)%Vf(B5B5B5)
+%t(6)%al%?ia<%ia|%?d(2)<%d(2)|%(unknown artist%)>>;%t(6)%s%al%?ia<%ia|%?d(2)<%d(2)|%(unknown artist%)>>;%t(6)%al%?ia<%ia|%?d(2)<%d(2)|%(unknown artist%)>>
+%Vl(a,155,83,160,15,1)%Vf(B5B5B5)
+%t(12)%al%?id<%id|%?d(1)<%d(1)|%(unknown album%)>>;%t(6)%s%al%?id<%id|%?d(1)<%d(1)|%(unknown album%)>>
+%Vl(a,155,113,160,15,1)%Vf(B5B5B5)
+%s%al%fc %?fv<~|>%fbkbps%?iy<  /  %iy |>
+%Vl(a,155,130,160,15,1)%Vf(B5B5B5)
+%t(9)%s%al%pp of %pe%?pn< in "%pn"|>;%t(9)%al%pp of %pe%?pn< in "%pn"|>
+#
+# Next Song Icon
+%xl(N,nextSong.bmp,0,0)
+%Vl(a,156,149,9,11,-)
+%xd(N)
+#
+# Next Track
+%Vl(a,172,147,143,15,1)%Vf(B5B5B5)
+%t(6)%s%al%?It<%It|%?Fn<%Fn| -  End  ->>;%?if(%ia, =, %Ia)<%t(6)%al%?It<%It|%?Fn<%Fn| -  End  ->>|%t(2)%al  by>;%?if(%ia, =, %Ia)<%t(0)|%s%?Ia<%t(4)%al%Ia|%t(0)>>
+#
+# No AA Present
+#
+# Playing Track
+%Vl(n,10,49,300,15,1)%Vf(F58105)
+%s%ac%?it<%it|%fn>
+#
+# Artist, Album, extra info, next track
+%Vl(n,10,66,300,15,1)%Vf(B5B5B5)
+%s%ac%?ia<%ia|%?d(2)<%d(2)|%(unknown artist%)>>
+%Vl(n,10,83,300,15,1)%Vf(B5B5B5)
+%s%ac%?id<%id|%?d(1)<%d(1)|%(unknown album%)>>
+%Vl(n,10,113,300,15,1)%Vf(B5B5B5)
+%s%ac%fc %?fv<~|>%fbkbps%?iy<  /  %iy |>
+%Vl(n,10,130,300,15,1)%Vf(B5B5B5)
+%s%ac%pp of %pe%?pn< in "%pn"|>
+%Vl(n,10,147,300,15,1)%Vf(B5B5B5)
+%s%acNext: %?It<%It|%?Fn<%Fn| -  End  ->>%?if(%ia, =, %Ia)<|%?Ia<  by  %Ia|>>
+#
+# Progress Bar
+%V(0,186,320,4,-)
+%pb(0,0,320,4,pb.bmp)
+#
+# Track partial/total times
+%V(3,193,314,10,2)%Vf(aeaeae)
+%al%pc%ar%pt
+#
+# Crossfade, Shuffle, Repeat
+%xl(q,CF.bmp,5,0,5)
+%xl(h,shuff.bmp,44,1)
+%xl(i,repeat.bmp,60,1,4)
+%V(0,208,94,15,-)
+%?xf<|%xd(qa)|%xd(qb)|%xd(qc)|%xd(qd)|%xd(qe)>%?ps<%xd(h)|>%?mm<|%xd(ia)|%xd(ib)|%xd(ic)|%xd(id)>
+#
+# Play, Pause, FFW, REW
+%xl(m,play_pause.bmp,61,11,2)
+%xl(n,next.bmp,101,6)
+%xl(o,back.bmp,4,6)
+%V(95,198,130,35,-)
+%?mp<|%xd(ma)|%xd(mb)|%xd(n)|%xd(o)>
+#
+# Volume
+%xl(A,volumeknob.bmp,0,0)
+%V(238,210,62,10,-)
+%pv(0,0,-,-,nofill,nobar,slider,A)
+%V(238,221,62,15,1)%Vf(121212)
+%ac%pv dB

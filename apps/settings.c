@@ -1032,6 +1032,10 @@ void settings_apply(bool read_disk)
     memcpy(&calibration_parameters, &global_settings.ts_calibration_data, sizeof(struct touchscreen_parameter));
 #endif
 
+#if defined(HAVE_BUTTONS_IN_HOLD_MODE) && !defined(SIMULATOR)
+    button_use_hold_buttons(global_settings.use_hold_buttons);
+#endif
+
     /* This should stay last */
 #if defined(HAVE_RECORDING) && CONFIG_CODEC == SWCODEC
     enc_global_settings_apply();

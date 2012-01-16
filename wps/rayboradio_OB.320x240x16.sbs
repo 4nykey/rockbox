@@ -1,0 +1,131 @@
+# Theme: rayboradio_OB
+# By: Humberto Santana (humbertosantana@hotmail.com)
+# License: CC-BY-SA 3.0 Creative Commons Attribution-Share Alike 3.0 (http://creativecommons.org/licenses/by-sa/3.0/)
+# Derived from: "rayboradio" CC-BY-SA 3.0 (initial rayboradio graphics by "Immolate", http://forums.rockbox.org/index.php?topic=12478.msg97821#msg97821)
+# rayboradio_OB Iconset derived from the Tango Small Iconset 
+#
+# Version 7.3
+# Last Update: December 1st, 2011
+# First rayboradio_OB version: February 24th, 2008
+# Original version: October 11th(?), 2007
+#
+# SBS File
+#
+# TOUCHSCREEN AREAS
+#
+# Cancel
+%T(26,156,36,24,cancel)
+#
+# Shuffle
+%T(35,200,24,40,shuffle)
+#
+# Menu & Cancel
+%T(100,0,120,27,menu)
+%T(100,0,120,27,cancel,long_press)
+#
+# Menu Up
+%T(100,200,24,40,prev)
+%T(100,200,24,40,rwd,long_press)
+#
+# Menu Down
+%T(196,200,24,40,next)
+%T(196,200,24,40,ffwd,long_press)
+#
+# Volume Slider
+%T(240,200,65,16,volume,long_press)
+#
+# Volume
+#%T(230,200,35,40,voldown)
+#%T(230,200,35,40,voldown,long_press)
+#%T(275,200,35,40,volup)
+#%T(275,200,35,40,volup,long_press)
+#
+# Select + Cancel
+%T(141,196,40,44,select)
+%T(141,196,40,44,cancel,long_press)
+#
+# Repeat
+%T(66,200,24,40,repmode)
+#
+#
+# Additional fonts
+%Fl(2,12-Adobe-Helvetica.fnt,15)
+#
+backdrop: /.rockbox/backdrops/rayboradio_OB_bd.bmp
+#
+#
+# Cancel Icon (TO ENABLE, uncomment - remove the "#" - the next 3 lines)
+%xl(C,cancel.bmp,0,0)
+%V(41,159,14,13,-)
+%?Tp<%xd(C)|>
+#
+# Track
+%V(4,64,85,10,0)%Vf(F58105)
+%t(6)%ac%s%?it<%it|%?fn<%fn|v7.3>>;%t(6)%ac%?it<%it|%?fn<%fn|v7.3>>
+#
+# AA
+%Cl(0,0,50,50,c,c)
+%V(21,81,50,50,-) 
+%Cd
+#
+# Ratings
+%xl(S,stars.bmp,0,0,10)
+%V(22,139,49,10,-)
+%?rr<|%xd(Sa)|%xd(Sb)|%xd(Sc)|%xd(Sd)|%xd(Se)|%xd(Sf)|%xd(Sg)|%xd(Sh)|%xd(Si)|%xd(Sj)>
+#
+#
+# Vi AREA (MENU)
+%Vi(-,93,39,222,139,-)
+#
+# Battery
+%xl(a,batt.bmp,0,0,6)
+%V(3,8,23,11,-) 
+%?bp<%?bc<%xd(af)|%xd(ae)>|%?bl<||%xd(aa)|%xd(ab)|%xd(ac)|%xd(ad)|%xd(ad)>>
+%V(30,6,35,13,1)%Vf(B5B5B5)
+%al%bl%%
+#
+# Hold
+%xl(g,hold.bmp,0,0)
+%V(84,6,56,27,-)
+%?mh<%xd(g)|>
+#
+# HDD
+%xl(f,hdd.bmp,0,0)
+%V(227,6,14,15,-)
+%?lh<%xd(f)|>
+#
+# Clock
+%V(259,6,51,25,1)%Vf(B5B5B5)
+%ar%?cf<%cH:%cM|%cl:%cM %cp>
+#
+# Progress Bar
+%V(0,186,320,4,-)
+%pb(0,0,320,4,pb.bmp)
+#
+# Track partial/total times
+%V(3,193,314,10,2)%Vf(aeaeae)
+%al%pc%ar%pt
+#
+# Crossfade, Shuffle, Repeat
+%xl(q,CF.bmp,5,0,5)
+%xl(h,shuff.bmp,44,1)
+%xl(i,repeat.bmp,60,1,4)
+%V(0,208,94,15,-)
+%?xf<|%xd(qa)|%xd(qb)|%xd(qc)|%xd(qd)|%xd(qe)>%?ps<%xd(h)|>%?mm<|%xd(ia)|%xd(ib)|%xd(ic)|%xd(id)>
+#
+# Play, Pause, FFW, REW
+%xl(m,play_pause.bmp,61,11,2)
+# (TO ENABLE UP-DOWN ICONS, uncomment the next 2 lines, see below more)
+%xl(n,menuDown.bmp,104,9)
+%xl(o,menuUp.bmp,10,9)
+%V(95,198,130,35,-)
+%?mp<|%xd(ma)|%xd(mb)||>
+# (TO ENABLE UP-DOWN ICONS, uncomment the next line)
+%?Tp<%xd(n)%xd(o)|>
+#
+# Volume
+%xl(A,volumeknob.bmp,0,0)
+%V(238,210,62,10,-)
+%pv(0,0,-,-,nofill,nobar,slider,A)
+%V(238,221,62,15,1)%Vf(121212)
+%ac%pv dB

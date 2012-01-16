@@ -150,3 +150,45 @@ Author: Johannes Voggenthaler, Apoo Maha, Marc Guay, Alex Vanderpol, Jerry Lange
 Font: 12-Adobe-Helvetica.fnt
 Statusbar: top
 </rwps>
+
+<wps>
+Name: rayboradio_OB.wps
+RWPS:
+SBS: rayboradio_OB.sbs
+FMS: rayboradio_OB.fms
+RSBS:
+# Real name of the creator of the WPS
+Author: Humberto Santana
+
+# Preferred font (including .fnt extension - leave blank for player):
+Font.320x240x16: 14-Terminus-Bold.fnt
+
+#misc settings that should be ignored on grayscale targets
+foreground color: B6B5B6
+background color: 2D2F2D
+line selector start color: db7e30
+line selector end color: 583313
+line selector text color: e7e7e7
+filetype colours:
+
+#backdrop - remember this is the source file name in your SVN folder, not dest name!
+backdrop.320x240x16: backdrops/rayboradio_OB_bd.bmp
+
+#selection bar settings for color targets
+selector type.320x240x16: bar (gradient)
+
+#icons
+iconset.320x240x16: icons/rayboradioOB_small.bmp
+
+#viewer icons
+viewers iconset.320x240x16: icons/rayboradioOB_small_viewers.bmp
+
+# Whether the WPS is designed to have the statusbar on or off
+Statusbar: custom
+remote statusbar: top
+
+# list & remote ui viewports
+ui viewport: 93,39,222,139,-,-,-
+remote ui viewport:
+</wps>
+

@@ -661,6 +661,10 @@ int do_menu(const struct menu_item_ex *start_menu, int *start_selected,
             }
 #endif
         }
+        else if (action == ACTION_STD_TOGGLEBACKLIGHT)
+        {
+            toggle_backlight();
+        }
         else
         {
             switch(default_event_handler(action))

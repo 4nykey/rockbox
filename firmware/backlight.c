@@ -780,6 +780,15 @@ bool is_backlight_on(bool ignore_always_off)
         || ((timeout < 0) && !ignore_always_off);
 }
 
+void toggle_backlight(void)
+{
+    if (is_backlight_on) {
+        return backlight_off();
+    } else {
+        return backlight_on();
+    }
+}
+
 /* return value in ticks; 0 means always on, <0 means always off */
 int backlight_get_current_timeout(void)
 {

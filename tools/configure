@@ -129,7 +129,7 @@ findarmgcc() {
     prefixtools arm-elf-eabi-
     gccchoice="4.4.4"
   else
-    prefixtools arm-elf-
+    prefixtools arm-softfloat-elf-
     gccchoice="4.0.3"
   fi
 }

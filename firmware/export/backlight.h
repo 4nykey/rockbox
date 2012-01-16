@@ -31,6 +31,7 @@
 #endif
 
 bool is_backlight_on(bool ignore_always_off);
+void toggle_backlight(void);
 void backlight_on(void);
 void backlight_off(void);
 void backlight_set_timeout(int value);

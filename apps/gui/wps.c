@@ -1054,6 +1054,12 @@ long gui_wps_show(void)
                 exit = true;
                 break;
 #endif
+            case ACTION_WPS_TOGGLEBACKLIGHT:
+                toggle_backlight();
+                break;
+            case SYS_POWEROFF:
+                default_event_handler(SYS_POWEROFF);
+                break;
             case ACTION_WPS_VIEW_PLAYLIST:
                 gwps_leave_wps();
                 return GO_TO_PLAYLIST_VIEWER;

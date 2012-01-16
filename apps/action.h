@@ -106,6 +106,7 @@ enum {
     ACTION_STD_QUICKSCREEN,
     ACTION_STD_KEYLOCK,
     ACTION_STD_REC,
+    ACTION_STD_TOGGLEBACKLIGHT,
     ACTION_STD_HOTKEY,
     
     ACTION_F3, /* just so everything works again, possibly change me */
@@ -129,6 +130,7 @@ enum {
     ACTION_WPS_MENU, /*this should be the same as ACTION_STD_MENU */
     ACTION_WPS_VIEW_PLAYLIST,
     ACTION_WPS_REC,
+    ACTION_WPS_TOGGLEBACKLIGHT,
 #if 0
     ACTION_WPSAB_SINGLE, /* This needs to be #defined in 
                             the config-<target>.h to one of the ACTION_WPS_ actions
@@ -146,7 +148,16 @@ enum {
     ACTION_LIST_VOLUP,
     ACTION_LIST_VOLDOWN,
 #endif
-    
+#ifdef HAVE_PLAYBACK_CONTROL_IN_LIST
+    ACTION_LIST_PLAY,
+    ACTION_LIST_SKIPPREV,
+    ACTION_LIST_SKIPNEXT,
+    ACTION_LIST_NEXTDIR,
+    ACTION_LIST_SEEKBACK,
+    ACTION_LIST_SEEKFWD,
+    ACTION_LIST_STOPSEEK,
+#endif
+
     /* tree */ 
     ACTION_TREE_ROOT_INIT,
     ACTION_TREE_PGLEFT,/* optional */

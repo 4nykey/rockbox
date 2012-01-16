@@ -1,0 +1,29 @@
+#!/bin/sh
+#PATH="/home/ak/binaries/rockbox/arm-elf-eabi/bin:$PATH" \
+
+pushd _bl
+../../../tools/configure --target=33 --type=b
+make veryclean
+make -j4
+popd
+
+pushd _fw
+../../../tools/configure --target=33 --type=n
+make veryclean
+make -j4
+popd
+
+pushd _sim
+../../../tools/configure --target=33 --type=s
+make veryclean
+make -j4
+make fullinstall
+popd
+
+#make -C _pdf HTLATEX="mk4ht htlatex" manual manual-zip
+
+echo 'make -C _fw PREFIX="/media/disk" fullinstall'
+#make -C _fw 7zip && 7z x -o/media/disk _fw/rockbox.7z
+
+echo './mktccboot ~/binaries/hw/d2/2.13p/fw/D2N_P.bin bootloader-cowond2.bin /media/D2/D2N_P.bin'
+#echo './mktccboot ~/binaries/hw/d2/2.59/fw/1/d2N.bin bootloader-cowond2.bin /media/D2/d2N.bin'
