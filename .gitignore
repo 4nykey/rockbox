@@ -1,6 +1,37 @@
 # /
 /build*
+/sim*
 /output
+*.elf
+*.exe
+
+# android: java build system
+/android/bin
+/android/data
+/android/gen
+/android/libs
+/android/local.properties
+
+# android: our build system
+/android/autoconf.h
+/android/Makefile
+/android/make.dep
+/android/apps
+/android/bitmaps
+/android/pluginbitmaps
+/android/firmware
+/android/lang
+/android/lib
+/android/librockbox.so
+/android/rockbox.*
+/android/rockbox-info.txt
+/android/sysfont.c
+/android/sysfont.h
+/android/version.h
+/android/credits.raw
+
+# android: eclipse stuff
+/android/.settings
 
 # /rbutil/
 /rbutil/Makefile
@@ -70,7 +101,6 @@
 # /utils/MTP/beastpatcher/
 /utils/MTP/beastpatcher/bootimg.*
 /utils/MTP/beastpatcher/beastpatcher
-/utils/MTP/beastpatcher/beastpatcher.exe
 /utils/MTP/beastpatcher/bin2c*
 
 # /utils/MTP/beastpatcher/vs2005/
@@ -88,13 +118,6 @@
 /utils/jz4740_tools/HXFsplit
 /utils/jz4740_tools/HXFmerge
 /utils/jz4740_tools/IHFSsplit
-/utils/jz4740_tools/HXFreplace.exe
-/utils/jz4740_tools/HXF2IHFS.exe
-/utils/jz4740_tools/usbtool.exe
-/utils/jz4740_tools/DLanalyser.exe
-/utils/jz4740_tools/HXFsplit.exe
-/utils/jz4740_tools/HXFmerge.exe
-/utils/jz4740_tools/IHFSsplit.exe
 /utils/jz4740_tools/jz_xloader.*
 /utils/jz4740_tools/bin2c
 
@@ -105,7 +128,6 @@
 /utils/themeeditor/Makefile*
 /utils/themeeditor/object_script*
 /utils/themeeditor/rbthemeeditor
-/utils/themeeditor/*.exe
 
 # /utils/zenutils/
 /utils/zenutils/build
