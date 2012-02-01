@@ -358,19 +358,16 @@ static void time_greyscale(void)
             log_text("CPU load err (boost?)");
     }
 }
-
-static struct touchbutton button[] = {
-    {
-        .action = ACTION_STD_OK,
-        .title = "OK",
-        /* viewport runtime initialized, rest false/NULL */
-    }
-};
 #endif
 
 void plugin_quit(void)
 {
 #ifdef HAVE_TOUCHSCREEN
+    static struct touchbutton button[] = {{
+            .action = ACTION_STD_OK,
+            .title = "OK",
+            /* .vp runtime initialized, rest false/NULL */
+    }};
     struct viewport *vp = &button[0].vp;
     struct screen *lcd = rb->screens[SCREEN_MAIN];
     rb->viewport_set_defaults(vp, SCREEN_MAIN);
