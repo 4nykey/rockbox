@@ -385,7 +385,9 @@ void lcd_init_device(void)
             lcd_init_seq_7783(); break;
     }
 
+#ifdef HAVE_LCD_ENABLE
     lcd_on = true;
+#endif
 }
 
 #ifdef HAVE_LCD_ENABLE
@@ -531,8 +533,7 @@ void lcd_update_rect(int x, int y, int w, int h)
      */
     if(w == LCD_WIDTH)
     {
-        imx233_dcp_memcpy_ex(lcd_dcp_channel, false, &lcd_framebuffer[y][x],
-            (void *)FRAME, h * w * sizeof(fb_data));
+        memcpy((void *)FRAME, &lcd_framebuffer[y][x], w * h * sizeof(fb_data));
     }
     else
     {
