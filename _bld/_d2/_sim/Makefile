@@ -12,6 +12,7 @@ export ARCHOSROM=
 export FLASHFILE=
 export TARGET_ID=34
 export TARGET=-DCOWON_D2
+export ARCH=amd64
 export CPU=arm
 export MANUFACTURER=tcc780x
 export OBJDIR=/home/ak/srcs/rockbox/_bld/_d2/_sim
@@ -33,6 +34,7 @@ export EXTRA_DEFINES= -DSIMULATOR
 export HOSTCC=/usr/bin/gcc
 export HOSTAR=/usr/bin/ar
 export CC=/usr/bin/ccache /usr/bin/gcc
+export CPP=/usr/bin/cpp
 export LD=/usr/bin/ar
 export AR=/usr/bin/ar
 export AS=/usr/bin/as
@@ -46,7 +48,7 @@ export PROFILE_OPTS=
 export APP_TYPE=sdl-sim
 export APPLICATION=
 export SIMDIR=$(ROOTDIR)/uisimulator/sdl
-export GCCOPTS=-W -Wall  -Wstrict-prototypes -pipe -std=gnu99 -fno-builtin -g -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT -I$(SIMDIR) -Wno-pointer-sign -Wno-override-init
+export GCCOPTS=-W -Wall  -O   -Wstrict-prototypes -pipe -std=gnu99 -fno-builtin -g -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT -I$(SIMDIR) -Wno-pointer-sign -Wno-override-init
 export TARGET_INC=-I$(FIRMDIR)/target/arm/tcc780x/cowond2 -I$(FIRMDIR)/target/hosted/sdl -I$(FIRMDIR)/target/hosted -I$(FIRMDIR)/target/arm/tcc780x -I$(FIRMDIR)/target/arm
 export LOADADDRESS=
 export SHARED_LDFLAG=-shared
