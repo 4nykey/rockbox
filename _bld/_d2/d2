@@ -24,7 +24,7 @@ popd
 
 echo "make -C _fw fullzip"
 echo "make -C _fw 7zip fontzip"
-echo 'make -C _fw PREFIX="/media/E873-BEF6" fullinstall'
+echo 'make -C _fw PREFIX="/media/SD2" fullinstall'
 #make -C _fw 7zip && 7z x -o/media/disk _fw/rockbox.7z
 
 echo './mktccboot ~/binaries/hw/d2/2.13p/fw/D2N_P.bin bootloader-cowond2.bin /media/D2/D2N_P.bin'

@@ -64,7 +64,7 @@
 %X(rayboradio_bg.bmp)
 #
 # Additional fonts
-%Fl(2,12-Adobe-Helvetica.fnt,15)
+%Fl(2,12-Terminus.fnt,15)
 #
 #
 # Battery
@@ -82,7 +82,7 @@
 #
 # HDD
 %xl(f,hdd.bmp,0,0)
-%V(227,6,14,15,-)
+%V(213,6,14,15,-)
 %?lh<%xd(f)|>
 #
 # Clock
