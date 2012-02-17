@@ -60,6 +60,10 @@ public class RockboxService extends Service
     private MediaButtonReceiver mMediaButtonReceiver;
     private ResultReceiver resultReceiver;
 
+    private boolean music_playing = false;
+    private boolean app_open = false;
+    private boolean paused = false;
+
     public static final int RESULT_INVOKING_MAIN = 0;
     public static final int RESULT_LIB_LOAD_PROGRESS = 1;
     public static final int RESULT_SERVICE_RUNNING = 3;
@@ -90,9 +94,37 @@ public class RockboxService extends Service
     {
         return current_activity;
     }
+
+    private native void tickpause();
+    private native void tickresume();
+
+    private void check_sleep()
+    {
+        if (paused)
+        {
+            if (music_playing || app_open)
+            {
+                LOG("Tick resume");
+                tickresume();
+                paused = false;
+            }
+        }
+        else
+        {
+            if (!music_playing && !app_open)
+            {
+                LOG("Tick pause");
+                tickpause();
+                paused = true;
+            }
+        }
+    }
+
     public void set_activity(Activity a)
     {
+        app_open = (a != null);
         current_activity = a;
+        check_sleep();
     }
 
     private void do_start(Intent intent)
@@ -138,20 +170,22 @@ public class RockboxService extends Service
 
     private void LOG(CharSequence text)
     {
-        Log.d("Rockbox", (String) text);
+        Log.d("RockboxService", (String) text);
     }
 
     private void LOG(CharSequence text, Throwable tr)
     {
-        Log.d("Rockbox", (String) text, tr);
+        Log.d("RockboxService", (String) text, tr);
     }
 
     public void onStart(Intent intent, int startId) {
+        LOG("onStart");
         do_start(intent);
     }
 
     public int onStartCommand(Intent intent, int flags, int startId)
     {
+        LOG("onStartCommand");
         /* if null, then the service was most likely restarted by android
          * after getting killed for memory pressure earlier */
         if (intent == null)
@@ -324,12 +358,18 @@ public class RockboxService extends Service
 
     void startForeground()
     {
+        LOG("startForeground");
+        music_playing = true;
+        check_sleep();
         fg_runner.startForeground();
     }
 
     void stopForeground()
     {
+        LOG("stopForeground");
+        music_playing = false;
         fg_runner.stopForeground();
+        check_sleep();
     }
 
     @Override

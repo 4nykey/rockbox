@@ -20,6 +20,7 @@
  ****************************************************************************/
 
 
+#include <jni.h>
 #include <stdlib.h>
 #include <time.h>
 #include <signal.h>
@@ -71,21 +72,23 @@ void interrupt(void)
  * Can be possibly be attached if it really needs to be. but let's
  * keep this leightweight
  */
+static timer_t timerid = 0;
+static int nsec;
 
 void tick_start(unsigned int interval_in_ms)
 {
     int ret = 0;
-    timer_t timerid;
     struct itimerspec ts;
     sigevent_t sigev;
 
     /* initializing in the declaration causes some weird warnings */
     memset(&sigev, 0, sizeof(sigevent_t));
-    sigev.sigev_notify = SIGEV_THREAD,
+    sigev.sigev_notify = SIGEV_THREAD;
     sigev.sigev_notify_function = timer_signal;
 
+    nsec = interval_in_ms * 1000000;
     ts.it_value.tv_sec = ts.it_interval.tv_sec = 0;
-    ts.it_value.tv_nsec = ts.it_interval.tv_nsec = interval_in_ms*1000*1000;
+    ts.it_value.tv_nsec = ts.it_interval.tv_nsec = nsec;
 
     /* add the timer */
     ret |= timer_create(CLOCK_REALTIME, &sigev, &timerid);
@@ -98,6 +101,27 @@ void tick_start(unsigned int interval_in_ms)
 
     if (ret != 0)
         panicf("%s(): %s\n", __func__, strerror(errno));
+}
+
+JNIEXPORT void JNICALL
+Java_org_rockbox_RockboxService_tickpause(JNIEnv*env, jobject this)
+{
+    (void)env;
+    (void)this;
+    const struct itimerspec newtimer = { {0, 0}, {0, 0} };
+    if (timerid)
+        timer_settime(timerid, 0, &newtimer, NULL);
+}
+
+JNIEXPORT void JNICALL
+Java_org_rockbox_RockboxService_tickresume(JNIEnv*env, jobject this)
+{
+    (void)env;
+    (void)this;
+    const struct itimerspec newtimer = { {0, nsec}, {0, 0} };
+
+    if (timerid)
+        timer_settime(timerid, 0, &newtimer, NULL);
 }
 
 #define cycles_to_microseconds(cycles) \
