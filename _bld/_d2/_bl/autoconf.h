@@ -8,6 +8,9 @@
 /* Define this if you build rockbox to support the logf logging and display */
 #undef ROCKBOX_HAS_LOGF
 
+/* Define this if you want logf to output to the serial port */
+#undef LOGF_SERIAL
+
 /* Define this to record a chart with timings for the stages of boot */
 #undef DO_BOOTCHART
 
