@@ -5,27 +5,35 @@
  *   Jukebox    |    |   (  <_> )  \___|    < | \_\ (  <_> > <  <
  *   Firmware   |____|_  /\____/ \___  >__|_ \|___  /\____/__/\_ \
  *                     \/            \/     \/    \/            \/
- * $Id$
  *
- * Copyright (C) 2005 Stepan Moskovchenko
+ *   Copyright (C) 2012 by Dominik Riebeling
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * All files in this archive are subject to the GNU General Public License.
+ * See the file COPYING in the source tree root for full license agreement.
  *
  * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
  * KIND, either express or implied.
  *
  ****************************************************************************/
 
-int tick(void);
+#ifndef INFOWIDGET_H
+#define INFOWIDGET_H
 
-/* used by beatbox */
-void rewindFile(void);
+#include <QtGui>
+#include "ui_infowidgetfrm.h"
 
-void seekForward(int nSec);
-void seekBackward(int nSec);
+class InfoWidget : public QWidget
+{
+    Q_OBJECT
+    public:
+        InfoWidget(QWidget *parent = 0);
 
-extern long tempo;
+    public slots:
+        void updateInfo(void);
+
+    private:
+        Ui::InfoWidgetFrm ui;
+};
+
+#endif
 

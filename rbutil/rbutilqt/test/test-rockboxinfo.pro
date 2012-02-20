@@ -5,7 +5,6 @@
 #   Jukebox    |    |   (  <_> )  \___|    < | \_\ (  <_> > <  <
 #   Firmware   |____|_  /\____/ \___  >__|_ \|___  /\____/__/\_ \
 #                     \/            \/     \/    \/            \/
-# $Id$
 #
 # All files in this archive are subject to the GNU General Public License.
 # See the file COPYING in the source tree root for full license agreement.
@@ -14,12 +13,18 @@
 # KIND, either express or implied.
 #
 
-# common settings for tests.
+#
+include(tests.pri)
 
-CONFIG += qtestlib
-DEPENDPATH += .
-OBJECTS_DIR = build/$$TARGET
-UI_DIR = build/$$TARGET
-MOC_DIR = build/$$TARGET
-RCC_DIR = build/$$TARGET
+TEMPLATE = app
+TARGET = test-rockboxinfo
+INCLUDEPATH += . ../base
+
+# Input
+SOURCES += \
+    test-rockboxinfo.cpp \
+    ../base/rockboxinfo.cpp
+
+HEADERS += \
+    ../base/rockboxinfo.h
 
