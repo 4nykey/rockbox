@@ -43,7 +43,7 @@
 #include "appevents.h"
 
 static struct listitem_viewport_cfg *listcfg[NB_SCREENS] = {NULL};
-struct gui_synclist *current_list;
+static struct gui_synclist *current_list;
 
 void skinlist_set_cfg(enum screen_type screen,
                       struct listitem_viewport_cfg *cfg)
@@ -67,7 +67,7 @@ static int current_drawing_line;
 static int offset_to_item(int offset, bool wrap)
 {
     int item = current_drawing_line + offset;
-    if (!current_list)
+    if (!current_list || current_list->nb_items == 0)
         return -1;
     if (item < 0)
     {
@@ -165,7 +165,7 @@ bool skinlist_draw(struct screen *display, struct gui_synclist *list)
     wps.display = display;
     wps.data = listcfg[screen]->data;
     display_lines = skinlist_get_line_count(screen, list);
-    label = listcfg[screen]->label;
+    label = (char *)SKINOFFSETTOPTR(get_skin_buffer(wps.data), listcfg[screen]->label);
     display->set_viewport(parent);
     display->clear_viewport();
     current_item = list->selected_item;
@@ -188,8 +188,8 @@ bool skinlist_draw(struct screen *display, struct gui_synclist *list)
         {
             int origional_x, origional_y;
             int origional_w, origional_h;
+            skin_viewport = SKINOFFSETTOPTR(get_skin_buffer(wps.data), viewport->data);
             char *viewport_label = SKINOFFSETTOPTR(get_skin_buffer(wps.data), skin_viewport->label);
-            skin_viewport = (struct skin_viewport*)viewport->data;
             if (viewport->children == 0 || !viewport_label ||
                 (skin_viewport->label && strcmp(label, viewport_label))
                 )
@@ -231,7 +231,7 @@ bool skinlist_draw(struct screen *display, struct gui_synclist *list)
             }
 #endif
             struct skin_element** children = SKINOFFSETTOPTR(get_skin_buffer(wps.data), viewport->children);
-            skin_render_viewport(children[0],
+            skin_render_viewport(SKINOFFSETTOPTR(get_skin_buffer(wps.data), (intptr_t)children[0]),
                                  &wps, skin_viewport, SKIN_REFRESH_ALL);
 #ifdef HAVE_LCD_BITMAP
             wps_display_images(&wps, &skin_viewport->vp);
