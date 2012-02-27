@@ -23,7 +23,7 @@ endif
 TOP := $(dir $(lastword $(MAKEFILE_LIST)))
 
 # overwrite for releases
-APPVERSION ?= $(shell $(TOP)/../tools/version.sh ../..)
+APPVERSION ?= $(shell $(TOP)/../tools/version.sh ../../)
 CFLAGS += -DVERSION=\"$(APPVERSION)\"
 TARGET_DIR ?= $(shell pwd)/
 
