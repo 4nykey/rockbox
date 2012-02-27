@@ -1,19 +1,19 @@
 #!/bin/sh
 #PATH="/home/ak/binaries/rockbox/arm-elf-eabi/bin:$PATH" \
 
-pushd _bl
+pushd _d2/_bl
 ../../../tools/configure --target=33 --type=b
 make veryclean
 make -j4
 popd
 
-pushd _fw
+pushd _d2/_fw
 ../../../tools/configure --target=33 --type=n
 make veryclean
 make -j4
 popd
 
-pushd _sim
+pushd _d2/_sim
 ../../../tools/configure --target=33 --type=s
 make veryclean
 make -j4
