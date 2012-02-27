@@ -1,0 +1,25 @@
+#!/bin/sh
+make -C ../rbutil/mkamsboot
+
+pushd _clipp/_bl
+../../../tools/configure --target=62 --type=b
+make veryclean
+make -j4
+popd
+
+pushd _clipp/_fw
+../../../tools/configure --target=62 --type=n
+make veryclean
+make -j4
+popd
+
+pushd _clipp/_sim
+../../../tools/configure --target=62 --type=s
+make veryclean
+make -j4
+make fullinstall
+popd
+
+echo 'make -C _fw PREFIX="/media/SANSA CLIPP" fullinstall'
+echo 'make -C _fw fullzip 7zip fontzip'
+echo './mkamsboot ~/binaries/hw/sansa/clppa.bin bootloader-clipplus.sansa "/media/SANSA CLIPP/clppa.bin"'
