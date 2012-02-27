@@ -1,11 +1,11 @@
 ## Automatically generated. http://www.rockbox.org/
 
-export ROOTDIR=/home/ak/srcs/nu/rockbox
+export ROOTDIR=/home/ak/srcs/rockbox
 export FIRMDIR=$(ROOTDIR)/firmware
 export APPSDIR=$(ROOTDIR)/apps
 export TOOLSDIR=$(ROOTDIR)/tools
-export DOCSDIR=/home/ak/srcs/nu/rockbox/docs
-export MANUALDIR=/home/ak/srcs/nu/rockbox/manual
+export DOCSDIR=/home/ak/srcs/rockbox/docs
+export MANUALDIR=/home/ak/srcs/rockbox/manual
 export DEBUG=-DDEBUG
 export MODELNAME=sansaclipplus
 export ARCHOSROM=
@@ -15,15 +15,15 @@ export TARGET=-DSANSA_CLIPPLUS
 export ARCH=amd64
 export CPU=arm
 export MANUFACTURER=as3525
-export OBJDIR=/home/ak/srcs/nu/rockbox/_bld/_clipp/_sim
-export BUILDDIR=/home/ak/srcs/nu/rockbox/_bld/_clipp/_sim
+export OBJDIR=/home/ak/srcs/rockbox/_bld/_clipp/_sim
+export BUILDDIR=/home/ak/srcs/rockbox/_bld/_clipp/_sim
 export LANGUAGE=english
 export VOICELANGUAGE=
 export MEMORYSIZE=8
 export BUILDDATE:=$(shell date -u +'-DYEAR=%Y -DMONTH=%m -DDAY=%d')
-export MKFIRMWARE=/home/ak/srcs/nu/rockbox/tools/scramble -add=cli+
-export BMP2RB_MONO=/home/ak/srcs/nu/rockbox/tools/bmp2rb -f 0
-export BMP2RB_NATIVE=/home/ak/srcs/nu/rockbox/tools/bmp2rb -f 0
+export MKFIRMWARE=/home/ak/srcs/rockbox/tools/scramble -add=cli+
+export BMP2RB_MONO=/home/ak/srcs/rockbox/tools/bmp2rb -f 0
+export BMP2RB_NATIVE=/home/ak/srcs/rockbox/tools/bmp2rb -f 0
 export BMP2RB_REMOTEMONO=
 export BMP2RB_REMOTENATIVE=
 export BINARY=rockboxui
