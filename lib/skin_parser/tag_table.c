@@ -191,6 +191,8 @@ static const struct tag_info legal_tags[] =
     { SKIN_TOKEN_VIEWPORT_CUSTOMLIST,   "Vp" , "IC", SKIN_REFRESH_DYNAMIC|NOBREAK },
     { SKIN_TOKEN_LIST_TITLE_TEXT,       "Lt" , "", SKIN_REFRESH_DYNAMIC },
     { SKIN_TOKEN_LIST_ITEM_TEXT,        "LT", "|IS",  SKIN_REFRESH_DYNAMIC },
+    { SKIN_TOKEN_LIST_ITEM_ROW,         "LR", "",  SKIN_REFRESH_DYNAMIC },
+    { SKIN_TOKEN_LIST_ITEM_COLUMN,      "LC", "",  SKIN_REFRESH_DYNAMIC },
     { SKIN_TOKEN_LIST_ITEM_NUMBER,      "LN", "",  SKIN_REFRESH_DYNAMIC },
     { SKIN_TOKEN_LIST_TITLE_ICON,       "Li" , "", SKIN_REFRESH_DYNAMIC },
     { SKIN_TOKEN_LIST_ITEM_ICON,        "LI", "|IS",  SKIN_REFRESH_DYNAMIC },
@@ -240,7 +242,7 @@ static const struct tag_info legal_tags[] =
     { SKIN_TOKEN_VAR_GETVAL,            "vg",   "S", SKIN_REFRESH_DYNAMIC },
     { SKIN_TOKEN_VAR_TIMEOUT,           "vl",   "S|D", SKIN_REFRESH_DYNAMIC },
 
-    { SKIN_TOKEN_SUBSTRING,             "ss",   "IiT", SKIN_REFRESH_DYNAMIC },
+    { SKIN_TOKEN_SUBSTRING,             "ss",   "IiT|s", SKIN_REFRESH_DYNAMIC },
     { SKIN_TOKEN_UNKNOWN,                ""   , "", 0 }
     /* Keep this here to mark the end of the table */
 };
