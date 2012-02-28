@@ -176,9 +176,9 @@ static const struct tag_info legal_tags[] =
     { SKIN_TOKEN_DISABLE_THEME,         "wd", "", 0|NOBREAK },
     { SKIN_TOKEN_DRAW_INBUILTBAR,       "wi", "", SKIN_REFRESH_STATIC|NOBREAK },
     
-    { SKIN_TOKEN_IMAGE_PRELOAD,         "xl", "SFII|I", 0|NOBREAK },
+    { SKIN_TOKEN_IMAGE_PRELOAD,         "xl", "SF|III", 0|NOBREAK },
     { SKIN_TOKEN_IMAGE_PRELOAD_DISPLAY, "xd", "S|[IT]I", 0 },
-    { SKIN_TOKEN_IMAGE_DISPLAY,         "x", "SFII", 0|NOBREAK },
+    { SKIN_TOKEN_IMAGE_DISPLAY,         "x", "SF|II", SKIN_REFRESH_STATIC|NOBREAK },
     
     { SKIN_TOKEN_LOAD_FONT,             "Fl" , "IF|I", 0|NOBREAK },
     { SKIN_TOKEN_ALBUMART_LOAD,         "Cl" , "IIII|ss", 0|NOBREAK },
@@ -204,6 +204,7 @@ static const struct tag_info legal_tags[] =
     { SKIN_TOKEN_VIEWPORT_BGCOLOUR,       "Vb" , "s", SKIN_REFRESH_STATIC|NOBREAK },
     { SKIN_TOKEN_VIEWPORT_TEXTSTYLE,      "Vs" , "S|s", SKIN_REFRESH_STATIC },
     { SKIN_TOKEN_VIEWPORT_GRADIENT_SETUP, "Vg" , "SS|s", SKIN_REFRESH_STATIC|NOBREAK },
+    { SKIN_TOKEN_VIEWPORT_DRAWONBG,       "VB" , "", SKIN_REFRESH_STATIC|NOBREAK },
     
     { SKIN_TOKEN_VIEWPORT_CONDITIONAL,  "Vl" , "SIIiii", 0 },
     { SKIN_TOKEN_UIVIEWPORT_LOAD,       "Vi" , "sIIiii", 0 },
