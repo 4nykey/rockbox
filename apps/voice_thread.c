@@ -116,9 +116,12 @@ enum voice_thread_messages
 /* Structure to store clip data callback info */
 struct voice_info
 {
-    pcm_play_callback_type get_more; /* Callback to get more clips */
-    unsigned char *start;            /* Start of clip */
-    size_t size;                     /* Size of clip */
+    /* Callback to get more clips */
+    mp3_play_callback_t get_more;
+    /* Start of clip */
+    const void *start;
+    /* Size of clip */
+    size_t size;
 };
 
 /* Private thread data for its current state that must be passed to its
@@ -148,14 +151,14 @@ static inline int voice_unplayed_frames(void)
 }
 
 /* Mixer channel callback */
-static void voice_pcm_callback(unsigned char **start, size_t *size)
+static void voice_pcm_callback(const void **start, size_t *size)
 {
     if (voice_unplayed_frames() == 0)
         return; /* Done! */
 
     unsigned int i = ++cur_buf_out % VOICE_FRAMES;
 
-    *start = (unsigned char *)voicebuf[i];
+    *start = voicebuf[i];
     *size = voicebuf_sizes[i];
 }
 
@@ -167,7 +170,7 @@ static void voice_start_playback(void)
 
     unsigned int i = cur_buf_out % VOICE_FRAMES;
     mixer_channel_play_data(PCM_MIXER_CHAN_VOICE, voice_pcm_callback,
-                            (unsigned char *)voicebuf[i], voicebuf_sizes[i]);
+                            voicebuf[i], voicebuf_sizes[i]);
 }
 
 /* Stop the voice channel */
@@ -197,15 +200,15 @@ static void voice_buf_commit(size_t size)
 }
 
 /* Stop any current clip and start playing a new one */
-void mp3_play_data(const unsigned char* start, int size,
-                   pcm_play_callback_type get_more)
+void mp3_play_data(const void *start, size_t size,
+                   mp3_play_callback_t get_more)
 {
-    if (get_more != NULL && start != NULL && (ssize_t)size > 0)
+    if (get_more != NULL && start != NULL && size > 0)
     {
         struct voice_info voice_clip =
         {
             .get_more = get_more,
-            .start    = (unsigned char *)start,
+            .start    = start,
             .size     = size,
         };
 
@@ -309,7 +312,8 @@ static enum voice_state voice_message(struct voice_thread_data *td)
         td->st = speex_decoder_init(&speex_wb_mode);
 
         /* Make bit buffer use our own buffer */
-        speex_bits_set_bit_buffer(&td->bits, td->vi.start, td->vi.size);
+        speex_bits_set_bit_buffer(&td->bits, (void *)td->vi.start,
+                                  td->vi.size);
         speex_decoder_ctl(td->st, SPEEX_GET_LOOKAHEAD, &td->lookahead);
 
         return VOICE_STATE_DECODE;
@@ -358,10 +362,11 @@ static enum voice_state voice_decode(struct voice_thread_data *td)
         if (td->vi.get_more != NULL)
             td->vi.get_more(&td->vi.start, &td->vi.size);
 
-        if (td->vi.start != NULL && (ssize_t)td->vi.size > 0)
+        if (td->vi.start != NULL && td->vi.size > 0)
         {
             /* Make bit buffer use our own buffer */
-            speex_bits_set_bit_buffer(&td->bits, td->vi.start, td->vi.size);
+            speex_bits_set_bit_buffer(&td->bits, (void *)td->vi.start,
+                                      td->vi.size);
             /* Don't skip any samples when we're stringing clips together */
             td->lookahead = 0;
         }
