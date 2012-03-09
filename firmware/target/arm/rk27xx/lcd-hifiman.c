@@ -29,7 +29,7 @@
 
 static bool display_on = false;
 
-void lcd_display_init()
+static void lcd_display_init(void)
 {
     unsigned int x, y;
 
@@ -108,6 +108,12 @@ void lcd_display_init()
     display_on = true;
 }
 
+void lcd_init_device(void)
+{
+    lcdif_init(LCDIF_16BIT);
+    lcd_display_init();
+}
+
 void lcd_enable (bool on)
 {
     if (on)
@@ -162,7 +168,7 @@ void lcd_update_rect(int x, int y, int width, int height)
 
     for (px=x; px<pxmax; px++)
 	for (py=y; py<pymax; py++)
-            lcd_data(FBADDR(px, py));
+            lcd_data(*FBADDR(px, py));
 }
 
 /* Blit a YUV bitmap directly to the LCD */

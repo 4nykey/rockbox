@@ -42,7 +42,6 @@
 #include "usb_screen.h"
 #include "talk.h"
 #include "audio.h"
-#include "mp3_playback.h"
 #include "settings.h"
 #include "storage.h"
 #include "ata_idle_notify.h"
@@ -88,6 +87,8 @@
 #include "playback.h"
 #if CONFIG_CODEC == SWCODEC
 #include "voice_thread.h"
+#else
+#include "mp3_playback.h"
 #endif
 
 #ifdef BOOTFILE
@@ -887,13 +888,15 @@ void keyclick_set_callback(keyclick_callback cb, void* data)
 }
 
 /* Produce keyclick based upon button and global settings */
-void keyclick_click(int action)
+void keyclick_click(bool rawbutton, int action)
 {
-    int button;
+    int button = action;
     static long last_button = BUTTON_NONE;
     bool do_beep = false;
 
-    get_action_statuscode(&button);
+    if (!rawbutton)
+        get_action_statuscode(&button);
+
     /* Settings filters */
     if (
 #ifdef HAVE_HARDWARE_CLICK

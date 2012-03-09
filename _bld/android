@@ -1,19 +1,14 @@
 #!/bin/sh
+export ANDROID_SDK_PATH=/opt/android-sdk-update-manager
+export ANDROID_NDK_PATH=/opt/android-ndk
+
 pushd _andr
-ANDROID_SDK_PATH=/opt/android-sdk-update-manager \
-ANDROID_NDK_PATH=/opt/android-ndk \
 ../../tools/configure --target=201 --type=n --lcdwidth=480 --lcdheight=800
+
+make veryclean
+
+make -j4
+
+make zip apk
+
 popd
-
-ANDROID_SDK_PATH=/opt/android-sdk-update-manager \
-ANDROID_NDK_PATH=/opt/android-ndk \
-make -C _andr veryclean
-
-ANDROID_SDK_PATH=/opt/android-sdk-update-manager \
-ANDROID_NDK_PATH=/opt/android-ndk \
-make -j4 -C _andr
-
-ANDROID_SDK_PATH=/opt/android-sdk-update-manager \
-ANDROID_NDK_PATH=/opt/android-ndk \
-make -C _andr zip apk
-

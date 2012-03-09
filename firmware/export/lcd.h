@@ -523,12 +523,15 @@ extern void lcd_hline(int x1, int x2, int y);
 extern void lcd_vline(int x, int y1, int y2);
 extern void lcd_drawrect(int x, int y, int width, int height);
 extern void lcd_fillrect(int x, int y, int width, int height);
+extern void lcd_gradient_fillrect(int x, int y, int width, int height,
+        unsigned start_rgb, unsigned end_rgb);
 extern void lcd_draw_border_viewport(void);
 extern void lcd_fill_viewport(void);
 extern void lcd_bitmap_part(const fb_data *src, int src_x, int src_y,
                             int stride, int x, int y, int width, int height);
 extern void lcd_bitmap(const fb_data *src, int x, int y, int width,
                        int height);
+extern void lcd_set_framebuffer(fb_data *fb);
 
 extern void lcd_scroll_step(int pixels);
 
