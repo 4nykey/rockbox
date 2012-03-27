@@ -7,8 +7,10 @@ pushd _andr
 
 make veryclean
 
-make -j4
+make -j4 zip
 
-make zip apk
+make apk
 
 popd
+
+echo "${ANDROID_SDK_PATH}/platform-tools/adb install -r _andr/rockbox.apk"
