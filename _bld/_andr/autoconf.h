@@ -2,6 +2,35 @@
 #ifndef __BUILD_AUTOCONF_H
 #define __BUILD_AUTOCONF_H
 
+/* lower case names match the what's exported in the Makefile
+ * upper case name looks nicer in the code */
+
+#define arch_none 0
+#define ARCH_NONE 0
+
+#define arch_sh 1
+#define ARCH_SH 1
+
+#define arch_m68k 2
+#define ARCH_M68K 2
+
+#define arch_arm 3
+#define ARCH_ARM 3
+
+#define arch_mips 4
+#define ARCH_MIPS 4
+
+#define arch_x86 5
+#define ARCH_X86 5
+
+#define arch_amd64 6
+#define ARCH_AMD64 6
+
+/* Define target machine architecture */
+#define ARCH arch_arm
+/* Optinally define architecture version */
+#define ARCH_VERSION 5
+
 /* Define endianess for the target or simulator platform */
 #define ROCKBOX_LITTLE_ENDIAN 1
 
