@@ -41,22 +41,22 @@ def get_refs(repo):
     @param repo Path to repository root.
     @return Dict matching hashes to each ref.
     '''
-    print "Getting list of refs"
-    output = subprocess.Popen(["git", "show-ref"], stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE, cwd=repo)
+    print("Getting list of refs")
+    output = subprocess.Popen(["git", "show-ref", "--abbrev"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=repo)
     cmdout = output.communicate()
     refs = {}
 
     if len(cmdout[1]) > 0:
-        print "An error occured!\n"
-        print cmdout[1]
+        print("An error occured!\n")
+        print(cmdout[1])
         return refs
 
     for line in cmdout:
-        regex = re.findall(r'([a-f0-9]+)\s+(\S+)', line)
+        regex = re.findall(b'([a-f0-9]+)\s+(\S+)', line)
         for r in regex:
             # ref is the key, hash its value.
-            refs[r[1]] = r[0]
+            refs[r[1].decode()] = r[0].decode()
 
     return refs
 
@@ -75,27 +75,43 @@ def get_lstree(repo, start, filterlist=[]):
     objects = {}
 
     if len(cmdout[1]) > 0:
-        print "An error occured!\n"
-        print cmdout[1]
+        print("An error occured!\n")
+        print(cmdout[1])
         return objects
 
-    for line in cmdout[0].split('\n'):
-        regex = re.findall(r'([0-9]+)\s+([a-z]+)\s+([0-9a-f]+)\s+(\S+)', line)
+    for line in cmdout[0].decode().split('\n'):
+        regex = re.findall(b'([0-9]+)\s+([a-z]+)\s+([0-9a-f]+)\s+(\S+)',
+                line.encode())
         for rf in regex:
             # filter
             add = False
             for f in filterlist:
-                if rf[3].find(f) == 0:
+                if rf[3].decode().find(f) == 0:
                     add = True
 
             # If two files have the same content they have the same hash, so
             # the filename has to be used as key.
             if len(filterlist) == 0 or add == True:
                 if rf[3] in objects:
-                    print "FATAL: key already exists in dict!"
+                    print("FATAL: key already exists in dict!")
                     return {}
                 objects[rf[3]] = rf[2]
     return objects
+
+
+def get_file_timestamp(repo, tree, filename):
+    '''Get timestamp for a file.
+    @param repo Path to repository root.
+    @param tree Hash of tree to use.
+    @param filename Filename in tree
+    @return Timestamp as string.
+    '''
+    output = subprocess.Popen(
+            ["git", "log", "--format=%ai", "-n", "1", tree, filename],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=repo)
+    cmdout = output.communicate()
+
+    return cmdout[0].decode().rstrip()
 
 
 def get_object(repo, blob, destfile):
@@ -110,14 +126,13 @@ def get_object(repo, blob, destfile):
     cmdout = output.communicate()
     # make sure output path exists
     if len(cmdout[1]) > 0:
-        print "An error occured!\n"
-        print cmdout[1]
+        print("An error occured!\n")
+        print(cmdout[1])
         return False
     if not os.path.exists(os.path.dirname(destfile)):
         os.makedirs(os.path.dirname(destfile))
     f = open(destfile, 'wb')
-    for line in cmdout[0]:
-        f.write(line)
+    f.write(cmdout[0])
     f.close()
     return True
 
@@ -132,13 +147,13 @@ def describe_treehash(repo, treehash):
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=repo)
     cmdout = output.communicate()
     if len(cmdout[1]) > 0:
-        print "An error occured!\n"
-        print cmdout[1]
+        print("An error occured!\n")
+        print(cmdout[1])
         return ""
     return cmdout[0].rstrip()
 
 
-def scrape_files(repo, treehash, filelist, dest=""):
+def scrape_files(repo, treehash, filelist, dest="", timestamp_files=[]):
     '''Scrape list of files from repository.
     @param repo Path to repository root.
     @param treehash Hash identifying the tree.
@@ -146,20 +161,27 @@ def scrape_files(repo, treehash, filelist, dest=""):
     @param dest Destination path for files. Files will get retrieved with full
                 path from the repository, and the folder structure will get
                 created below dest as necessary.
-    @return Destination path.
+    @param timestamp_files List of files to also get the last modified date.
+                           WARNING: this is SLOW!
+    @return Destination path, filename:timestamp dict.
     '''
-    print "Scraping files from repository"
+    print("Scraping files from repository")
 
     if dest == "":
         dest = tempfile.mkdtemp()
     treeobjects = get_lstree(repo, treehash, filelist)
+    timestamps = {}
     for obj in treeobjects:
-        get_object(repo, treeobjects[obj], os.path.join(dest, obj))
+        get_object(repo, treeobjects[obj], os.path.join(dest.encode(), obj))
+        for f in timestamp_files:
+            if obj.find(f) == 0:
+                timestamps[obj] = get_file_timestamp(repo, treehash, obj)
 
-    return dest
+    return [dest, timestamps]
 
 
-def archive_files(repo, treehash, filelist, basename, tmpfolder=""):
+def archive_files(repo, treehash, filelist, basename, tmpfolder="",
+        archive="tbz"):
     '''Archive list of files into tarball.
     @param repo Path to repository root.
     @param treehash Hash identifying the tree.
@@ -169,15 +191,37 @@ def archive_files(repo, treehash, filelist, basename, tmpfolder=""):
                     basename inside of the archive as well (i.e. no tarbomb).
     @param tmpfolder Folder to put intermediate files in. If no folder is given
                      a temporary one will get used.
+    @param archive Type of archive to create. Supported values are "tbz" and
+                   "7z". The latter requires the 7z binary available in the
+                   system's path.
     @return Output filename.
     '''
-    print "Archiving files from repository"
 
-    workfolder = scrape_files(repo, treehash, filelist, tmpfolder)
-    outfile = basename + ".tar.bz2"
-    tf = tarfile.open(outfile, "w:bz2")
-    tf.add(workfolder, basename)
-    tf.close()
+    if tmpfolder == "":
+        temp_remove = True
+        tmpfolder = tempfile.mkdtemp()
+    else:
+        temp_remove = False
+    workfolder = scrape_files(repo, treehash, filelist,
+            os.path.join(tmpfolder, basename))[0]
+    if basename is "":
+        return ""
+    print("Archiving files from repository")
+    if archive == "7z":
+        outfile = basename + ".7z"
+        output = subprocess.Popen(["7z", "a",
+            os.path.join(os.getcwd(), basename + ".7z"), basename],
+            cwd=tmpfolder, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output.communicate()
+    elif archive == "tbz":
+        outfile = basename + ".tar.bz2"
+        tf = tarfile.open(outfile, "w:bz2")
+        tf.add(workfolder, basename)
+        tf.close()
+    else:
+        print("Files not archived")
     if tmpfolder != workfolder:
         shutil.rmtree(workfolder)
+    if temp_remove:
+        shutil.rmtree(tmpfolder)
     return outfile

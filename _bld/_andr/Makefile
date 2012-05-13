@@ -18,6 +18,7 @@ export CPU=hosted
 export MANUFACTURER=android
 export OBJDIR=/home/ak/srcs/rockbox/_bld/_andr
 export BUILDDIR=/home/ak/srcs/rockbox/_bld/_andr
+export RBCODEC_BLD=/home/ak/srcs/rockbox/_bld/_andr/lib/rbcodec
 export LANGUAGE=english
 export VOICELANGUAGE=
 export MEMORYSIZE=8

@@ -63,7 +63,7 @@
 #elif defined (APPLICATION)
 #define PREFIX(_x_) app_ ## _x_
 #else
-#define PREFIX
+#define PREFIX(_x_) _x_
 #endif
 
 #if defined (APPLICATION)
@@ -565,13 +565,15 @@ static const struct plugin_api rockbox_api = {
     audio_set_output_source,
     audio_set_input_source,
 #endif
-    dsp_set_crossfeed,
-    dsp_set_eq,
+    dsp_crossfeed_enable,
+    dsp_eq_enable,
     dsp_dither_enable,
+#ifdef HAVE_PITCHCONTROL
+    dsp_set_timestretch,
+#endif
     dsp_configure,
+    dsp_get_config,
     dsp_process,
-    dsp_input_count,
-    dsp_output_count,
 
     mixer_channel_status,
     mixer_channel_get_buffer,
@@ -584,7 +586,7 @@ static const struct plugin_api rockbox_api = {
 
     system_sound_play,
     keyclick_click,
-#endif
+#endif /* CONFIG_CODEC == SWCODEC */
     /* playback control */
     playlist_amount,
     playlist_resume,
@@ -612,7 +614,7 @@ static const struct plugin_api rockbox_api = {
     mpeg_get_last_header,
 #endif
 #if ((CONFIG_CODEC == MAS3587F) || (CONFIG_CODEC == MAS3539F) || \
-     (CONFIG_CODEC == SWCODEC)) && defined (HAVE_PITCHSCREEN)
+     (CONFIG_CODEC == SWCODEC)) && defined (HAVE_PITCHCONTROL)
     sound_set_pitch,
 #endif
 
@@ -1032,6 +1034,8 @@ static int close_wrapper(int fd)
 
 static int creat_wrapper(const char *pathname, mode_t mode)
 {
+    (void)mode;
+
     int fd = PREFIX(creat)(pathname, mode);
 
     if(fd >= 0)

@@ -33,7 +33,6 @@
 #include "settings.h"
 #include "settings_list.h"
 #include "usb.h"
-#include "dsp.h"
 #include "audio.h"
 #include "power.h"
 #include "powermgmt.h"
@@ -436,7 +435,7 @@ static void crossfeed_cross_set(int val)
 static void compressor_set(int val)
 {
     (void)val;
-    dsp_set_compressor();
+    dsp_set_compressor(&global_settings.compressor_settings);
 }
 
 static const char* db_format(char* buffer, size_t buffer_size, int value,
@@ -1354,13 +1353,13 @@ const struct settings_list settings[] = {
 
 #if CONFIG_CODEC == SWCODEC
     /* replay gain */
-    CHOICE_SETTING(F_SOUNDSETTING, replaygain_type, LANG_REPLAYGAIN_MODE,
-                   REPLAYGAIN_SHUFFLE, "replaygain type",
+    CHOICE_SETTING(F_SOUNDSETTING, replaygain_settings.type,
+                   LANG_REPLAYGAIN_MODE, REPLAYGAIN_SHUFFLE, "replaygain type",
                    "track,album,track shuffle,off", NULL, 4, ID2P(LANG_TRACK_GAIN),
                    ID2P(LANG_ALBUM_GAIN), ID2P(LANG_SHUFFLE_GAIN), ID2P(LANG_OFF)),
-    OFFON_SETTING(F_SOUNDSETTING, replaygain_noclip, LANG_REPLAYGAIN_NOCLIP,
-                  false, "replaygain noclip", NULL),
-    INT_SETTING_NOWRAP(F_SOUNDSETTING, replaygain_preamp,
+    OFFON_SETTING(F_SOUNDSETTING, replaygain_settings.noclip,
+                  LANG_REPLAYGAIN_NOCLIP, false, "replaygain noclip", NULL),
+    INT_SETTING_NOWRAP(F_SOUNDSETTING, replaygain_settings.preamp,
                        LANG_REPLAYGAIN_PREAMP, 0, "replaygain preamp",
                        UNIT_DB, -120, 120, 5, db_format, get_dec_talkid, NULL),
 
@@ -1398,7 +1397,7 @@ const struct settings_list settings[] = {
 
     /* crossfeed */
     OFFON_SETTING(F_SOUNDSETTING, crossfeed, LANG_CROSSFEED, false,
-                  "crossfeed", dsp_set_crossfeed),
+                  "crossfeed", dsp_crossfeed_enable),
     INT_SETTING_NOWRAP(F_SOUNDSETTING, crossfeed_direct_gain,
                        LANG_CROSSFEED_DIRECT_GAIN, -15,
                        "crossfeed direct gain", UNIT_DB, -60, 0, 5,
@@ -1475,32 +1474,33 @@ const struct settings_list settings[] = {
     OFFON_SETTING(F_SOUNDSETTING, dithering_enabled, LANG_DITHERING, false,
                   "dithering enabled", dsp_dither_enable),
 
-#ifdef HAVE_PITCHSCREEN
+#ifdef HAVE_PITCHCONTROL
     /* timestretch */
     OFFON_SETTING(F_SOUNDSETTING, timestretch_enabled, LANG_TIMESTRETCH, false,
                   "timestretch enabled", dsp_timestretch_enable),
 #endif
 
     /* compressor */
-    INT_SETTING_NOWRAP(F_SOUNDSETTING, compressor_threshold,
+    INT_SETTING_NOWRAP(F_SOUNDSETTING, compressor_settings.threshold,
                        LANG_COMPRESSOR_THRESHOLD, 0,
                        "compressor threshold", UNIT_DB, 0, -24,
-                       -3, formatter_unit_0_is_off, getlang_unit_0_is_off, compressor_set),
-    CHOICE_SETTING(F_SOUNDSETTING|F_NO_WRAP, compressor_makeup_gain,
+                       -3, formatter_unit_0_is_off, getlang_unit_0_is_off,
+                       compressor_set),
+    CHOICE_SETTING(F_SOUNDSETTING|F_NO_WRAP, compressor_settings.makeup_gain,
                    LANG_COMPRESSOR_GAIN, 1, "compressor makeup gain",
                    "off,auto", compressor_set, 2,
                    ID2P(LANG_OFF), ID2P(LANG_AUTO)),
-    CHOICE_SETTING(F_SOUNDSETTING|F_NO_WRAP, compressor_ratio,
+    CHOICE_SETTING(F_SOUNDSETTING|F_NO_WRAP, compressor_settings.ratio,
                    LANG_COMPRESSOR_RATIO, 1, "compressor ratio",
                    "2:1,4:1,6:1,10:1,limit", compressor_set, 5,
                    ID2P(LANG_COMPRESSOR_RATIO_2), ID2P(LANG_COMPRESSOR_RATIO_4),
                    ID2P(LANG_COMPRESSOR_RATIO_6), ID2P(LANG_COMPRESSOR_RATIO_10),
                    ID2P(LANG_COMPRESSOR_RATIO_LIMIT)),
-    CHOICE_SETTING(F_SOUNDSETTING|F_NO_WRAP, compressor_knee,
+    CHOICE_SETTING(F_SOUNDSETTING|F_NO_WRAP, compressor_settings.knee,
                    LANG_COMPRESSOR_KNEE, 1, "compressor knee",
                    "hard knee,soft knee", compressor_set, 2,
                    ID2P(LANG_COMPRESSOR_HARD_KNEE), ID2P(LANG_COMPRESSOR_SOFT_KNEE)),
-    INT_SETTING_NOWRAP(F_SOUNDSETTING, compressor_release_time,
+    INT_SETTING_NOWRAP(F_SOUNDSETTING, compressor_settings.release_time,
                        LANG_COMPRESSOR_RELEASE, 500,
                        "compressor release time", UNIT_MS, 100, 1000,
                        100, NULL, NULL, compressor_set),
@@ -1848,7 +1848,7 @@ const struct settings_list settings[] = {
 #endif
     OFFON_SETTING(0, prevent_skip, LANG_PREVENT_SKIPPING, false, "prevent track skip", NULL),
 
-#ifdef HAVE_PITCHSCREEN
+#ifdef HAVE_PITCHCONTROL
     OFFON_SETTING(0, pitch_mode_semitone, LANG_SEMITONE, false,
                   "Semitone pitch change", NULL),
 #if CONFIG_CODEC == SWCODEC

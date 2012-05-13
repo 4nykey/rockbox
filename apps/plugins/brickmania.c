@@ -277,6 +277,15 @@ CONFIG_KEYPAD == SANSA_CONNECT_PAD
 #define UP BUTTON_UP
 #define DOWN BUTTON_DOWN
 
+#elif (CONFIG_KEYPAD == HM60X_PAD) || \
+    (CONFIG_KEYPAD == HM801_PAD)
+#define QUIT BUTTON_POWER
+#define LEFT BUTTON_LEFT
+#define RIGHT BUTTON_RIGHT
+#define SELECT BUTTON_SELECT
+#define UP BUTTON_UP
+#define DOWN BUTTON_DOWN
+
 #else
 #error No keymap defined!
 #endif
@@ -2398,6 +2407,12 @@ static int brickmania_game_loop(void)
         }
         else
         {
+            resume = false;
+            if(resume_file)
+            {
+                rb->remove(SAVE_FILE);
+                resume_file = false;
+            }
 #ifdef HAVE_LCD_COLOR
             rb->lcd_bitmap_transparent(brickmania_gameover,
                            (LCD_WIDTH - INT3(GAMEOVER_WIDTH))/2,
