@@ -373,6 +373,9 @@ static void init(void)
 #ifdef DEBUG
     debug_init();
 #endif
+#if CONFIG_TUNER
+    radio_init();
+#endif
     /* Keep the order of this 3 (viewportmanager handles statusbars)
      * Must be done before any code uses the multi-screen API */
     gui_syncstatusbar_init(&statusbars);
@@ -381,6 +384,9 @@ static void init(void)
     viewportmanager_init();
 
     storage_init();
+#if CONFIG_CODEC == SWCODEC
+    dsp_init();
+#endif
     settings_reset();
     settings_load(SETTINGS_ALL);
     settings_apply(true);
@@ -389,7 +395,6 @@ static void init(void)
 #ifdef HAVE_TAGCACHE
     init_tagcache();
 #endif
-    sleep(HZ/2);
     tree_mem_init();
     filetype_init();
     playlist_init();
@@ -629,6 +634,10 @@ static void init(void)
             system_reboot();
         }
     }
+
+#if CONFIG_CODEC == SWCODEC
+    dsp_init();
+#endif
 
 #if defined(SETTINGS_RESET) || (CONFIG_KEYPAD == IPOD_4G_PAD) || \
     (CONFIG_KEYPAD == IRIVER_H10_PAD)

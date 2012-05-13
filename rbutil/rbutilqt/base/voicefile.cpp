@@ -143,6 +143,7 @@ void VoiceFileCreator::downloadDone(bool error)
         else if(line.contains("voice:"))  // voice found
         {
             voice = line.remove("voice:").remove('"').trimmed();
+            voice = voice.remove("<").remove(">");
             voicefound=true;
         }
 
@@ -160,8 +161,14 @@ void VoiceFileCreator::downloadDone(bool error)
                 QFile::copy(":/builtin/VOICE_PAUSE.wav",m_path + "/VOICE_PAUSE.wav");
                 entry.wavfilename = m_path + "/VOICE_PAUSE.wav";
                 entry.voiced = true;
+                m_talkList.append(entry);
             }
-            m_talkList.append(entry);
+            else if(entry.toSpeak.isEmpty()) {
+                qDebug() << "[Voicefile] Empty voice string for ID" << id;
+            }
+            else {
+                m_talkList.append(entry);
+            }
             idfound=false;
             voicefound=false;
         }

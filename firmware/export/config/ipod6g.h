@@ -63,9 +63,6 @@
 /* define this if you have access to the quickscreen */
 #define HAVE_QUICKSCREEN
 
-/* define this if you have access to the pitchscreen */
-#define HAVE_PITCHSCREEN
-
 /* define this if you would like tagcache to build on this target */
 #define HAVE_TAGCACHE
 
@@ -207,7 +204,7 @@
 #define HAVE_HARDWARE_CLICK
 
 /* Define this if you have adjustable CPU frequency */
-//#define HAVE_ADJUSTABLE_CPU_FREQ
+#define HAVE_ADJUSTABLE_CPU_FREQ
 
 #define BOOTFILE_EXT "ipod"
 #define BOOTFILE "rockbox." BOOTFILE_EXT
@@ -239,7 +236,7 @@
 #define CONFIG_USBOTG USBOTG_S3C6400X
 #define USB_VENDOR_ID 0x05AC
 #define USB_PRODUCT_ID 0x1261
-#define USB_NUM_ENDPOINTS 5
+#define USB_NUM_ENDPOINTS 6
 #define USE_ROCKBOX_USB
 #define USB_DEVBSS_ATTR __attribute__((aligned(16)))
 

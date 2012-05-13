@@ -867,6 +867,17 @@ Lyre prototype 1 */
 .endm
 #endif
 
+#if defined(CPU_COLDFIRE) && defined(__ASSEMBLER__)
+/* Assembler doesn't support these as mnemonics but does tpf */
+.macro tpf.w
+.word 0x51fa
+.endm
+
+.macro tpf.l
+.word 0x51fb
+.endm
+#endif
+
 #ifndef CODEC_SIZE
 #define CODEC_SIZE 0
 #endif
@@ -901,21 +912,11 @@ Lyre prototype 1 */
     && CONFIG_CPU != JZ4732 && CONFIG_CPU != AS3525v2 && CONFIG_CPU != IMX233
 #define PLUGIN_USE_IRAM
 #endif
-#if defined(CPU_ARM) && !defined(__ARM_EABI__)
-/* GCC quirk workaround: arm-elf-gcc treats static functions as short_call
- * when not compiling with -ffunction-sections, even when the function has
- * a section attribute.
- * This is fixed with eabi since all calls are short ones by default */
-#define STATICIRAM
-#else
-#define STATICIRAM static
-#endif
 #else
 #define ICODE_ATTR
 #define ICONST_ATTR
 #define IDATA_ATTR
 #define IBSS_ATTR
-#define STATICIRAM static
 #endif
 
 #if (defined(CPU_PP) || (CONFIG_CPU == AS3525) || (CONFIG_CPU == AS3525v2) || \
@@ -1115,6 +1116,11 @@ Lyre prototype 1 */
 #if defined(CPU_COLDIRE) || CONFIG_CPU == IMX31L
 /* Can record and play simultaneously */
 #define HAVE_PCM_FULL_DUPLEX
+#endif
+
+#if (CONFIG_CODEC == SWCODEC) || (CONFIG_CODEC == MAS3587F) || \
+    (CONFIG_CODEC == MAS3539F)
+#define HAVE_PITCHCONTROL
 #endif
 
 #endif /* __CONFIG_H__ */

@@ -49,7 +49,6 @@
 /* Image stuff */
 #include "albumart.h"
 #endif
-#include "dsp.h"
 #include "playlist.h"
 #if CONFIG_CODEC == SWCODEC
 #include "playback.h"
@@ -126,7 +125,7 @@ char* get_dir(char* buf, int buf_size, const char* path, int level)
     return buf;
 }
 
-#if (CONFIG_CODEC != MAS3507D) && defined (HAVE_PITCHSCREEN)
+#if (CONFIG_CODEC != MAS3507D) && defined (HAVE_PITCHCONTROL)
 /* A helper to determine the enum value for pitch/speed.
 
    When there are two choices (i.e. boolean), return 1 if the value is
@@ -1421,25 +1420,22 @@ const char *get_token_value(struct gui_wps *gwps,
 
         case SKIN_TOKEN_REPLAYGAIN:
         {
+            int globtype = global_settings.replaygain_settings.type;
             int val;
 
-            if (global_settings.replaygain_type == REPLAYGAIN_OFF)
+
+            if (globtype == REPLAYGAIN_OFF)
                 val = 1; /* off */
             else
             {
-                int type;
-                if (LIKELY(id3))
-                    type = get_replaygain_mode(id3->track_gain != 0,
-                                               id3->album_gain != 0);
-                else
-                    type = -1;
+                int type = id3_get_replaygain_mode(id3);
 
                 if (type < 0)
                     val = 6;    /* no tag */
                 else
                     val = type + 2;
 
-                if (global_settings.replaygain_type == REPLAYGAIN_SHUFFLE)
+                if (globtype == REPLAYGAIN_SHUFFLE)
                     val += 2;
             }
 
@@ -1466,7 +1462,7 @@ const char *get_token_value(struct gui_wps *gwps,
         }
 #endif  /* (CONFIG_CODEC == SWCODEC) */
 
-#if (CONFIG_CODEC != MAS3507D) && defined (HAVE_PITCHSCREEN)
+#if (CONFIG_CODEC != MAS3507D) && defined (HAVE_PITCHCONTROL)
         case SKIN_TOKEN_SOUND_PITCH:
         {
             int32_t pitch = sound_get_pitch();
@@ -1481,7 +1477,7 @@ const char *get_token_value(struct gui_wps *gwps,
         }
 #endif
 
-#if (CONFIG_CODEC == SWCODEC) && defined (HAVE_PITCHSCREEN)
+#if (CONFIG_CODEC == SWCODEC) && defined (HAVE_PITCHCONTROL)
     case SKIN_TOKEN_SOUND_SPEED:
     {
         int32_t pitch = sound_get_pitch();

@@ -33,22 +33,17 @@
 #include <unistd.h>
 #include "buffering.h" /* TYPE_PACKET_AUDIO */
 #include "codecs.h"
-#include "core_alloc.h" /* core_allocator_init */
-#include "debug.h"
-#include "dsp.h"
+#include "dsp_core.h"
 #include "metadata.h"
 #include "settings.h"
 #include "sound.h"
 #include "tdspeed.h"
+#include "kernel.h"
+#include "platform.h"
 
 /***************** EXPORTED *****************/
 
 struct user_settings global_settings;
-volatile long current_tick = 0;
-
-void yield(void)
-{
-}
 
 int set_irq_level(int level)
 {
@@ -73,6 +68,13 @@ void debugf(const char *fmt, ...)
     va_start(ap, fmt);
     vfprintf(stderr, fmt, ap);
     va_end(ap);
+}
+
+int find_first_set_bit(uint32_t value)
+{
+    if (value == 0)
+        return 32;
+    return __builtin_ctz(value);
 }
 
 /***************** INTERNAL *****************/
@@ -391,17 +393,30 @@ static void ci_pcmbuf_insert(const void *ch1, const void *ch2, int count)
     num_output_samples += count;
 
     if (use_dsp) {
-        const char *src[2] = {ch1, ch2};
-        while (count > 0) {
-            int out_count = dsp_output_count(ci.dsp, count);
-            int in_count = MIN(dsp_input_count(ci.dsp, out_count), count);
+        struct dsp_buffer src;
+        src.remcount = count;
+        src.pin[0] = ch1;
+        src.pin[1] = ch2;
+        src.proc_mask = 0;
+        while (1) {
+            int out_count = MAX(count, 512);
             int16_t buf[2 * out_count];
-            out_count = dsp_process(ci.dsp, (char *)buf, src, in_count);
-            if (mode == MODE_WRITE)
-                write_pcm(buf, out_count);
-            else if (mode == MODE_PLAY)
-                playback_pcm(buf, out_count);
-            count -= in_count;
+            struct dsp_buffer dst;
+
+            dst.remcount = 0;
+            dst.p16out = buf;
+            dst.bufcount = out_count;
+
+            dsp_process(ci.dsp, &src, &dst);
+
+            if (dst.remcount > 0) {
+                if (mode == MODE_WRITE)
+                    write_pcm(buf, dst.remcount);
+                else if (mode == MODE_PLAY)
+                    playback_pcm(buf, dst.remcount);
+            } else if (src.remcount <= 0) {
+                break;
+            }
         }
     } else {
         /* Convert to 32-bit interleaved. */
@@ -475,7 +490,7 @@ static size_t ci_read_filebuf(void *ptr, size_t size)
 static void *ci_request_buffer(size_t *realsize, size_t reqsize)
 {
     free(input_buffer);
-    if (get_audio_base_data_type(ci.id3->codectype) == TYPE_PACKET_AUDIO)
+    if (!rbcodec_format_is_atomic(ci.id3->codectype))
         reqsize = MIN(reqsize, 32 * 1024);
     input_buffer = malloc(reqsize);
     *realsize = read(input_fd, input_buffer, reqsize);
@@ -561,13 +576,32 @@ static unsigned ci_sleep(unsigned ticks)
     return 0;
 }
 
-static void ci_cpucache_flush(void)
+static void ci_debugf(const char *fmt, ...)
+{
+    va_list ap;
+    va_start(ap, fmt);
+    vfprintf(stderr, fmt, ap);
+    va_end(ap);
+}
+
+#ifdef ROCKBOX_HAS_LOGF
+static void ci_logf(const char *fmt, ...)
+{
+    va_list ap;
+    va_start(ap, fmt);
+    vfprintf(stderr, fmt, ap);
+    putc('\n', stderr);
+    va_end(ap);
+}
+#endif
+
+static void ci_yield(void)
 {
 }
 
-static void ci_cpucache_invalidate(void)
-{
-}
+static void commit_dcache(void) {}
+static void commit_discard_dcache(void) {}
+static void commit_discard_idcache(void) {}
 
 static struct codec_api ci = {
 
@@ -590,7 +624,7 @@ static struct codec_api ci = {
     ci_should_loop,
 
     ci_sleep,
-    yield,
+    ci_yield,
 
 #if NUM_CORES > 1
     ci_create_thread,
@@ -601,8 +635,9 @@ static struct codec_api ci = {
     ci_semaphore_release,
 #endif
 
-    ci_cpucache_flush,
-    ci_cpucache_invalidate,
+    commit_dcache,
+    commit_discard_dcache,
+    commit_discard_idcache,
 
     /* strings and memory */
     strcpy,
@@ -615,10 +650,10 @@ static struct codec_api ci = {
     memcmp,
     memchr,
 #if defined(DEBUG) || defined(SIMULATOR)
-    debugf,
+    ci_debugf,
 #endif
 #ifdef ROCKBOX_HAS_LOGF
-    debugf, /* logf */
+    ci_logf,
 #endif
 
     qsort,
@@ -681,11 +716,13 @@ static void print_mp3entry(const struct mp3entry *id3, FILE *f)
 
 static void decode_file(const char *input_fn)
 {
+    /* Initialize DSP before any sort of interaction */
+    dsp_init();
+
     /* Set up global settings */
     memset(&global_settings, 0, sizeof(global_settings));
     global_settings.timestretch_enabled = true;
     dsp_timestretch_enable(true);
-    tdspeed_init();
 
     /* Open file */
     if (!strcmp(input_fn, "-")) {
@@ -708,7 +745,7 @@ static void decode_file(const char *input_fn)
     ci.filesize = filesize(input_fd);
     ci.id3 = &id3;
     if (use_dsp) {
-        ci.dsp = (struct dsp_config *)dsp_configure(NULL, DSP_MYDSP, CODEC_IDX_AUDIO);
+        ci.dsp = dsp_get_config(CODEC_IDX_AUDIO);
         dsp_configure(ci.dsp, DSP_RESET, 0);
         dsp_dither_enable(false);
     }
@@ -813,7 +850,6 @@ int main(int argc, char **argv)
         }
     }
 
-    core_allocator_init();
     if (argc == optind + 2) {
         write_init(argv[optind + 1]);
     } else if (argc == optind + 1) {

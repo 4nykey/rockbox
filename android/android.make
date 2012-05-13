@@ -28,7 +28,7 @@ $(CPUFEAT_BUILD)/cpu-features.o: $(CPUFEAT)/cpu-features.c
 .PHONY: apk classes clean dex dirs libs jar
 
 # API version
-ANDROID_PLATFORM_VERSION=11
+ANDROID_PLATFORM_VERSION=15
 ANDROID_PLATFORM=$(ANDROID_SDK_PATH)/platforms/android-$(ANDROID_PLATFORM_VERSION)
 
 # android tools
@@ -116,7 +116,7 @@ classes: $(R_OBJ) $(JAVA_OBJ)
 
 $(BUILDDIR)/$(BINARY): $$(OBJ) $(FIRMLIB) $(VOICESPEEXLIB) $(CORE_LIBS) $(CPUFEAT_BUILD)/cpu-features.o
 	$(call PRINTS,LD $(BINARY))$(CC) -o $@ $^ $(LDOPTS) $(GLOBAL_LDOPTS) -Wl,-Map,$(BUILDDIR)/rockbox.map
-	$(call PRINTS,OC $(@F))$(OC) -S -x $@
+	$(call PRINTS,OC $(@F))$(call objcopy,$@,$@)
 
 $(BINLIB_DIR)/$(BINARY): $(BUILDDIR)/$(BINARY)
 	$(call PRINTS,CP $(BINARY))cp $^ $@
@@ -124,7 +124,7 @@ $(BINLIB_DIR)/$(BINARY): $(BUILDDIR)/$(BINARY)
 $(BINLIB_DIR)/libmisc.so: $(BUILDDIR)/rockbox.zip
 	$(call PRINTS,CP rockbox.zip)cp $^ $@
 
-$(BINLIB_DIR)/lib%.so: $(BUILDDIR)/apps/codecs/%.codec
+$(BINLIB_DIR)/lib%.so: $(RBCODEC_BLD)/codecs/%.codec
 	$(call PRINTS,CP $(@F))cp $^ $@
 
 libs: $(DIRS) $(LIBS)
