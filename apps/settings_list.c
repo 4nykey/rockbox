@@ -214,6 +214,9 @@ static const char graphic_numeric[] = "graphic,numeric";
 #elif LCD_HEIGHT <= 80
   #define DEFAULT_FONT_HEIGHT 11
   #define DEFAULT_FONTNAME "11-Sazanami-Mincho"
+#elif (LCD_HEIGHT == 96) && (LCD_WIDTH == 96)   /* sandisk sansa clip zip */
+  #define DEFAULT_FONT_HEIGHT 8
+  #define DEFAULT_FONTNAME "08-Rockfont"
 #elif LCD_HEIGHT <= 220
   #define DEFAULT_FONT_HEIGHT 12
 #elif LCD_HEIGHT <= 320
@@ -250,9 +253,12 @@ static const char graphic_numeric[] = "graphic,numeric";
   #elif DEFAULT_FONT_HEIGHT >= 15
     #define DEFAULT_ICONSET "tango_icons.16x16"
     #define DEFAULT_VIEWERS_ICONSET "tango_icons_viewers.16x16"
-  #else
+  #elif DEFAULT_FONT_HEIGHT >= 11
     #define DEFAULT_ICONSET "tango_icons.12x12"
     #define DEFAULT_VIEWERS_ICONSET "tango_icons_viewers.12x12"
+  #elif DEFAULT_FONT_HEIGHT >= 7
+    #define DEFAULT_ICONSET "tango_icons.8x8"
+    #define DEFAULT_VIEWERS_ICONSET "tango_icons_viewers.8x8"
   #endif
 #elif LCD_DEPTH > 1 /* greyscale */
   #define DEFAULT_ICONSET "tango_small_mono"
@@ -1396,8 +1402,10 @@ const struct settings_list settings[] = {
 #endif
 
     /* crossfeed */
-    OFFON_SETTING(F_SOUNDSETTING, crossfeed, LANG_CROSSFEED, false,
-                  "crossfeed", dsp_crossfeed_enable),
+    CHOICE_SETTING(F_SOUNDSETTING, crossfeed, LANG_CROSSFEED, 0,"crossfeed",
+                   "off,meier,custom", dsp_set_crossfeed_type, 3,
+                   ID2P(LANG_OFF), ID2P(LANG_CROSSFEED_MEIER),
+                   ID2P(LANG_CROSSFEED_CUSTOM)),
     INT_SETTING_NOWRAP(F_SOUNDSETTING, crossfeed_direct_gain,
                        LANG_CROSSFEED_DIRECT_GAIN, -15,
                        "crossfeed direct gain", UNIT_DB, -60, 0, 5,
@@ -1531,25 +1539,28 @@ const struct settings_list settings[] = {
 #ifdef HAVE_LCD_BITMAP
                    /* The order must match with that in unicode.c */
                    "iso8859-1,iso8859-7,iso8859-8,cp1251,iso8859-11,cp1256,"
-                   "iso8859-9,iso8859-2,cp1250,sjis,gb2312,ksx1001,big5,utf-8",
+                   "iso8859-9,iso8859-2,cp1250,cp1252,sjis,gb2312,ksx1001,big5,utf-8",
                    set_codepage, 14,
-                   ID2P(LANG_CODEPAGE_LATIN1), ID2P(LANG_CODEPAGE_GREEK),
+                   ID2P(LANG_CODEPAGE_LATIN1),
+                   ID2P(LANG_CODEPAGE_GREEK),
                    ID2P(LANG_CODEPAGE_HEBREW), ID2P(LANG_CODEPAGE_CYRILLIC),
                    ID2P(LANG_CODEPAGE_THAI), ID2P(LANG_CODEPAGE_ARABIC),
                    ID2P(LANG_CODEPAGE_TURKISH),
                    ID2P(LANG_CODEPAGE_LATIN_EXTENDED),
                    ID2P(LANG_CODEPAGE_CENTRAL_EUROPEAN),
+                   ID2P(LANG_CODEPAGE_WESTERN_EUROPEAN),
                    ID2P(LANG_CODEPAGE_JAPANESE),
                    ID2P(LANG_CODEPAGE_SIMPLIFIED), ID2P(LANG_CODEPAGE_KOREAN),
                    ID2P(LANG_CODEPAGE_TRADITIONAL), ID2P(LANG_CODEPAGE_UTF8)),
 #else /* !HAVE_LCD_BITMAP */
                    /* The order must match with that in unicode.c */
-                   "iso8859-1,iso8859-7,cp1251,iso8859-9,iso8859-2,cp1250,utf-8",
+                   "iso8859-1,iso8859-7,cp1251,iso8859-9,iso8859-2,cp1250,cp1252,utf-8",
                    set_codepage, 7,
                    ID2P(LANG_CODEPAGE_LATIN1), ID2P(LANG_CODEPAGE_GREEK),
                    ID2P(LANG_CODEPAGE_CYRILLIC), ID2P(LANG_CODEPAGE_TURKISH),
                    ID2P(LANG_CODEPAGE_LATIN_EXTENDED),
                    ID2P(LANG_CODEPAGE_CENTRAL_EUROPEAN),
+                   ID2P(LANG_CODEPAGE_WESTERN_EUROPEAN),
                    ID2P(LANG_CODEPAGE_UTF8)),
 #endif
     OFFON_SETTING(0, warnon_erase_dynplaylist, LANG_WARN_ERASEDYNPLAYLIST_MENU,

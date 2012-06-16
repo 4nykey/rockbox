@@ -31,7 +31,7 @@
 #include "logf.h"
 
 #ifdef HAVE_LCD_ENABLE
-bool lcd_on; /* framebuffer-imx233.c */
+static bool lcd_on;
 #endif
 static unsigned lcd_yuv_options = 0;
 static int lcd_dcp_channel = -1;
@@ -157,10 +157,10 @@ static inline uint32_t decode_18_to_16(uint32_t a)
 static void setup_lcdif_clock(void)
 {
     /* the LCD seems to work at 24Mhz, so use the xtal clock with no divider */
-    imx233_enable_clock(CLK_PIX, false);
-    imx233_set_clock_divisor(CLK_PIX, 1);
-    imx233_set_bypass_pll(CLK_PIX, true); /* use XTAL */
-    imx233_enable_clock(CLK_PIX, true);
+    imx233_clkctrl_enable_clock(CLK_PIX, false);
+    imx233_clkctrl_set_clock_divisor(CLK_PIX, 1);
+    imx233_clkctrl_set_bypass_pll(CLK_PIX, true); /* use XTAL */
+    imx233_clkctrl_enable_clock(CLK_PIX, true);
 }
 
 static uint32_t i80_read_register(uint32_t data_out)

@@ -194,7 +194,9 @@ static unsigned char* get_clip(long id, long* p_size)
     unsigned char* clipbuf;
     
     if (id > VOICEONLY_DELIMITER)
-    {   /* voice-only entries use the second part of the table */
+    {   /* voice-only entries use the second part of the table.
+           The first string comes after VOICEONLY_DELIMITER so we need to
+           substract VOICEONLY_DELIMITER + 1 */
         id -= VOICEONLY_DELIMITER + 1;
         if (id >= p_voicefile->id2_max)
             return NULL; /* must be newer than we have */
@@ -626,7 +628,8 @@ static bool restore_state(void)
     {
         size_t size;
         audio_restore_playback(AUDIO_WANT_VOICE);
-        voicebuf = audio_get_buffer(false, &size);
+        voicebuf = audio_get_buffer(true, &size);
+        audio_get_buffer(false, &size);
     }
 
     return !!voicebuf;

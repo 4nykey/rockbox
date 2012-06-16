@@ -80,11 +80,6 @@
 #define WPS_ERROR_INVALID_PARAM         -1
 
 static char* skin_buffer = NULL;
-void skinparser_set_buffer(char* pointer)
-{
-    skin_buffer = pointer;
-}
-
 #if (LCD_DEPTH > 1) || (defined(HAVE_REMOTE_LCD) && (LCD_REMOTE_DEPTH > 1))
 static char *backdrop_filename;
 #endif
@@ -158,7 +153,6 @@ void *skin_find_item(const char *label, enum skin_find_what what,
                      struct wps_data *data)
 {
     const char *itemlabel = NULL;
-    char *old_skin_buffer = skin_buffer;
     char *databuf = get_skin_buffer(data);
     union {
         struct skin_token_list *linkedlist;
@@ -166,28 +160,28 @@ void *skin_find_item(const char *label, enum skin_find_what what,
     } list = {NULL};
     bool isvplist = false;
     void *ret = NULL;
-    if (databuf && databuf != skin_buffer)
-        skin_buffer = get_skin_buffer(data);
+    if (!databuf)
+        databuf = skin_buffer;
     switch (what)
     {
         case SKIN_FIND_UIVP:
         case SKIN_FIND_VP:
-            list.vplist = SKINOFFSETTOPTR(skin_buffer, data->tree);
+            list.vplist = SKINOFFSETTOPTR(databuf, data->tree);
             isvplist = true;
         break;
 #ifdef HAVE_LCD_BITMAP
         case SKIN_FIND_IMAGE:
-            list.linkedlist = SKINOFFSETTOPTR(skin_buffer, data->images);
+            list.linkedlist = SKINOFFSETTOPTR(databuf, data->images);
         break;
 #endif
 #ifdef HAVE_TOUCHSCREEN
         case SKIN_FIND_TOUCHREGION:
-            list.linkedlist = SKINOFFSETTOPTR(skin_buffer, data->touchregions);
+            list.linkedlist = SKINOFFSETTOPTR(databuf, data->touchregions);
         break;
 #endif
 #ifdef HAVE_SKIN_VARIABLES
         case SKIN_VARIABLE:
-            list.linkedlist = SKINOFFSETTOPTR(skin_buffer, data->skinvars);
+            list.linkedlist = SKINOFFSETTOPTR(databuf, data->skinvars);
         break;
 #endif
     }
@@ -198,54 +192,50 @@ void *skin_find_item(const char *label, enum skin_find_what what,
 #ifdef HAVE_LCD_BITMAP
         struct wps_token *token = NULL;
         if (!isvplist)
-            token = SKINOFFSETTOPTR(skin_buffer, list.linkedlist->token);
+            token = SKINOFFSETTOPTR(databuf, list.linkedlist->token);
 #endif
         switch (what)
         {
             case SKIN_FIND_UIVP:
             case SKIN_FIND_VP:
-                ret = SKINOFFSETTOPTR(skin_buffer, list.vplist->data);
+                ret = SKINOFFSETTOPTR(databuf, list.vplist->data);
                 if (((struct skin_viewport *)ret)->label == VP_DEFAULT_LABEL)
                     itemlabel = VP_DEFAULT_LABEL_STRING;
                 else
-                    itemlabel = SKINOFFSETTOPTR(skin_buffer, ((struct skin_viewport *)ret)->label);
+                    itemlabel = SKINOFFSETTOPTR(databuf, ((struct skin_viewport *)ret)->label);
                 skip = !(((struct skin_viewport *)ret)->is_infovp ==
                     (what==SKIN_FIND_UIVP));
                 break;
 #ifdef HAVE_LCD_BITMAP
             case SKIN_FIND_IMAGE:
-                ret = SKINOFFSETTOPTR(skin_buffer, token->value.data);
-                itemlabel = SKINOFFSETTOPTR(skin_buffer, ((struct gui_img *)ret)->label);
+                ret = SKINOFFSETTOPTR(databuf, token->value.data);
+                itemlabel = SKINOFFSETTOPTR(databuf, ((struct gui_img *)ret)->label);
                 break;
 #endif
 #ifdef HAVE_TOUCHSCREEN
             case SKIN_FIND_TOUCHREGION:
-                ret = SKINOFFSETTOPTR(skin_buffer, token->value.data);
-                itemlabel = SKINOFFSETTOPTR(skin_buffer, ((struct touchregion *)ret)->label);
+                ret = SKINOFFSETTOPTR(databuf, token->value.data);
+                itemlabel = SKINOFFSETTOPTR(databuf, ((struct touchregion *)ret)->label);
                 break;
 #endif
 #ifdef HAVE_SKIN_VARIABLES
             case SKIN_VARIABLE:
-                ret = SKINOFFSETTOPTR(skin_buffer, token->value.data);
-                itemlabel = SKINOFFSETTOPTR(skin_buffer, ((struct skin_var *)ret)->label);
+                ret = SKINOFFSETTOPTR(databuf, token->value.data);
+                itemlabel = SKINOFFSETTOPTR(databuf, ((struct skin_var *)ret)->label);
                 break;
 #endif
 
         }
         if (!skip && itemlabel && !strcmp(itemlabel, label))
         {
-            if (old_skin_buffer != skin_buffer)
-                skin_buffer = old_skin_buffer;
             return ret;
         }
 
         if (isvplist)
-            list.vplist = SKINOFFSETTOPTR(skin_buffer, list.vplist->next);
+            list.vplist = SKINOFFSETTOPTR(databuf, list.vplist->next);
         else
-            list.linkedlist = SKINOFFSETTOPTR(skin_buffer, list.linkedlist->next);
+            list.linkedlist = SKINOFFSETTOPTR(databuf, list.linkedlist->next);
     }
-    if (old_skin_buffer != skin_buffer)
-        skin_buffer = old_skin_buffer;
     return NULL;
 }
 
@@ -1675,7 +1665,7 @@ static int load_skin_bmp(struct wps_data *wps_data, struct bitmap *bitmap, char*
     size_t buf_size = read_bmp_fd(fd, bitmap, 0,
                                     format|FORMAT_RETURN_SIZE, NULL);
     handle = core_alloc_ex(bitmap->data, buf_size, &buflib_ops);
-    if (handle < 0)
+    if (handle <= 0)
     {
         DEBUGF("Not enough skin buffer: need %zd more.\n",
                 buf_size - skin_buffer_freespace());
@@ -1955,6 +1945,10 @@ static int convert_viewport(struct wps_data *data, struct skin_element* element)
         (unsigned) skin_vp->vp.y >= (unsigned) display->lcdheight ||
         skin_vp->vp.height + skin_vp->vp.y > display->lcdheight)
         return CALLBACK_ERROR;
+
+    /* Fix x position for RTL languages */
+    if (follow_lang_direction && lang_is_rtl())
+        skin_vp->vp.x = display->lcdwidth - skin_vp->vp.x - skin_vp->vp.width;
 
     return CALLBACK_OK;
 }
@@ -2321,7 +2315,7 @@ bool skin_data_load(enum screen_type screen, struct wps_data *wps_data,
 #ifndef __PCTOOL__
     wps_data->buflib_handle = core_alloc(isfile ? buf : "failsafe skin",
                                             skin_buffer_usage());
-    if (wps_data->buflib_handle >= 0)
+    if (wps_data->buflib_handle > 0)
     {
         wps_data->wps_loaded = true;
         memcpy(core_get_data(wps_data->buflib_handle), skin_buffer,
@@ -2330,5 +2324,6 @@ bool skin_data_load(enum screen_type screen, struct wps_data *wps_data,
 #else
     wps_data->wps_loaded = wps_data->tree >= 0;
 #endif
+    skin_buffer = NULL;
     return true;
 }
