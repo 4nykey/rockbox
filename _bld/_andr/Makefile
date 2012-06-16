@@ -72,6 +72,7 @@ export ROCKBOX_BINARY_PATH=/data/data/org.rockbox/lib
 export ROCKBOX_LIBRARY_PATH=/data/data/org.rockbox/app_rockbox
 export SDLCONFIG=
 export LCDORIENTATION=portrait
+export ANDROID_ARCH=armeabi
 
 CONFIGURE_OPTIONS=  --lcdwidth=480 --lcdheight=800 --lcdwidth=480 --lcdheight=800 --target=$(MODELNAME) --ram=$(MEMORYSIZE) --rbdir=$(RBDIR) --type=N
 
