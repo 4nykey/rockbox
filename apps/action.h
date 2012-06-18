@@ -130,6 +130,8 @@ enum {
     ACTION_WPS_QUICKSCREEN,/* optional */
     ACTION_WPS_MENU, /*this should be the same as ACTION_STD_MENU */
     ACTION_WPS_VIEW_PLAYLIST,
+    ACTION_WPS_LIST_BOOKMARKS,/* optional */
+    ACTION_WPS_CREATE_BOOKMARK,/* optional */
     ACTION_WPS_REC,
     ACTION_WPS_TOGGLEBACKLIGHT,
 #if 0

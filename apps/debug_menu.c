@@ -78,6 +78,11 @@
 #endif
 #include "power.h"
 
+#if defined(SAMSUNG_YPR0) && defined(CONFIG_TUNER)
+#include "tuner.h"
+#include "radio.h"
+#endif
+
 #ifdef HAVE_LCD_BITMAP
 #include "scrollbar.h"
 #include "peakmeter.h"
@@ -104,9 +109,6 @@
 #include "pcf50605.h"
 #endif
 #include "appevents.h"
-#if (CONFIG_PLATFORM & PLATFORM_NATIVE)
-#include "debug-target.h"
-#endif
 
 #if defined(HAVE_AS3514) && defined(CONFIG_CHARGING)
 #include "ascodec.h"
@@ -1767,6 +1769,7 @@ static bool dbg_save_roms(void)
     return false;
 }
 #elif CONFIG_CPU == IMX31L
+bool __dbg_dvfs_dptc(void);
 static bool dbg_save_roms(void)
 {
     int fd = creat("/flash_rom_A0000000-A01FFFFF.bin", 0666);
@@ -1869,13 +1872,27 @@ static int radio_callback(int btn, struct gui_synclist *lists)
         }
     }
 #endif /* RDA55802 */
+#if (CONFIG_TUNER & STFM1000)
+    IF_TUNER_TYPE(STFM1000)
+    {
+        struct stfm1000_dbg_info nfo;
+        stfm1000_dbg_info(&nfo);
+        simplelist_addline(SIMPLELIST_ADD_LINE, "STFM1000 regs:");
+        simplelist_addline(SIMPLELIST_ADD_LINE,"chipid: 0x%x", nfo.chipid);
+    }
+#endif /* STFM1000 */
 
 #ifdef HAVE_RDS_CAP
         simplelist_addline(SIMPLELIST_ADD_LINE, "PI:%04X PS:'%8s'",
                            rds_get_pi(), rds_get_ps());
         simplelist_addline(SIMPLELIST_ADD_LINE, "RT:%s",
                            rds_get_rt());
-        simplelist_addline(SIMPLELIST_ADD_LINE, "CT:%d", rds_get_ct());
+        time_t seconds = rds_get_ct();
+        struct tm* time = gmtime(&seconds);
+        simplelist_addline(SIMPLELIST_ADD_LINE,
+            "CT:%4d-%02d-%02d %02d:%02d",
+            time->tm_year + 1900, time->tm_mon + 1, time->tm_mday,
+            time->tm_hour, time->tm_min, time->tm_sec);
 #endif
     return ACTION_REDRAW;
 }

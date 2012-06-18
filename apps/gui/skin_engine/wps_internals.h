@@ -113,6 +113,15 @@ struct progressbar {
     bool horizontal;
     OFFSETTYPE(struct gui_img *) backdrop;
 };
+
+struct draw_rectangle {
+    int x;
+    int y;
+    int width;
+    int height;
+    unsigned start_colour;
+    unsigned end_colour;
+};
 #endif
 
 
@@ -402,7 +411,7 @@ struct gui_wps
 
 /* gui_wps end */
 
-char *get_image_filename(const char *start, const char* bmpdir,
+void get_image_filename(const char *start, const char* bmpdir,
                                 char *buf, int buf_size);
 /***** wps_tokens.c ******/
 

@@ -44,7 +44,7 @@
 #include "progressloggerinterface.h"
 
 #include "bootloaderinstallbase.h"
-#include "bootloaderinstallmpio.h"
+#include "bootloaderinstallhelper.h"
 
 #if defined(Q_OS_LINUX)
 #include <stdio.h>
@@ -227,7 +227,7 @@ void RbUtilQt::downloadInfo()
     ui.statusbar->showMessage(tr("Downloading build information, please wait ..."));
     qDebug() << "[RbUtil] downloading build info";
     daily->setFile(&buildInfo);
-    daily->getFile(QUrl(SystemInfo::value(SystemInfo::ServerConfUrl).toString()));
+    daily->getFile(QUrl(SystemInfo::value(SystemInfo::BuildInfoUrl).toString()));
 }
 
 
@@ -249,42 +249,13 @@ void RbUtilQt::downloadDone(bool error)
     ServerInfo::readBuildInfo(buildInfo.fileName());
     buildInfo.close();
 
-    // start bleeding info download
-    bleeding = new HttpGet(this);
-    connect(bleeding, SIGNAL(done(bool)), this, SLOT(downloadBleedingDone(bool)));
-    connect(qApp, SIGNAL(lastWindowClosed()), bleeding, SLOT(abort()));
-    if(RbSettings::value(RbSettings::CacheOffline).toBool())
-        bleeding->setCache(true);
-    bleeding->setFile(&bleedingInfo);
-    bleeding->getFile(QUrl(SystemInfo::value(SystemInfo::BleedingInfo).toString()));
-    ui.statusbar->showMessage(tr("Downloading build information, please wait ..."));
+    ui.statusbar->showMessage(tr("Download build information finished."), 5000);
+    updateSettings();
+    m_gotInfo = true;
 
-}
+    //start check for updates
+    checkUpdate();
 
-
-void RbUtilQt::downloadBleedingDone(bool error)
-{
-    if(error) {
-        qDebug() << "[RbUtil] network error:" << bleeding->error();
-        ui.statusbar->showMessage(tr("Can't get version information!"));
-        QMessageBox::critical(this, tr("Network error"),
-                tr("Can't get version information.\n"
-                   "Network error: %1. Please check your network and proxy settings.")
-                    .arg(bleeding->errorString()));
-        return;
-    }
-    else {
-        bleedingInfo.open();
-        ServerInfo::readBleedingInfo(bleedingInfo.fileName());
-        bleedingInfo.close();
-
-        ui.statusbar->showMessage(tr("Download build information finished."), 5000);
-        updateSettings();
-        m_gotInfo = true;
-
-        //start check for updates
-        checkUpdate();
-    }
 }
 
 
@@ -673,8 +644,9 @@ void RbUtilQt::installBootloader()
     m_error = false;
 
     // create installer
-    BootloaderInstallBase *bl = BootloaderInstallBase::createBootloaderInstaller(this,
-                                    SystemInfo::value(SystemInfo::CurBootloaderMethod).toString());
+    BootloaderInstallBase *bl =
+        BootloaderInstallHelper::createBootloaderInstaller(this,
+                SystemInfo::value(SystemInfo::CurBootloaderMethod).toString());
     if(bl == NULL) {
         logger->addItem(tr("No install method known."), LOGERROR);
         logger->setFinished();
@@ -759,8 +731,14 @@ void RbUtilQt::installBootloader()
         }
         // open dialog to browse to of file
         QString offile;
+        QString filter
+            = SystemInfo::value(SystemInfo::CurBootloaderFilter).toString();
+        if(!filter.isEmpty()) {
+            filter = tr("Bootloader files (%1)").arg(filter) + ";;";
+        }
+        filter += tr("All files (*)");
         offile = QFileDialog::getOpenFileName(this,
-                tr("Select firmware file"), QDir::homePath());
+                tr("Select firmware file"), QDir::homePath(), filter);
         if(!QFileInfo(offile).isReadable()) {
             logger->addItem(tr("Error opening firmware file"), LOGERROR);
             logger->setFinished();
@@ -806,7 +784,7 @@ void RbUtilQt::installBootloaderPost(bool error)
     if(m_auto)
         return;
 
-    QString msg = BootloaderInstallBase::postinstallHints(
+    QString msg = BootloaderInstallHelper::postinstallHints(
                     RbSettings::value(RbSettings::Platform).toString());
     if(!msg.isEmpty()) {
         QMessageBox::information(this, tr("Manual steps required"), msg);
@@ -853,7 +831,6 @@ void RbUtilQt::installFonts()
     if(relversion.isEmpty()) {
         // release is empty for non-release versions (i.e. daily / current)
         fontsurl = SystemInfo::value(SystemInfo::DailyFontUrl).toString();
-        logversion = installInfo.revision();
     }
     else {
         fontsurl = SystemInfo::value(SystemInfo::ReleaseFontUrl).toString();
@@ -906,9 +883,14 @@ void RbUtilQt::installVoice()
         return;
     }
     if(relversion.isEmpty()) {
-        // release is empty for non-release versions (i.e. daily / current)
-        voiceurl = SystemInfo::value(SystemInfo::DailyVoiceUrl).toString();
-        logversion = installInfo.revision();
+        // release is empty for development builds.
+        // No voice files are available for development builds.
+        QMessageBox::critical(this, tr("No voice file available"),
+                tr("The installed version of Rockbox is a development version. "
+                    "Pre-built voices are only available for release versions "
+                    "of Rockbox. Please generate a voice yourself using the "
+                    "\"Create voice file\" functionality."));
+        return;
     }
     else {
         voiceurl = SystemInfo::value(SystemInfo::ReleaseVoiceUrl).toString();
@@ -919,11 +901,8 @@ void RbUtilQt::installVoice()
        QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
         return;
 
-    QDate date = QDate::fromString(
-            ServerInfo::value(ServerInfo::DailyDate).toString(), Qt::ISODate);
     QString model = SystemInfo::value(SystemInfo::CurBuildserverModel).toString();
     // replace placeholder in voice url
-    voiceurl.replace("%DATE%", date.toString("yyyyMMdd"));
     voiceurl.replace("%MODEL%", model);
     voiceurl.replace("%RELVERSION%", relversion);
 
@@ -987,7 +966,7 @@ void RbUtilQt::installDoom()
 
     installer->setUrl(SystemInfo::value(SystemInfo::DoomUrl).toString());
     installer->setLogSection("Game Addons");
-    installer->setLogVersion(ServerInfo::value(ServerInfo::DailyDate).toString());
+    installer->setLogVersion();
     installer->setMountPoint(RbSettings::value(RbSettings::Mountpoint).toString());
     if(!RbSettings::value(RbSettings::CacheDisabled).toBool())
         installer->setCache(true);
@@ -1048,10 +1027,11 @@ void RbUtilQt::uninstallBootloader(void)
     QString platform = RbSettings::value(RbSettings::Platform).toString();
 
     // create installer
-    BootloaderInstallBase *bl = BootloaderInstallBase::createBootloaderInstaller(this,
-                                    SystemInfo::value(SystemInfo::CurBootloaderMethod).toString());
+    BootloaderInstallBase *bl
+        = BootloaderInstallHelper::createBootloaderInstaller(this,
+                SystemInfo::value(SystemInfo::CurBootloaderMethod).toString());
 
-    if(bl == NULL ) {
+    if(bl == NULL) {
         logger->addItem(tr("No uninstall method for this target known."), LOGERROR);
         logger->setFinished();
         return;

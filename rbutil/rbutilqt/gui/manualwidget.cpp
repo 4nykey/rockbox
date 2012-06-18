@@ -59,8 +59,8 @@ QString ManualWidget::manualUrl(ManualFormat format)
             manualbasename += "/rockbox-build";
             break;
         case ManualZip:
-            manual.replace("%EXTENSION%", "-html.zip");
-            manualbasename += "/rockbox-build";
+            manual.replace("%EXTENSION%", "zip");
+            manualbasename += "-html";
             break;
         default:
             break;
@@ -104,8 +104,6 @@ void ManualWidget::downloadManual(void)
         manual = "rockbox-" + SystemInfo::value(SystemInfo::CurBuildserverModel).toString();
     }
 
-    QDate date = QDate::fromString(ServerInfo::value(
-                ServerInfo::DailyDate).toString(), Qt::ISODate);
     QString manualurl;
 
     ProgressLoggerGui* logger = new ProgressLoggerGui(this);
@@ -123,11 +121,11 @@ void ManualWidget::downloadManual(void)
     else {
         manualurl = manualUrl(ManualZip);
         installer->setLogSection("Manual (HTML)");
-        installer->setTarget("/" + manual + "-" + date.toString("yyyyMMdd") + "-html.zip");
+        installer->setTarget("/" + manual + "-" + "-html.zip");
     }
     qDebug() << "[ManualWidget] Manual URL:" << manualurl;
 
-    installer->setLogVersion(ServerInfo::value(ServerInfo::DailyDate).toString());
+    installer->setLogVersion();
     installer->setUrl(manualurl);
     installer->setUnzip(false);
 

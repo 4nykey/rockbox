@@ -12,11 +12,13 @@ export ARCHOSROM=
 export FLASHFILE=
 export TARGET_ID=34
 export TARGET=-DCOWON_D2
-export ARCH=arm
+export ARCH=arch_arm
+export ARCH_VERSION=5
 export CPU=arm
 export MANUFACTURER=tcc780x
 export OBJDIR=/home/ak/srcs/rockbox/_bld/_d2/_bl
 export BUILDDIR=/home/ak/srcs/rockbox/_bld/_d2/_bl
+export RBCODEC_BLD=/home/ak/srcs/rockbox/_bld/_d2/_bl/lib/rbcodec
 export LANGUAGE=english
 export VOICELANGUAGE=
 export MEMORYSIZE=32
@@ -70,6 +72,7 @@ export ROCKBOX_BINARY_PATH=
 export ROCKBOX_LIBRARY_PATH=
 export SDLCONFIG=
 export LCDORIENTATION=
+export ANDROID_ARCH=
 
 CONFIGURE_OPTIONS=  --target=$(MODELNAME) --ram=$(MEMORYSIZE) --rbdir=$(RBDIR) --type=b
 

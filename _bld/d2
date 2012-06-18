@@ -22,10 +22,10 @@ popd
 
 #make -C _pdf HTLATEX="mk4ht htlatex" manual manual-zip
 
-echo "make -C _fw fullzip"
-echo "make -C _fw 7zip fontzip"
-echo 'make -C _fw PREFIX="/media/SD2" fullinstall'
-#make -C _fw 7zip && 7z x -o/media/disk _fw/rockbox.7z
+echo "make -C _d2/_fw fullzip"
+echo "make -C _d2/_fw 7zip fontzip"
+echo 'make -C _d2/_fw PREFIX="/media/SD2" fullinstall'
+#make -C _d2/_fw 7zip && 7z x -o/media/disk _d2/_fw/rockbox.7z
 
-echo './mktccboot ~/binaries/hw/d2/2.13p/fw/D2N_P.bin bootloader-cowond2.bin /media/D2/D2N_P.bin'
-#echo './mktccboot ~/binaries/hw/d2/2.59/fw/1/d2N.bin bootloader-cowond2.bin /media/D2/d2N.bin'
+echo './_d2/mktccboot ~/binaries/hw/d2/2.13p/fw/D2N_P.bin _d2/bootloader-cowond2.bin /media/D2/D2N_P.bin'
+#echo './_d2/mktccboot ~/binaries/hw/d2/2.59/fw/1/d2N.bin _d2/bootloader-cowond2.bin /media/D2/d2N.bin'

@@ -42,6 +42,7 @@
 #define LV240000   0x20 /* Sanyo */
 #define IPOD_REMOTE_TUNER   0x40 /* Apple */
 #define RDA5802    0x80 /* RDA Microelectronics */
+#define STFM1000   0x100 /* Sigmatel */
 
 /* CONFIG_CODEC */
 #define MAS3587F 3587
@@ -144,6 +145,8 @@
 #define HM801_PAD          51
 #define SANSA_CONNECT_PAD  52
 #define SAMSUNG_YPR0_PAD   53
+#define CREATIVE_ZENXFI2_PAD 54
+#define CREATIVE_ZENXFI3_PAD 55
 
 /* CONFIG_REMOTE_KEYPAD */
 #define H100_REMOTE   1
@@ -243,6 +246,8 @@
 #define LCD_CONNECT   45 /* as used by the Sandisk Sansa Connect */
 #define LCD_GIGABEATS 46
 #define LCD_YPR0      47
+#define LCD_CREATIVEZXFI2 48 /* as used by the Creative Zen X-Fi2 */
+#define LCD_CREATIVEZXFI3 49 /* as used by the Creative Zen X-Fi3 */
 
 /* LCD_PIXELFORMAT */
 #define HORIZONTAL_PACKING 1
@@ -294,6 +299,7 @@ Lyre prototype 1 */
 #define NAND_SAMSUNG 3
 #define NAND_CC      4 /* ChinaChip */
 #define NAND_RK27XX  5
+#define NAND_IMX233  6
 
 /* CONFIG_RTC */
 #define RTC_M41ST84W 1 /* Archos Recorder */
@@ -415,6 +421,10 @@ Lyre prototype 1 */
 #include "config/zenvisionm60gb.h"
 #elif defined(CREATIVE_ZV)
 #include "config/zenvision.h"
+#elif defined(CREATIVE_ZENXFI2)
+#include "config/creativezenxfi2.h"
+#elif defined(CREATIVE_ZENXFI3)
+#include "config/creativezenxfi3.h"
 #elif defined(PHILIPS_SA9200)
 #include "config/gogearsa9200.h"
 #elif defined(PHILIPS_HDD1630)
@@ -526,12 +536,12 @@ Lyre prototype 1 */
 #ifndef __PCTOOL__
 
 /* define for all cpus from SH family */
-#if (CONFIG_CPU == SH7034)
+#if (ARCH == ARCH_SH) && (CONFIG_CPU == SH7034)
 #define CPU_SH
 #endif
 
 /* define for all cpus from coldfire family */
-#if (CONFIG_CPU == MCF5249) || (CONFIG_CPU == MCF5250)
+#if (ARCH == ARCH_M68K) && ((CONFIG_CPU == MCF5249) || (CONFIG_CPU == MCF5250))
 #define CPU_COLDFIRE
 #endif
 
@@ -565,31 +575,13 @@ Lyre prototype 1 */
 #endif
 
 /* define for all cpus from ARM family */
-#if ((CONFIG_PLATFORM & PLATFORM_MAEMO5) && defined(MAEMO_ARM_BUILD)) \
-  || (CONFIG_PLATFORM & PLATFORM_PANDORA)
+#if ARCH == ARCH_ARM
 #define CPU_ARM
-#define ARM_ARCH 7 /* ARMv7 */
-
-#elif (CONFIG_CPU == IMX31L) || defined(SAMSUNG_YPR0) \
-  || ((CONFIG_PLATFORM & PLATFORM_MAEMO4) && defined(MAEMO_ARM_BUILD))
-#define CPU_ARM
-#define ARM_ARCH 6 /* ARMv6 */
-
-#elif defined(CPU_TCC77X) || defined(CPU_TCC780X) || (CONFIG_CPU == DM320) \
-  || (CONFIG_CPU == AT91SAM9260) || (CONFIG_CPU == AS3525v2) \
-  || (CONFIG_CPU == S5L8702) || (CONFIG_CPU == IMX233) \
-  || (CONFIG_CPU == RK27XX) ||(CONFIG_PLATFORM & PLATFORM_ANDROID)
-#define CPU_ARM
-#define ARM_ARCH 5 /* ARMv5 */
-
-#elif defined(CPU_PP) || (CONFIG_CPU == PNX0101) || (CONFIG_CPU == S3C2440) \
-  || (CONFIG_CPU == DSC25) || defined(CPU_S5L870X) || (CONFIG_CPU == AS3525)
-#define CPU_ARM
-#define ARM_ARCH 4 /* ARMv4 */
+#define ARM_ARCH ARCH_VERSION /* ARMv{4,5,6,7} */
 #endif
 
-#if (CONFIG_CPU == JZ4732)
-#define CPU_MIPS 32
+#if ARCH == ARCH_MIPS
+#define CPU_MIPS ARCH_VERSION /* 32, 64 */
 #endif
 
 #endif /*__PCTOOL__*/
@@ -885,6 +877,17 @@ Lyre prototype 1 */
 .endm
 #endif
 
+#if defined(CPU_COLDFIRE) && defined(__ASSEMBLER__)
+/* Assembler doesn't support these as mnemonics but does tpf */
+.macro tpf.w
+.word 0x51fa
+.endm
+
+.macro tpf.l
+.word 0x51fb
+.endm
+#endif
+
 #ifndef CODEC_SIZE
 #define CODEC_SIZE 0
 #endif
@@ -919,21 +922,11 @@ Lyre prototype 1 */
     && CONFIG_CPU != JZ4732 && CONFIG_CPU != AS3525v2 && CONFIG_CPU != IMX233
 #define PLUGIN_USE_IRAM
 #endif
-#if defined(CPU_ARM) && !defined(__ARM_EABI__)
-/* GCC quirk workaround: arm-elf-gcc treats static functions as short_call
- * when not compiling with -ffunction-sections, even when the function has
- * a section attribute.
- * This is fixed with eabi since all calls are short ones by default */
-#define STATICIRAM
-#else
-#define STATICIRAM static
-#endif
 #else
 #define ICODE_ATTR
 #define ICONST_ATTR
 #define IDATA_ATTR
 #define IBSS_ATTR
-#define STATICIRAM static
 #endif
 
 #if (defined(CPU_PP) || (CONFIG_CPU == AS3525) || (CONFIG_CPU == AS3525v2) || \
@@ -1133,6 +1126,11 @@ Lyre prototype 1 */
 #if defined(CPU_COLDIRE) || CONFIG_CPU == IMX31L
 /* Can record and play simultaneously */
 #define HAVE_PCM_FULL_DUPLEX
+#endif
+
+#if (CONFIG_CODEC == SWCODEC) || (CONFIG_CODEC == MAS3587F) || \
+    (CONFIG_CODEC == MAS3539F)
+#define HAVE_PITCHCONTROL
 #endif
 
 #endif /* __CONFIG_H__ */

@@ -12,11 +12,13 @@ export ARCHOSROM=
 export FLASHFILE=
 export TARGET_ID=34
 export TARGET=-DCOWON_D2
-export ARCH=amd64
+export ARCH=arch_amd64
+export ARCH_VERSION=
 export CPU=arm
 export MANUFACTURER=tcc780x
 export OBJDIR=/home/ak/srcs/rockbox/_bld/_d2/_sim
 export BUILDDIR=/home/ak/srcs/rockbox/_bld/_d2/_sim
+export RBCODEC_BLD=/home/ak/srcs/rockbox/_bld/_d2/_sim/lib/rbcodec
 export LANGUAGE=english
 export VOICELANGUAGE=
 export MEMORYSIZE=32
@@ -53,9 +55,9 @@ export TARGET_INC=-I$(FIRMDIR)/target/arm/tcc780x/cowond2 -I$(FIRMDIR)/target/ho
 export LOADADDRESS=
 export SHARED_LDFLAG=-shared
 export SHARED_CFLAGS=-fPIC -fvisibility=hidden
-export LDOPTS=-lm -ldl -lSDL -lpthread -lpthread
+export LDOPTS= -lm -ldl -lSDL -lpthread -lpthread
 export GLOBAL_LDOPTS= -Wl,-z,defs
-export GCCVER=4.6.2
+export GCCVER=4.6.3
 export GCCNUM=406
 export UNAME=Linux
 export MANUALDEV=cowond2
@@ -70,6 +72,7 @@ export ROCKBOX_BINARY_PATH=
 export ROCKBOX_LIBRARY_PATH=
 export SDLCONFIG=/usr/bin/sdl-config
 export LCDORIENTATION=
+export ANDROID_ARCH=
 
 CONFIGURE_OPTIONS=  --target=$(MODELNAME) --ram=$(MEMORYSIZE) --rbdir=$(RBDIR) --type=s
 

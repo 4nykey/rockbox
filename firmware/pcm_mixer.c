@@ -25,7 +25,7 @@
 #include "pcm.h"
 #include "pcm-internal.h"
 #include "pcm_mixer.h"
-#include "dsp.h"
+#include "dsp_core.h" /* For NATIVE_FREQUENCY */
 
 /* Channels use standard-style PCM callback interface but a latency of one
    frame by double-buffering is introduced in order to facilitate mixing and
@@ -59,9 +59,6 @@ static size_t next_size = 0;    /* Size of buffer to play next time */
 
 /* Descriptors for all available channels */
 static struct mixer_channel channels[PCM_MIXER_NUM_CHANNELS] IBSS_ATTR;
-
-/* History for channel peaks */
-static struct pcm_peaks channel_peaks[PCM_MIXER_NUM_CHANNELS];
 
 /* Packed pointer array of all playing (active) channels in "channels" array */
 static struct mixer_channel * active_channels[PCM_MIXER_NUM_CHANNELS+1] IBSS_ATTR;
@@ -232,6 +229,9 @@ fill_frame:
         *downmix_buf[downmix_index] = downmix_index ? 0x7fff7fff : 0x80008000;
 #endif
 
+    /* Certain SoC's have to do cleanup */
+    mixer_buffer_callback_exit();
+
     return PCM_DMAST_OK;
 }
 
@@ -386,21 +386,24 @@ const void * mixer_channel_get_buffer(enum pcm_mixer_channel channel, int *count
 
 /* Calculate peak values for channel */
 void mixer_channel_calculate_peaks(enum pcm_mixer_channel channel,
-                                   int *left, int *right)
+                                   struct pcm_peaks *peaks)
 {
-    struct mixer_channel *chan = &channels[channel];
-    struct pcm_peaks *peaks = &channel_peaks[channel];
     int count;
     const void *addr = mixer_channel_get_buffer(channel, &count);
 
-    pcm_do_peak_calculation(peaks, chan->status == CHANNEL_PLAYING,
+    pcm_do_peak_calculation(peaks,
+                            channels[channel].status == CHANNEL_PLAYING,
                             addr, count);
+}
 
-    if (left)
-        *left = peaks->val[0];
-
-    if (right)
-        *right = peaks->val[1];
+/* Adjust channel pointer by a given offset to support movable buffers */
+void mixer_adjust_channel_address(enum pcm_mixer_channel channel,
+                                  off_t offset)
+{
+    pcm_play_lock();
+    /* Makes no difference if it's stopped */
+    channels[channel].start += offset;
+    pcm_play_unlock();
 }
 
 /* Stop ALL channels and PCM and reset state */
