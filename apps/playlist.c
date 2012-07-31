@@ -1770,6 +1770,18 @@ static int format_track_path(char *dest, char *src, int buf_length, int max,
             snprintf(dest, buf_length, "%s/%s", dir, src);
         }
     }
+#ifdef HAVE_MULTIVOLUME 
+
+    char vol_string[VOL_ENUM_POS + 8];
+    snprintf(vol_string, sizeof(vol_string), "/"VOL_NAMES, 1);
+
+    /*check if the playlist is on a external card, and correct path if needed */
+    if(strstr(dir, vol_string) && (strstr(dest, vol_string) == NULL)){
+        char temp[buf_length];
+        strlcpy(temp, dest, buf_length);
+        snprintf(dest, buf_length, "%s%s", vol_string, temp);
+    }
+#endif
 
     return 0;
 }
@@ -2049,6 +2061,7 @@ void playlist_shutdown(void)
             flush_cached_control(playlist);
 
         close(playlist->control_fd);
+        playlist->control_fd = -1;
 
         mutex_unlock(playlist->control_mutex);
     }
@@ -2838,8 +2851,11 @@ int playlist_set_current(struct playlist_info* playlist)
     current_playlist.fd = playlist->fd;
 
     close(playlist->control_fd);
+    playlist->control_fd = -1;
     close(current_playlist.control_fd);
+    current_playlist.control_fd = -1;
     remove(current_playlist.control_filename);
+    current_playlist.control_created = false;
     if (rename(playlist->control_filename,
             current_playlist.control_filename) < 0)
         return -1;
@@ -2888,14 +2904,20 @@ void playlist_close(struct playlist_info* playlist)
     if (!playlist)
         return;
 
-    if (playlist->fd >= 0)
+    if (playlist->fd >= 0) {
         close(playlist->fd);
+        playlist->fd = -1;
+    }
 
-    if (playlist->control_fd >= 0)
+    if (playlist->control_fd >= 0) {
         close(playlist->control_fd);
+        playlist->control_fd = -1;
+    }
 
-    if (playlist->control_created)
+    if (playlist->control_created) {
         remove(playlist->control_filename);
+        playlist->control_created = false;
+    }
 }
 
 void playlist_sync(struct playlist_info* playlist)
@@ -3441,7 +3463,7 @@ int playlist_save(struct playlist_info* playlist, char *filename)
 
     /* use current working directory as base for pathname */
     if (format_track_path(path, filename, sizeof(tmp_buf),
-                          strlen(filename)+1, getcwd(NULL, -1)) < 0)
+                          strlen(filename)+1, "/") < 0)
         return -1;
 
     /* can ignore volatile here, because core_get_data() is called later */
@@ -3552,6 +3574,7 @@ int playlist_save(struct playlist_info* playlist, char *filename)
 
         /* Replace the current playlist with the new one and update indices */
         close(playlist->fd);
+        playlist->fd = -1;
         if (remove(playlist->filename) >= 0)
         {
             if (rename(path, playlist->filename) >= 0)

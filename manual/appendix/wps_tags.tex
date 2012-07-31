@@ -360,6 +360,8 @@ that, it will display the volume value.
     \config{\%St(<setting\tabnlindent{}name>)} & The value of the Rockbox
              setting with the specified name. See \reference{ref:config_file_options}
              for the list of the available settings.\\
+    \config{\%St(...)} & Draw a bar using from the setting.
+            See \reference{ref:bar_tags} for details.\\
   \end{tagmap}
 
 Examples:
@@ -676,6 +678,12 @@ display cycling round the defined sublines. See
   Some tags can be used to display a bar which draws according to the value of
   the tag. To use these tags like a bar you need to use the following parameters
   (\%XX should be replaced with the actual tag).
+  
+\opt{touchscreen}{
+    Volume and progress bars automatically create touch regions the same size
+    as the bar (slightly larger actually). This can be disabled with the
+    \config{notouch} option.
+}
 
 \begin{tagmap}
   \config{\%XX(x, y, width, height, [options])}
@@ -706,6 +714,11 @@ display cycling round the defined sublines. See
      ``slider'' option).
   \item[nobar] -- don't draw the bar or its frame (for use with the
     ``slider'' option).
+    \opt{touchscreen}{
+        \item[notouch] -- don't create the touchregion for progress/volume bars.
+    }
+  \item[setting] -- Specify the setting name to draw the bar from (bar must be
+    \%St type), the next param is the settings config name.
 \end{description}
 
 Example: \config{\%pb(0,0,-,-,-,nofill, slider, slider\_image, invert)} -- draw
@@ -713,7 +726,9 @@ a horizontal progressbar which doesn't fill and draws the image
 ``slider\_image'' which moves right to left.
 
 \note{If the slider option is used, the bar will be shrunk so that the slider
-  fits inside the specified width and height.}
+  fits inside the specified width and height. Example: A 100px bar image with a
+  16px slider image needs the bar to be 116px wide, and should be offset 8px
+  left of the backdrop image to align correctly.}
 
 \section{Other Tags}
 

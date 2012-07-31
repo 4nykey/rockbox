@@ -68,7 +68,7 @@ bool BootloaderInstallIpod::install(void)
     }
     if(getmodel(&ipod,(ipod.ipod_directory[ipod.ososimage].vers>>8)) < 0) {
         emit logItem(tr("Unknown version number in firmware (%1)").arg(
-                    ipod.ipod_directory[0].vers), LOGERROR);
+                    ipod.ipod_directory[ipod.ososimage].vers), LOGERROR);
         emit done(true);
         return false;
     }
@@ -153,9 +153,9 @@ bool BootloaderInstallIpod::uninstall(void)
         emit done(true);
         return false;
     }
-    if (getmodel(&ipod,(ipod.ipod_directory[0].vers>>8)) < 0) {
+    if (getmodel(&ipod,(ipod.ipod_directory[ipod.ososimage].vers>>8)) < 0) {
         emit logItem(tr("Unknown version number in firmware (%1)").arg(
-                    ipod.ipod_directory[0].vers), LOGERROR);
+                    ipod.ipod_directory[ipod.ososimage].vers), LOGERROR);
         emit done(true);
         return false;
     }
@@ -166,7 +166,7 @@ bool BootloaderInstallIpod::uninstall(void)
         return false;
     }
 
-    if (ipod.ipod_directory[0].entryOffset == 0) {
+    if (ipod_has_bootloader(&ipod) == 0) {
         emit logItem(tr("No bootloader detected."), LOGERROR);
         emit done(true);
         return false;
@@ -199,8 +199,8 @@ BootloaderInstallBase::BootloaderType BootloaderInstallIpod::installed(void)
     }
     else {
         read_directory(&ipod);
-        if(ipod.ipod_directory[0].entryOffset == 0 || ipod.macpod) {
-            qDebug() << "[BootloaderInstallIpod] installed: BootloaderOther";
+        getmodel(&ipod,(ipod.ipod_directory[ipod.ososimage].vers>>8));
+        if(!ipod_has_bootloader(&ipod)) {
             result = BootloaderOther;
         }
         else {
