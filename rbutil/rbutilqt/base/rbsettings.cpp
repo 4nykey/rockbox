@@ -40,6 +40,11 @@ const static struct {
     { RbSettings::OfPath,               "ofpath",               "" },
     { RbSettings::Platform,             "platform",             "" },
     { RbSettings::Language,             "lang",                 "" },
+    { RbSettings::BackupPath,           "backuppath",           "" },
+    { RbSettings::InstallRockbox,       "install_rockbox",      "true" },
+    { RbSettings::InstallFonts,         "install_fonts",        "true" },
+    { RbSettings::InstallThemes,        "install_themes",       "false" },
+    { RbSettings::InstallGamefiles,     "install_gamefiles",    "true" },
 #if defined(Q_OS_WIN32)
     { RbSettings::Tts,                  "tts",                  "sapi" },
 #elif defined(Q_OS_MACX)

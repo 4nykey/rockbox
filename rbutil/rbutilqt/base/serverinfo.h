@@ -32,8 +32,15 @@ class ServerInfo : public QObject
         enum ServerInfos {
             CurReleaseVersion,
             CurStatus,
+            CurReleaseUrl,
+            CurDevelUrl,
+            ManualPdfUrl,
+            ManualHtmlUrl,
+            ManualZipUrl,
             BleedingRevision,
             BleedingDate,
+            RelCandidateVersion,
+            RelCandidateUrl,
         };
 
         //! read in buildinfo file
@@ -45,7 +52,7 @@ class ServerInfo : public QObject
 
     private:
         //! set a server info value
-        static void setValue(enum ServerInfos setting , QVariant value);
+        static void setValue(enum ServerInfos setting, QVariant value);
         //! set a value for a server info for a named platform.
         static void setPlatformValue(QString platform, enum ServerInfos setting, QVariant value);
         //! you shouldnt call this, its a fully static class

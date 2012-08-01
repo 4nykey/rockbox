@@ -21,7 +21,6 @@ SOURCES += \
  gui/infowidget.cpp \
  rbutilqt.cpp \
  main.cpp \
- installwindow.cpp \
  base/httpget.cpp \
  configure.cpp \
  base/zipinstaller.cpp \
@@ -77,14 +76,15 @@ SOURCES += \
  quazip/zip.c \
  quazip/ioapi.c \
  base/ziputil.cpp \
- comboboxviewdelegate.cpp \
+ gui/comboboxviewdelegate.cpp \
+ gui/selectiveinstallwidget.cpp \
+ gui/backupdialog.cpp \
 
 
 HEADERS += \
  gui/manualwidget.h \
  gui/infowidget.h \
  rbutilqt.h \
- installwindow.h \
  base/httpget.h \
  configure.h \
  version.h \
@@ -148,7 +148,9 @@ HEADERS += \
  quazip/zip.h \
  base/ziputil.h \
  lame/lame.h \
- comboboxviewdelegate.h \
+ gui/comboboxviewdelegate.h \
+ gui/selectiveinstallwidget.h \
+ gui/backupdialog.h \
 
 
 FORMS += \
@@ -156,7 +158,6 @@ FORMS += \
  gui/infowidgetfrm.ui \
  rbutilqtfrm.ui \
  aboutbox.ui \
- installwindowfrm.ui \
  progressloggerfrm.ui \
  configurefrm.ui \
  installtalkfrm.ui \
@@ -165,7 +166,9 @@ FORMS += \
  previewfrm.ui \
  createvoicefrm.ui \
  sysinfofrm.ui \
- systracefrm.ui
+ systracefrm.ui \
+ gui/selectiveinstallwidgetfrm.ui \
+ gui/backupdialogfrm.ui \
 
 
 TRANSLATIONS += \

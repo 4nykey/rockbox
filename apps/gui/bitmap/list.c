@@ -154,6 +154,7 @@ void list_draw(struct screen *display, struct gui_synclist *list)
     int icon_yoffset = 0; /* to center the icon */
     bool show_title;
     struct viewport *list_text_vp = &list_text[screen];
+    int indent = 0;
 
     line_height = parent->line_height;
     display->set_viewport(parent);
@@ -249,9 +250,28 @@ void list_draw(struct screen *display, struct gui_synclist *list)
         unsigned char *entry_name;
         int text_pos = 0;
         int line = i - start;
+        indent = 0;
         s = list->callback_get_item_name(i, list->data, entry_buffer,
                                          sizeof(entry_buffer));
         entry_name = P2STR(s);
+
+        while (*entry_name == '\t')
+        {
+            indent++;
+            entry_name++;
+        }
+        if (indent)
+        {
+            if (icon_width)
+                indent *= icon_width;
+            else
+                indent *= display->getcharwidth();
+
+            list_icons.x += indent;
+            list_text_vp->x += indent;
+            list_text_vp->width -= indent;
+        }
+
         display->set_viewport(list_text_vp);
         style = STYLE_DEFAULT;
         /* position the string at the correct offset place */
@@ -352,6 +372,12 @@ void list_draw(struct screen *display, struct gui_synclist *list)
             screen_put_iconxy(display, 0,
                             line*line_height + draw_offset + icon_yoffset,
                             Icon_Cursor);
+        }
+        if (indent)
+        {
+            list_icons.x -= indent;
+            list_text_vp->x -= indent;
+            list_text_vp->width += indent;
         }
     }
     display->set_viewport(parent);
@@ -704,7 +730,7 @@ unsigned gui_synclist_do_touchscreen(struct gui_synclist * list)
     enum screen_type screen;
     struct viewport *parent;
     short x, y;
-    int action, adj_y, line, line_height, list_start_item;
+    int action, adj_x, adj_y, line, line_height, list_start_item;
     bool recurse;
     static int last_y = -1;
     
@@ -714,6 +740,7 @@ unsigned gui_synclist_do_touchscreen(struct gui_synclist * list)
     list_start_item = list->start_item[screen];
     /* start with getting the action code and finding the click location */
     action = action_get_touchscreen_press(&x, &y);
+    adj_x = x - parent->x;
     adj_y = y - parent->y;
 
 
@@ -736,13 +763,17 @@ unsigned gui_synclist_do_touchscreen(struct gui_synclist * list)
                 line = 0; /* silence gcc 'used uninitialized' warning */
                 if (click_loc & LIST)
                 {
-                    /* selection needs to be corrected if items are only partially visible */
-                    line = (adj_y - y_offset) / line_height;
-                    if (list_display_title(list, screen))
-                        line -= 1; /* adjust for the list title */
+                    if(!skinlist_get_item(&screens[screen], list, adj_x, adj_y, &line))
+                    {
+                        /* selection needs to be corrected if items are only partially visible */
+                        line = (adj_y - y_offset) / line_height;
+                        if (list_display_title(list, screen))
+                            line -= 1; /* adjust for the list title */
+                    }
                     if (line >= list->nb_items)
                         return ACTION_NONE;
                     list->selected_item = list_start_item+line;
+
                     gui_synclist_speak_item(list);
                 }
                 if (action == BUTTON_TOUCHSCREEN)
