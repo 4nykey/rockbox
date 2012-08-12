@@ -27,6 +27,7 @@
 #include <time.h>
 #include <errno.h>
 #include "config.h"
+#include "ata_idle_notify.h"
 
 #define HAVE_STATVFS (!defined(WIN32))
 #define HAVE_LSTAT   (!defined(WIN32))
@@ -270,6 +271,8 @@ static ssize_t io_trigger_and_wait(enum io_dir cmd)
         result = -1;
     }
 
+    call_storage_idle_notifys(false);
+
     /* Regain our status as current */
     if (mythread != NULL)
     {
@@ -279,7 +282,7 @@ static ssize_t io_trigger_and_wait(enum io_dir cmd)
     return result;
 }
 
-#if !defined(__PCTOOL__) && !defined(APPLICATION)
+#if !defined(APPLICATION)
 static const char *get_sim_pathname(const char *name)
 {
     static char buffer[MAX_PATH]; /* sufficiently big */

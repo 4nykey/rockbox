@@ -204,7 +204,7 @@ static const char graphic_numeric[] = "graphic,numeric";
 /* Default theme settings */
 #define DEFAULT_WPSNAME  "cabbiev2"
 #define DEFAULT_SBSNAME  "-"
-#define DEFAULT_FMS_NAME "-"
+#define DEFAULT_FMS_NAME "cabbiev2"
 
 #ifdef HAVE_LCD_BITMAP
 
@@ -315,6 +315,12 @@ static const char graphic_numeric[] = "graphic,numeric";
 #endif
 
 #endif /* HAVE_RECORDING */
+
+#if (CONFIG_PLATFORM & PLATFORM_ANDROID)
+#define DEFAULT_TAGCACHE_SCAN_PATHS "/sdcard"
+#else
+#define DEFAULT_TAGCACHE_SCAN_PATHS "/"
+#endif
 
 #ifdef HAVE_TOUCHSCREEN
 
@@ -1355,6 +1361,8 @@ const struct settings_list settings[] = {
 
     OFFON_SETTING(0, runtimedb, LANG_RUNTIMEDB_ACTIVE, false,
                   "gather runtime data", NULL),
+    TEXT_SETTING(0, tagcache_scan_paths, "database scan paths",
+                 DEFAULT_TAGCACHE_SCAN_PATHS, NULL, NULL),
 #endif
 
 #if CONFIG_CODEC == SWCODEC

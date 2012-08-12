@@ -736,6 +736,10 @@ static int parse_image_special(struct skin_element *element,
 
 #endif /* HAVE_LCD_BITMAP */
 
+static int parse_progressbar_tag(struct skin_element* element,
+                                 struct wps_token *token,
+                                 struct wps_data *wps_data);
+
 static int parse_setting_and_lang(struct skin_element *element,
                                   struct wps_token *token,
                                   struct wps_data *wps_data)
@@ -756,6 +760,13 @@ static int parse_setting_and_lang(struct skin_element *element,
         if (i < 0)
             return WPS_ERROR_INVALID_PARAM;
 #endif
+    }
+    else if (element->params_count > 1)
+    {
+        if (element->params_count > 4)
+            return parse_progressbar_tag(element, token, wps_data);
+        else
+            return WPS_ERROR_INVALID_PARAM;
     }
     else
     {
@@ -871,6 +882,9 @@ static int parse_progressbar_tag(struct skin_element* element,
     struct skin_tag_parameter *param = get_param(element, 0);
     int curr_param = 0;
     char *image_filename = NULL;
+#ifdef HAVE_TOUCHSCREEN
+    bool suppress_touchregion = false;
+#endif
 
     if (element->params_count == 0 &&
         element->tag->type != SKIN_TOKEN_PROGRESSBAR)
@@ -888,6 +902,7 @@ static int parse_progressbar_tag(struct skin_element* element,
     pb->image = PTRTOSKINOFFSET(skin_buffer, NULL);
     pb->slider = PTRTOSKINOFFSET(skin_buffer, NULL);
     pb->backdrop = PTRTOSKINOFFSET(skin_buffer, NULL);
+    pb->setting_id = -1;
     pb->invert_fill_direction = false;
     pb->horizontal = true;
 
@@ -1008,6 +1023,23 @@ static int parse_progressbar_tag(struct skin_element* element,
         }
         else if (!strcmp(text, "horizontal"))
             pb->horizontal = true;
+#ifdef HAVE_TOUCHSCREEN
+        else if (!strcmp(text, "notouch"))
+            suppress_touchregion = true;
+#endif
+		else if (token->type == SKIN_TOKEN_SETTING && !strcmp(text, "setting"))
+		{
+            if (curr_param+1 < element->params_count)
+            {
+                curr_param++;
+                param++;
+                text = SKINOFFSETTOPTR(skin_buffer, param->data.text);
+#ifndef __PCTOOL__
+				if (find_setting_by_cfgname(text, &pb->setting_id) == NULL)
+					return WPS_ERROR_INVALID_PARAM;
+#endif
+			}
+		}
         else if (curr_param == 4)
             image_filename = text;
 
@@ -1053,7 +1085,68 @@ static int parse_progressbar_tag(struct skin_element* element,
         token->type = SKIN_TOKEN_PEAKMETER_RIGHTBAR;
     else if (token->type == SKIN_TOKEN_LIST_NEEDS_SCROLLBAR)
         token->type = SKIN_TOKEN_LIST_SCROLLBAR;
+    else if (token->type == SKIN_TOKEN_SETTING)
+		token->type = SKIN_TOKEN_SETTINGBAR;
     pb->type = token->type;
+
+#ifdef HAVE_TOUCHSCREEN
+    if (!suppress_touchregion &&
+        (token->type == SKIN_TOKEN_VOLUMEBAR ||
+         token->type == SKIN_TOKEN_PROGRESSBAR ||
+         token->type == SKIN_TOKEN_SETTINGBAR))
+    {
+        struct touchregion *region = skin_buffer_alloc(sizeof(*region));
+        struct skin_token_list *item;
+        int wpad, hpad;
+
+        if (!region)
+            return 0;
+
+        if (token->type == SKIN_TOKEN_VOLUMEBAR)
+            region->action = ACTION_TOUCH_VOLUME;
+        else if (token->type == SKIN_TOKEN_SETTINGBAR)
+            region->action = ACTION_TOUCH_SETTING;
+        else
+            region->action = ACTION_TOUCH_SCROLLBAR;
+
+        /* try to add some extra space on either end to make pressing the
+         * full bar easier. ~5% on either side
+         */
+        wpad = pb->width * 5 / 100;
+        if (wpad > 10)
+            wpad = 10;
+        hpad = pb->height * 5 / 100;
+        if (hpad > 10)
+            hpad = 10;
+
+        region->x = pb->x - wpad;
+        if (region->x < 0)
+            region->x = 0;
+        region->width = pb->width + 2 * wpad;
+        if (region->x + region->width > curr_vp->vp.x + curr_vp->vp.width)
+            region->width = curr_vp->vp.x + curr_vp->vp.width - region->x;
+
+        region->y = pb->y - hpad;
+        if (region->y < 0)
+            region->y = 0;
+        region->height = pb->height + 2 * hpad;
+        if (region->y + region->height > curr_vp->vp.y + curr_vp->vp.height)
+            region->height = curr_vp->vp.y + curr_vp->vp.height - region->y;
+
+        region->wvp = PTRTOSKINOFFSET(skin_buffer, curr_vp);
+        region->reverse_bar = false;
+        region->allow_while_locked = false;
+        region->press_length = PRESS;
+        region->last_press = 0xffff;
+        region->armed = false;
+        region->bar = PTRTOSKINOFFSET(skin_buffer, pb);
+
+        item = new_skin_token_list_item(NULL, region);
+        if (!item)
+            return WPS_ERROR_INVALID_PARAM;
+        add_to_ll_chain(&wps_data->touchregions, item);
+    }
+#endif
 
     return 0;
 
@@ -1429,6 +1522,7 @@ static int parse_touchregion(struct skin_element *element,
     region->last_press = 0xffff;
     region->press_length = PRESS;
     region->allow_while_locked = false;
+    region->bar = PTRTOSKINOFFSET(skin_buffer, NULL);
     action = get_param_text(element, p++);
 
     /* figure out the action */
@@ -1795,8 +1889,7 @@ static bool skin_load_fonts(struct wps_data *data)
 
         if (font->id < 0)
         {
-            DEBUGF("Unable to load font %d: '%s.fnt'\n",
-                    font_id, font->name);
+            DEBUGF("Unable to load font %d: '%s'\n", font_id, font->name);
             font->name = NULL; /* to stop trying to load it again if we fail */
             success = false;
             continue;
@@ -1901,6 +1994,8 @@ static int convert_viewport(struct wps_data *data, struct skin_element* element)
         skin_vp->vp.x = param->data.number;
         if (param->data.number < 0)
             skin_vp->vp.x += display->lcdwidth;
+        else if (param->type == PERCENT)
+            skin_vp->vp.x = param->data.number * display->lcdwidth / 1000;
     }
     param++;
     /* y */
@@ -1909,6 +2004,8 @@ static int convert_viewport(struct wps_data *data, struct skin_element* element)
         skin_vp->vp.y = param->data.number;
         if (param->data.number < 0)
             skin_vp->vp.y += display->lcdheight;
+        else if (param->type == PERCENT)
+            skin_vp->vp.y = param->data.number * display->lcdheight / 1000;
     }
     param++;
     /* width */
@@ -1917,6 +2014,8 @@ static int convert_viewport(struct wps_data *data, struct skin_element* element)
         skin_vp->vp.width = param->data.number;
         if (param->data.number < 0)
             skin_vp->vp.width = (skin_vp->vp.width + display->lcdwidth) - skin_vp->vp.x;
+        else if (param->type == PERCENT)
+            skin_vp->vp.width = param->data.number * display->lcdwidth / 1000;
     }
     else
     {
@@ -1929,6 +2028,8 @@ static int convert_viewport(struct wps_data *data, struct skin_element* element)
         skin_vp->vp.height = param->data.number;
         if (param->data.number < 0)
             skin_vp->vp.height = (skin_vp->vp.height + display->lcdheight) - skin_vp->vp.y;
+        else if (param->type == PERCENT)
+            skin_vp->vp.height = param->data.number * display->lcdheight / 1000;
     }
     else
     {
@@ -2324,6 +2425,31 @@ bool skin_data_load(enum screen_type screen, struct wps_data *wps_data,
 #else
     wps_data->wps_loaded = wps_data->tree >= 0;
 #endif
+
+#ifdef HAVE_TOUCHSCREEN
+    /* Check if there are any touch regions from the skin and not just
+     * auto-created ones for bars */
+    struct skin_token_list *regions = SKINOFFSETTOPTR(skin_buffer,
+            wps_data->touchregions);
+    bool user_touch_region_found = false;
+    while (regions)
+    {
+        struct wps_token *token = SKINOFFSETTOPTR(skin_buffer, regions->token);
+        struct touchregion *r = SKINOFFSETTOPTR(skin_buffer, token->value.data);
+
+        if (r->action != ACTION_TOUCH_SCROLLBAR &&
+            r->action != ACTION_TOUCH_VOLUME)
+        {
+            user_touch_region_found = true;
+            break;
+        }
+        regions = SKINOFFSETTOPTR(skin_buffer, regions->next);
+    }
+    regions = SKINOFFSETTOPTR(skin_buffer, wps_data->touchregions);
+    if (regions && !user_touch_region_found)
+        wps_data->touchregions = PTRTOSKINOFFSET(skin_buffer, NULL);
+#endif
+
     skin_buffer = NULL;
     return true;
 }

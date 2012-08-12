@@ -1133,4 +1133,10 @@ Lyre prototype 1 */
 #define HAVE_PITCHCONTROL
 #endif
 
+/* enable logging messages to disk*/
+#if CONFIG_PLATFORM == PLATFORM_NATIVE  && !defined(SIMULATOR) && !defined(BOOTLOADER) \
+    && !defined(__PCTOOL__)
+#define ROCKBOX_HAS_LOGDISKF
+#endif
+
 #endif /* __CONFIG_H__ */

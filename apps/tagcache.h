@@ -201,17 +201,15 @@ struct tagcache_search {
     int32_t idx_id;      /* Entry number in the master index. */
 };
 
-void tagcache_build(const char *path);
-
 #ifdef __PCTOOL__
 void tagcache_reverse_scan(void);
+/* call this directly instead of tagcache_build in order to not pull
+ * on global_settings */
+void do_tagcache_build(const char *path[]);
 #endif
 
 const char* tagcache_tag_to_str(int tag);
 
-#ifdef CPU_SH
-bool tagcache_is_numeric_tag(int type);
-#endif
 bool tagcache_find_index(struct tagcache_search *tcs, const char *filename);
 bool tagcache_check_clauses(struct tagcache_search *tcs,
                             struct tagcache_search_clause **clause, int count);
