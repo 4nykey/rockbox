@@ -33,7 +33,6 @@
 #include "settings.h"
 #include "settings_list.h"
 #include "usb.h"
-#include "dsp.h"
 #include "audio.h"
 #include "power.h"
 #include "powermgmt.h"
@@ -205,7 +204,7 @@ static const char graphic_numeric[] = "graphic,numeric";
 /* Default theme settings */
 #define DEFAULT_WPSNAME  "cabbiev2"
 #define DEFAULT_SBSNAME  "-"
-#define DEFAULT_FMS_NAME "-"
+#define DEFAULT_FMS_NAME "cabbiev2"
 
 #ifdef HAVE_LCD_BITMAP
 
@@ -215,6 +214,9 @@ static const char graphic_numeric[] = "graphic,numeric";
 #elif LCD_HEIGHT <= 80
   #define DEFAULT_FONT_HEIGHT 11
   #define DEFAULT_FONTNAME "11-Sazanami-Mincho"
+#elif (LCD_HEIGHT == 96) && (LCD_WIDTH == 96)   /* sandisk sansa clip zip */
+  #define DEFAULT_FONT_HEIGHT 8
+  #define DEFAULT_FONTNAME "08-Rockfont"
 #elif LCD_HEIGHT <= 220
   #define DEFAULT_FONT_HEIGHT 12
 #elif LCD_HEIGHT <= 320
@@ -251,9 +253,12 @@ static const char graphic_numeric[] = "graphic,numeric";
   #elif DEFAULT_FONT_HEIGHT >= 15
     #define DEFAULT_ICONSET "tango_icons.16x16"
     #define DEFAULT_VIEWERS_ICONSET "tango_icons_viewers.16x16"
-  #else
+  #elif DEFAULT_FONT_HEIGHT >= 11
     #define DEFAULT_ICONSET "tango_icons.12x12"
     #define DEFAULT_VIEWERS_ICONSET "tango_icons_viewers.12x12"
+  #elif DEFAULT_FONT_HEIGHT >= 7
+    #define DEFAULT_ICONSET "tango_icons.8x8"
+    #define DEFAULT_VIEWERS_ICONSET "tango_icons_viewers.8x8"
   #endif
 #elif LCD_DEPTH > 1 /* greyscale */
   #define DEFAULT_ICONSET "tango_small_mono"
@@ -310,6 +315,12 @@ static const char graphic_numeric[] = "graphic,numeric";
 #endif
 
 #endif /* HAVE_RECORDING */
+
+#if (CONFIG_PLATFORM & PLATFORM_ANDROID)
+#define DEFAULT_TAGCACHE_SCAN_PATHS "/sdcard"
+#else
+#define DEFAULT_TAGCACHE_SCAN_PATHS "/"
+#endif
 
 #ifdef HAVE_TOUCHSCREEN
 
@@ -436,7 +447,7 @@ static void crossfeed_cross_set(int val)
 static void compressor_set(int val)
 {
     (void)val;
-    dsp_set_compressor();
+    dsp_set_compressor(&global_settings.compressor_settings);
 }
 
 static const char* db_format(char* buffer, size_t buffer_size, int value,
@@ -1350,17 +1361,19 @@ const struct settings_list settings[] = {
 
     OFFON_SETTING(0, runtimedb, LANG_RUNTIMEDB_ACTIVE, false,
                   "gather runtime data", NULL),
+    TEXT_SETTING(0, tagcache_scan_paths, "database scan paths",
+                 DEFAULT_TAGCACHE_SCAN_PATHS, NULL, NULL),
 #endif
 
 #if CONFIG_CODEC == SWCODEC
     /* replay gain */
-    CHOICE_SETTING(F_SOUNDSETTING, replaygain_type, LANG_REPLAYGAIN_MODE,
-                   REPLAYGAIN_SHUFFLE, "replaygain type",
+    CHOICE_SETTING(F_SOUNDSETTING, replaygain_settings.type,
+                   LANG_REPLAYGAIN_MODE, REPLAYGAIN_SHUFFLE, "replaygain type",
                    "track,album,track shuffle,off", NULL, 4, ID2P(LANG_TRACK_GAIN),
                    ID2P(LANG_ALBUM_GAIN), ID2P(LANG_SHUFFLE_GAIN), ID2P(LANG_OFF)),
-    OFFON_SETTING(F_SOUNDSETTING, replaygain_noclip, LANG_REPLAYGAIN_NOCLIP,
-                  false, "replaygain noclip", NULL),
-    INT_SETTING_NOWRAP(F_SOUNDSETTING, replaygain_preamp,
+    OFFON_SETTING(F_SOUNDSETTING, replaygain_settings.noclip,
+                  LANG_REPLAYGAIN_NOCLIP, false, "replaygain noclip", NULL),
+    INT_SETTING_NOWRAP(F_SOUNDSETTING, replaygain_settings.preamp,
                        LANG_REPLAYGAIN_PREAMP, 0, "replaygain preamp",
                        UNIT_DB, -120, 120, 5, db_format, get_dec_talkid, NULL),
 
@@ -1397,8 +1410,10 @@ const struct settings_list settings[] = {
 #endif
 
     /* crossfeed */
-    OFFON_SETTING(F_SOUNDSETTING, crossfeed, LANG_CROSSFEED, false,
-                  "crossfeed", dsp_set_crossfeed),
+    CHOICE_SETTING(F_SOUNDSETTING, crossfeed, LANG_CROSSFEED, 0,"crossfeed",
+                   "off,meier,custom", dsp_set_crossfeed_type, 3,
+                   ID2P(LANG_OFF), ID2P(LANG_CROSSFEED_MEIER),
+                   ID2P(LANG_CROSSFEED_CUSTOM)),
     INT_SETTING_NOWRAP(F_SOUNDSETTING, crossfeed_direct_gain,
                        LANG_CROSSFEED_DIRECT_GAIN, -15,
                        "crossfeed direct gain", UNIT_DB, -60, 0, 5,
@@ -1475,32 +1490,33 @@ const struct settings_list settings[] = {
     OFFON_SETTING(F_SOUNDSETTING, dithering_enabled, LANG_DITHERING, false,
                   "dithering enabled", dsp_dither_enable),
 
-#ifdef HAVE_PITCHSCREEN
+#ifdef HAVE_PITCHCONTROL
     /* timestretch */
     OFFON_SETTING(F_SOUNDSETTING, timestretch_enabled, LANG_TIMESTRETCH, false,
                   "timestretch enabled", dsp_timestretch_enable),
 #endif
 
     /* compressor */
-    INT_SETTING_NOWRAP(F_SOUNDSETTING, compressor_threshold,
+    INT_SETTING_NOWRAP(F_SOUNDSETTING, compressor_settings.threshold,
                        LANG_COMPRESSOR_THRESHOLD, 0,
                        "compressor threshold", UNIT_DB, 0, -24,
-                       -3, formatter_unit_0_is_off, getlang_unit_0_is_off, compressor_set),
-    CHOICE_SETTING(F_SOUNDSETTING|F_NO_WRAP, compressor_makeup_gain,
+                       -3, formatter_unit_0_is_off, getlang_unit_0_is_off,
+                       compressor_set),
+    CHOICE_SETTING(F_SOUNDSETTING|F_NO_WRAP, compressor_settings.makeup_gain,
                    LANG_COMPRESSOR_GAIN, 1, "compressor makeup gain",
                    "off,auto", compressor_set, 2,
                    ID2P(LANG_OFF), ID2P(LANG_AUTO)),
-    CHOICE_SETTING(F_SOUNDSETTING|F_NO_WRAP, compressor_ratio,
+    CHOICE_SETTING(F_SOUNDSETTING|F_NO_WRAP, compressor_settings.ratio,
                    LANG_COMPRESSOR_RATIO, 1, "compressor ratio",
                    "2:1,4:1,6:1,10:1,limit", compressor_set, 5,
                    ID2P(LANG_COMPRESSOR_RATIO_2), ID2P(LANG_COMPRESSOR_RATIO_4),
                    ID2P(LANG_COMPRESSOR_RATIO_6), ID2P(LANG_COMPRESSOR_RATIO_10),
                    ID2P(LANG_COMPRESSOR_RATIO_LIMIT)),
-    CHOICE_SETTING(F_SOUNDSETTING|F_NO_WRAP, compressor_knee,
+    CHOICE_SETTING(F_SOUNDSETTING|F_NO_WRAP, compressor_settings.knee,
                    LANG_COMPRESSOR_KNEE, 1, "compressor knee",
                    "hard knee,soft knee", compressor_set, 2,
                    ID2P(LANG_COMPRESSOR_HARD_KNEE), ID2P(LANG_COMPRESSOR_SOFT_KNEE)),
-    INT_SETTING_NOWRAP(F_SOUNDSETTING, compressor_release_time,
+    INT_SETTING_NOWRAP(F_SOUNDSETTING, compressor_settings.release_time,
                        LANG_COMPRESSOR_RELEASE, 500,
                        "compressor release time", UNIT_MS, 100, 1000,
                        100, NULL, NULL, compressor_set),
@@ -1531,25 +1547,28 @@ const struct settings_list settings[] = {
 #ifdef HAVE_LCD_BITMAP
                    /* The order must match with that in unicode.c */
                    "iso8859-1,iso8859-7,iso8859-8,cp1251,iso8859-11,cp1256,"
-                   "iso8859-9,iso8859-2,cp1250,sjis,gb2312,ksx1001,big5,utf-8",
+                   "iso8859-9,iso8859-2,cp1250,cp1252,sjis,gb2312,ksx1001,big5,utf-8",
                    set_codepage, 14,
-                   ID2P(LANG_CODEPAGE_LATIN1), ID2P(LANG_CODEPAGE_GREEK),
+                   ID2P(LANG_CODEPAGE_LATIN1),
+                   ID2P(LANG_CODEPAGE_GREEK),
                    ID2P(LANG_CODEPAGE_HEBREW), ID2P(LANG_CODEPAGE_CYRILLIC),
                    ID2P(LANG_CODEPAGE_THAI), ID2P(LANG_CODEPAGE_ARABIC),
                    ID2P(LANG_CODEPAGE_TURKISH),
                    ID2P(LANG_CODEPAGE_LATIN_EXTENDED),
                    ID2P(LANG_CODEPAGE_CENTRAL_EUROPEAN),
+                   ID2P(LANG_CODEPAGE_WESTERN_EUROPEAN),
                    ID2P(LANG_CODEPAGE_JAPANESE),
                    ID2P(LANG_CODEPAGE_SIMPLIFIED), ID2P(LANG_CODEPAGE_KOREAN),
                    ID2P(LANG_CODEPAGE_TRADITIONAL), ID2P(LANG_CODEPAGE_UTF8)),
 #else /* !HAVE_LCD_BITMAP */
                    /* The order must match with that in unicode.c */
-                   "iso8859-1,iso8859-7,cp1251,iso8859-9,iso8859-2,cp1250,utf-8",
+                   "iso8859-1,iso8859-7,cp1251,iso8859-9,iso8859-2,cp1250,cp1252,utf-8",
                    set_codepage, 7,
                    ID2P(LANG_CODEPAGE_LATIN1), ID2P(LANG_CODEPAGE_GREEK),
                    ID2P(LANG_CODEPAGE_CYRILLIC), ID2P(LANG_CODEPAGE_TURKISH),
                    ID2P(LANG_CODEPAGE_LATIN_EXTENDED),
                    ID2P(LANG_CODEPAGE_CENTRAL_EUROPEAN),
+                   ID2P(LANG_CODEPAGE_WESTERN_EUROPEAN),
                    ID2P(LANG_CODEPAGE_UTF8)),
 #endif
     OFFON_SETTING(0, warnon_erase_dynplaylist, LANG_WARN_ERASEDYNPLAYLIST_MENU,
@@ -1830,6 +1849,8 @@ const struct settings_list settings[] = {
                   NULL, "qs bottom",
                   qs_load_from_cfg, qs_write_to_cfg,
                   qs_is_changed, qs_set_default),
+   OFFON_SETTING(0, shortcuts_replaces_qs, LANG_USE_SHORTCUTS_INSTEAD_OF_QS,
+                  false, "shortcuts instead of quickscreen", NULL),
 #endif
 #ifdef HAVE_SPEAKER
     OFFON_SETTING(0, speaker_enabled, LANG_ENABLE_SPEAKER, false, "speaker",
@@ -1846,7 +1867,7 @@ const struct settings_list settings[] = {
 #endif
     OFFON_SETTING(0, prevent_skip, LANG_PREVENT_SKIPPING, false, "prevent track skip", NULL),
 
-#ifdef HAVE_PITCHSCREEN
+#ifdef HAVE_PITCHCONTROL
     OFFON_SETTING(0, pitch_mode_semitone, LANG_SEMITONE, false,
                   "Semitone pitch change", NULL),
 #if CONFIG_CODEC == SWCODEC

@@ -22,6 +22,7 @@
 #include "kernel.h"
 #include "system.h"
 #include "panic.h"
+#include "button.h"
 #include "system-target.h"
 
 #define default_interrupt(name) \
@@ -117,13 +118,46 @@ void fiq_dummy(void)
 
 void system_init(void)
 {
-    return;
+    /* disable WDT just in case nand loader activated it */
+    WDTCON &= ~(1<<3);
+
+#ifndef BOOTLOADER
+    /* SDRAM tweaks */
+    MCSDR_MODE = (2<<4)|3;         /* CAS=2, burst=8 */
+    MCSDR_T_REF = (125*100) >> 3;  /* 125/8 = 15.625 autorefresh interval */
+    MCSDR_T_RFC = (64*100) / 1000; /* autorefresh period */
+    MCSDR_T_RP = 1;                /* precharge period */
+    MCSDR_T_RCD = 1;               /* active to RD/WR delay */
+
+    /* turn off clock for unused modules */
+    SCU_CLKCFG |= (1<<31) |        /* WDT pclk */
+                  (1<<30) |        /* RTC pclk */
+                  (1<<26) |        /* HS_ADC clock */
+                  (1<<25) |        /* HS_ADC HCLK */
+                  (1<<21) |        /* SPI clock */
+                  (1<<19) |        /* UART1 clock */
+                  (1<<18) |        /* UART0 clock */
+                  (1<<15) |        /* VIP clock */
+                  (1<<14) |        /* VIP HCLK */
+                  (1<<13) |        /* LCDC clock */
+                   (1<<9) |        /* NAND HCLK */
+                   (1<<5) |        /* USB host HCLK */
+                   (1<<1) |        /* DSP clock */
+                   (1<<0);         /* OTP clock (dunno what it is */
+
+    /* turn off DSP pll */
+    SCU_PLLCON2 |= (1<<22);
+
+    /* turn off codec pll */
+    SCU_PLLCON3 |= (1<<22);
+#endif
 }
 
 /* not tested */
 void system_reboot(void)
 {
     /* use Watchdog to reset */
+    SCU_CLKCFG &= ~(1<<31);
     WDTLR = 1;
     WDTCON = (1<<4) | (1<<3);
 
@@ -133,7 +167,10 @@ void system_reboot(void)
 
 void system_exception_wait(void)
 {
-    while(1);
+    /* wait until button release (if a button is pressed) */
+    while(button_read_device());
+    /* then wait until next button press */
+    while(!button_read_device());
 }
 
 int system_memory_guard(int newmode)

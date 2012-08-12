@@ -20,6 +20,6 @@ make -j4
 make fullinstall
 popd
 
-echo 'make -C _fw PREFIX="/media/SANSA CLIPP" fullinstall'
-echo 'make -C _fw fullzip 7zip fontzip'
-echo './mkamsboot ~/binaries/hw/sansa/clppa.bin bootloader-clipplus.sansa "/media/SANSA CLIPP/clppa.bin"'
+echo 'make -C _clipp/_fw PREFIX="/media/SANSA CLIPP" fullinstall'
+echo 'make -C _clipp/_fw fullzip 7zip fontzip'
+echo './_clipp/mkamsboot ~/binaries/hw/sansa/clppV010218.bin _clipp/bootloader-clipplus.sansa "/media/SANSA CLIPP/clppa.bin"'

@@ -24,7 +24,7 @@ TOP := $(dir $(lastword $(MAKEFILE_LIST)))
 
 # overwrite for releases
 APPVERSION ?= $(shell $(TOP)/../tools/version.sh ../../)
-CFLAGS += -DVERSION=\"$(APPVERSION)\"
+CFLAGS += -DVERSION=\""$(APPVERSION)"\"
 TARGET_DIR ?= $(shell pwd)/
 
 # use POSIX/C99 printf on windows
@@ -122,6 +122,11 @@ $(TARGET_DIR)lib$(OUTPUT)$(RBARCH).a: $(LIBOBJS) $(addprefix $(OBJDIR),$(EXTRALI
 clean:
 	rm -f $(OBJS) $(OUTPUT) $(TARGET_DIR)lib$(OUTPUT)*.a $(OUTPUT).dmg
 	rm -rf $(OUTPUT)-* i386 ppc $(OBJDIR)
+
+# extra tools
+BIN2C = $(TOP)/tools/bin2c
+$(BIN2C):
+	$(MAKE) -C $(TOP)/tools
 
 # OS X specifics
 $(OUTPUT).dmg: $(OUTPUT)

@@ -76,6 +76,7 @@
 #include "skin_engine/skin_engine.h"
 #include "statusbar-skinned.h"
 #include "bootchart.h"
+#include "logdiskf.h"
 #if (CONFIG_PLATFORM & PLATFORM_ANDROID)
 #include "notification.h"
 #endif
@@ -282,7 +283,7 @@ static void init_tagcache(void) INIT_ATTR;
 static void init_tagcache(void)
 {
     bool clear = false;
-#if CONFIG_CODEC == SWCODEC
+#if 0 /* CONFIG_CODEC == SWCODEC */
     long talked_tick = 0;
 #endif
     tagcache_init();
@@ -293,7 +294,7 @@ static void init_tagcache(void)
 
         if (ret > 0)
         {
-#if CONFIG_CODEC == SWCODEC
+#if 0 /* FIXME: Audio isn't even initialized yet! */ /* CONFIG_CODEC == SWCODEC */
             /* hwcodec can't use voice here, as the database commit
              * uses the audio buffer. */
             if(global_settings.talk_menu
@@ -373,6 +374,9 @@ static void init(void)
 #ifdef DEBUG
     debug_init();
 #endif
+#if CONFIG_TUNER
+    radio_init();
+#endif
     /* Keep the order of this 3 (viewportmanager handles statusbars)
      * Must be done before any code uses the multi-screen API */
     gui_syncstatusbar_init(&statusbars);
@@ -381,6 +385,9 @@ static void init(void)
     viewportmanager_init();
 
     storage_init();
+#if CONFIG_CODEC == SWCODEC
+    dsp_init();
+#endif
     settings_reset();
     settings_load(SETTINGS_ALL);
     settings_apply(true);
@@ -389,7 +396,6 @@ static void init(void)
 #ifdef HAVE_TAGCACHE
     init_tagcache();
 #endif
-    sleep(HZ/2);
     tree_mem_init();
     filetype_init();
     playlist_init();
@@ -482,6 +488,10 @@ static void init(void)
 #ifdef HAVE_SERIAL
     serial_setup();
 #endif
+#endif
+
+#ifdef ROCKBOX_HAS_LOGDISKF
+    init_logdiskf();
 #endif
 
 #if CONFIG_RTC
@@ -629,6 +639,10 @@ static void init(void)
             system_reboot();
         }
     }
+
+#if CONFIG_CODEC == SWCODEC
+    dsp_init();
+#endif
 
 #if defined(SETTINGS_RESET) || (CONFIG_KEYPAD == IPOD_4G_PAD) || \
     (CONFIG_KEYPAD == IRIVER_H10_PAD)

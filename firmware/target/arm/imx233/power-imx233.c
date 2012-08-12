@@ -96,7 +96,7 @@ void power_init(void)
     else
         __REG_SET(HW_POWER_CTRL) = HW_POWER_CTRL__POLARITY_VBUSVALID;
     __REG_SET(HW_POWER_CTRL) = HW_POWER_CTRL__ENIRQ_VBUS_VALID;
-    imx233_enable_interrupt(INT_SRC_VDD5V, true);
+    imx233_icoll_enable_interrupt(INT_SRC_VDD5V, true);
     /* setup linear regulator offsets to 25 mV below to prevent contention between
      * linear regulators and DCDC */
     __FIELD_SET(HW_POWER_VDDDCTRL, LINREG_OFFSET, 2);
@@ -114,6 +114,7 @@ void power_off(void)
     sleep(HZ / 2);
 #ifdef SANSA_FUZEPLUS
     /* This pin seems to be important to shutdown the hardware properly */
+    imx233_pinctrl_acquire_pin(0, 9, "power off");
     imx233_set_pin_function(0, 9, PINCTRL_FUNCTION_GPIO);
     imx233_enable_gpio_output(0, 9, true);
     imx233_set_gpio_output(0, 9, true);

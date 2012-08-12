@@ -32,6 +32,7 @@
 #include "button.h"
 #if CONFIG_CODEC == SWCODEC
 #include "audio.h"
+#include "dsp_proc_settings.h"
 #endif
 #include "rbpaths.h"
 
@@ -115,9 +116,6 @@ enum { SORT_INTERPRET_AS_DIGIT, SORT_INTERPRET_AS_NUMBER };
 
 /* recursive dir insert options */
 enum { RECURSE_OFF, RECURSE_ON, RECURSE_ASK };
-
-/* replaygain types */
-enum { REPLAYGAIN_TRACK = 0, REPLAYGAIN_ALBUM, REPLAYGAIN_SHUFFLE, REPLAYGAIN_OFF };
 
 /* show path types */
 enum { SHOW_PATH_OFF = 0, SHOW_PATH_CURRENT, SHOW_PATH_FULL };
@@ -324,13 +322,10 @@ struct user_settings
 #endif
 
     /* Replaygain */
-    bool replaygain_noclip; /* scale to prevent clips */
-    int  replaygain_type;   /* 0=track gain, 1=album gain, 2=track gain if
-                               shuffle is on, album gain otherwise, 4=off */
-    int  replaygain_preamp; /* scale replaygained tracks by this */
+    struct replaygain_settings replaygain_settings;
 
     /* Crossfeed */
-    bool crossfeed;                             /* enable crossfeed */
+    int crossfeed;                              /* crossfeed type */
     unsigned int crossfeed_direct_gain;         /* dB x 10 */
     unsigned int crossfeed_cross_gain;          /* dB x 10 */
     unsigned int crossfeed_hf_attenuation;      /* dB x 10 */
@@ -339,20 +334,14 @@ struct user_settings
     /* EQ */
     bool eq_enabled;            /* Enable equalizer */
     unsigned int eq_precut;     /* dB */
-
-    struct eq_band_setting
-    {
-        int cutoff;        /* Hz */
-        int q;
-        int gain;          /* +/- dB */
-    } eq_band_settings[5];
+    struct eq_band_setting eq_band_settings[EQ_NUM_BANDS]; /* for each band */
 
     /* Misc. swcodec */
     int  beep;              /* system beep volume when changing tracks etc. */
     int  keyclick;          /* keyclick volume */
     int  keyclick_repeats;  /* keyclick on repeats */
     bool dithering_enabled;
-#ifdef HAVE_PITCHSCREEN
+#ifdef HAVE_PITCHCONTROL
     bool timestretch_enabled;
 #endif
 #endif /* CONFIG_CODEC == SWCODEC */
@@ -572,6 +561,7 @@ struct user_settings
                                  2=custom */
     unsigned char autoresume_paths[MAX_PATHNAME+1]; /* colon-separated list */
     bool runtimedb;           /* runtime database active? */
+    unsigned char tagcache_scan_paths[MAX_PATHNAME+1];
 #endif /* HAVE_TAGCACHE */
 
 #if LCD_DEPTH > 1
@@ -744,7 +734,7 @@ struct user_settings
     struct touchscreen_parameter ts_calibration_data;
 #endif
 
-#ifdef HAVE_PITCHSCREEN
+#ifdef HAVE_PITCHCONTROL
     /* pitch screen settings */
     bool pitch_mode_semitone;
 #if CONFIG_CODEC == SWCODEC
@@ -772,11 +762,7 @@ struct user_settings
 #endif
 
 #if CONFIG_CODEC == SWCODEC
-    int compressor_threshold;
-    int compressor_makeup_gain;
-    int compressor_ratio;
-    int compressor_knee;
-    int compressor_release_time;
+    struct compressor_settings compressor_settings;
 #endif
 
     int sleeptimer_duration; /* In minutes; 0=off */
@@ -827,6 +813,9 @@ struct user_settings
     char start_directory[MAX_PATHNAME+1];
     /* Has the root been customized from the .cfg file? false = no, true = loaded from cfg */
     bool root_menu_customized;
+#ifdef HAVE_QUICKSCREEN
+    bool shortcuts_replaces_qs;
+#endif
 };
 
 /** global variables **/

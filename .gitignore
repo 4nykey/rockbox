@@ -5,6 +5,8 @@
 *.elf
 *.exe
 *.so
+*.o
+*.a
 
 # android: java build system
 /android/bin
@@ -36,6 +38,9 @@
 # /rbutil/
 /rbutil/Makefile
 /rbutil/rbutil
+
+# /rbutil/ipodpatcher/
+/rbutil/ipodpatcher/ipodpatcher
 
 # /rbutil/chinachippatcher/
 /rbutil/chinachippatcher/chinachip

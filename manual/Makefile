@@ -33,7 +33,7 @@ objdir-check:
 manual-prep: objdir-check rockbox.tex $(OBJDIR)/CREDITS.tex $(OBJDIR)/version.tex $(OBJDIR)/$(MANFILE).tex
 	$(SILENT)mkdir -p $(OBJDIR)
 	$(SILENT)find * -type d \! -regex '.*\.svn.*' -exec mkdir -p $(OBJDIR)/{} \;
-	$(SILENT)find * -type f \! -regex '.*\.svn.*' -exec cp {} $(OBJDIR)/{} \;
+	$(SILENT)find -L * -type f \! -regex '.*\.svn.*' -exec cp {} $(OBJDIR)/{} \;
 	$(SILENT)mv $(OBJDIR)/Makefile.pdflatex $(OBJDIR)/Makefile
 
 $(OBJDIR)/$(MANFILE).tex:
@@ -44,14 +44,17 @@ $(OBJDIR)/$(MANFILE).tex:
 
 $(OBJDIR)/CREDITS.tex: $(DOCSDIR)/CREDITS
 	@echo "processing $(notdir $^)"
+	$(SILENT)mkdir -p $(OBJDIR)
 	$(SILENT)perl credits.pl < $(DOCSDIR)/CREDITS  > $@
 
 $(OBJDIR)/version.tex:
 	@echo "creating $(notdir $@)"
+	$(SILENT)mkdir -p $(OBJDIR)
 	$(SILENT)printf "%s%%" $(VERSION) > $@
 
 $(OBJDIR)/features.tex: $(ROOTDIR)/apps/features.txt
 	@echo "processing $(notdir $^)"
+	$(SILENT)mkdir -p $(OBJDIR)
 	$(SILENT)mkdir -p `dirname $@`
 	$(SILENT) for f in \
 	    $$(cat $< | $(HOSTCC) -DMEMORYSIZE=$(MEMORYSIZE) $(INCLUDES) \

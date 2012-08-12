@@ -40,6 +40,11 @@ const static struct {
     { RbSettings::OfPath,               "ofpath",               "" },
     { RbSettings::Platform,             "platform",             "" },
     { RbSettings::Language,             "lang",                 "" },
+    { RbSettings::BackupPath,           "backuppath",           "" },
+    { RbSettings::InstallRockbox,       "install_rockbox",      "true" },
+    { RbSettings::InstallFonts,         "install_fonts",        "true" },
+    { RbSettings::InstallThemes,        "install_themes",       "false" },
+    { RbSettings::InstallGamefiles,     "install_gamefiles",    "true" },
 #if defined(Q_OS_WIN32)
     { RbSettings::Tts,                  "tts",                  "sapi" },
 #elif defined(Q_OS_MACX)
@@ -48,7 +53,14 @@ const static struct {
     { RbSettings::Tts,                  "tts",                  "espeak" },
 #endif
     { RbSettings::UseTtsCorrections,    "use_tts_corrections",  "true" },
-    { RbSettings::LastTalkedFolder,     "last_talked_folder",   "" },
+    { RbSettings::TalkFolders,          "talk_folders",         "" },
+    { RbSettings::TalkProcessFiles,     "talk_process_files",   "true" },
+    { RbSettings::TalkProcessFolders,   "talk_process_folders", "true" },
+    { RbSettings::TalkRecursive,        "talk_recursive",       "true" },
+    { RbSettings::TalkSkipExisting,     "talk_skip_existing",   "true" },
+    { RbSettings::TalkStripExtensions,  "talk_strip_extensions","true" },
+    { RbSettings::TalkIgnoreFiles,      "talk_ignore_files",    "false" },
+    { RbSettings::TalkIgnoreWildcards,  "talk_ignore_wildcards","" },
     { RbSettings::VoiceLanguage,        "voicelanguage",        "" },
     { RbSettings::TtsLanguage,          ":tts:/language",       "" },
     { RbSettings::TtsOptions,           ":tts:/options",        "" },

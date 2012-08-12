@@ -32,7 +32,7 @@
 #include "lang.h"
 #include "splash.h"
 #include "playlist.h"
-#include "dsp.h"
+#include "dsp_misc.h"
 
 /** Disarms all touchregions. */
 void skin_disarm_touchregions(struct wps_data *data)
@@ -99,19 +99,21 @@ int skin_get_touchaction(struct wps_data *data, int* edge_offset,
                 /* reposition the touch within the area */
                 vx -= r->x;
                 vy -= r->y;
-                
 
                 switch(r->action)
                 {
                     case ACTION_TOUCH_SCROLLBAR:
                     case ACTION_TOUCH_VOLUME:
+                    case ACTION_TOUCH_SETTING:
                         if (edge_offset)
                         {
+                            struct progressbar *bar =
+                                    SKINOFFSETTOPTR(skin_buffer, r->bar);
                             if(r->width > r->height)
                                 *edge_offset = vx*100/r->width;
                             else
                                 *edge_offset = vy*100/r->height;
-                            if (r->reverse_bar)
+                            if (r->reverse_bar || (bar && bar->invert_fill_direction))
                                 *edge_offset = 100 - *edge_offset;
                         }
                         temp = r;
@@ -266,9 +268,7 @@ int skin_get_touchaction(struct wps_data *data, int* edge_offset,
             {
                 global_settings.playlist_shuffle = 
                                             !global_settings.playlist_shuffle;
-#if CONFIG_CODEC == SWCODEC
-                dsp_set_replaygain();
-#endif
+                replaygain_update();
                 if (global_settings.playlist_shuffle)
                     playlist_randomise(NULL, current_tick, true);
                 else
@@ -283,6 +283,19 @@ int skin_get_touchaction(struct wps_data *data, int* edge_offset,
                 option_select_next_val(rep_setting, false, true);
                 audio_flush_and_reload_tracks();
                 returncode = ACTION_REDRAW;
+            }
+            break;
+            case ACTION_TOUCH_SETTING:
+            {                
+                struct progressbar *bar =
+                        SKINOFFSETTOPTR(skin_buffer, temp->bar);
+                if (bar && edge_offset)
+                {                    
+                    int val, count;
+                    get_setting_info_for_bar(bar->setting_id, &count, &val);
+                    val = *edge_offset * count / 100;
+                    update_setting_value_from_touch(bar->setting_id, val);
+                }
             }
             break;
         }

@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include "string-extra.h"
 #include "config.h"
+#include "system.h"
 #include "option_select.h"
 #include "kernel.h"
 #include "lang.h"
@@ -574,3 +575,46 @@ bool option_screen(const struct settings_list *setting,
     return false;
 }
 
+int get_setting_info_for_bar(int setting_id, int *count, int *val)
+{
+    const struct settings_list *setting = &settings[setting_id];
+    int var_type = setting->flags&F_T_MASK;
+    void (*function)(int) = NULL;
+    int oldvalue;
+
+    if (var_type == F_T_INT || var_type == F_T_UINT)
+    {
+        oldvalue = *(int*)setting->setting;
+    }
+    else if (var_type == F_T_BOOL)
+    {
+        oldvalue = *(bool*)setting->setting?1:0;
+    }
+    else
+    {
+        *val = 0;
+        *count = 1;
+        return false; /* only int/bools can go here */
+    }
+
+    val_to_selection(setting, oldvalue, count, val, &function);
+    return true;
+}
+
+#ifdef HAVE_TOUCHSCREEN
+void update_setting_value_from_touch(int setting_id, int selection)
+{
+    const struct settings_list *setting = &settings[setting_id];
+    int new_val = selection_to_val(setting, selection);
+    int var_type = setting->flags&F_T_MASK;
+
+    if (var_type == F_T_INT || var_type == F_T_UINT)
+    {
+        *(int*)setting->setting = new_val;
+    }
+    else if (var_type == F_T_BOOL)
+    {
+        *(bool*)setting->setting = new_val ? true : false;
+    }
+}
+#endif

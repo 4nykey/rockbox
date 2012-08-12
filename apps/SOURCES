@@ -26,6 +26,7 @@ menus/audiohw_eq_menu.c
 menus/eq_menu.c
 buffering.c
 voice_thread.c
+rbcodec_helpers.c
 #else  /* !SWCODEC */
 mpeg.c
 #endif
@@ -79,12 +80,13 @@ gui/bitmap/list-skinned.c
 gui/charcell/list.c
 #endif
 gui/option_select.c
-#ifdef HAVE_PITCHSCREEN
+#ifdef HAVE_PITCHCONTROL
 gui/pitchscreen.c
 #endif
 #ifdef HAVE_QUICKSCREEN
 gui/quickscreen.c
 #endif
+gui/folder_select.c
 
 gui/wps.c
 gui/scrollbar.c
@@ -235,6 +237,10 @@ keymaps/keymap-meizu-m6sp.c
 keymaps/keymap-creativezvm.c
 #elif CONFIG_KEYPAD == CREATIVEZV_PAD
 keymaps/keymap-creativezv.c
+#elif CONFIG_KEYPAD == CREATIVE_ZENXFI2_PAD
+keymaps/keymap-zenxfi2.c
+#elif CONFIG_KEYPAD == CREATIVE_ZENXFI3_PAD
+keymaps/keymap-zenxfi3.c
 #elif CONFIG_KEYPAD == PHILIPS_SA9200_PAD
 keymaps/keymap-sa9200.c
 #elif CONFIG_KEYPAD == PHILIPS_HDD1630_PAD

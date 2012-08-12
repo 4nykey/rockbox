@@ -12,11 +12,13 @@ export ARCHOSROM=
 export FLASHFILE=
 export TARGET_ID=66
 export TARGET=-DSANSA_CLIPPLUS
-export ARCH=arm
+export ARCH=arch_arm
+export ARCH_VERSION=5
 export CPU=arm
 export MANUFACTURER=as3525
 export OBJDIR=/home/ak/srcs/rockbox/_bld/_clipp/_fw
 export BUILDDIR=/home/ak/srcs/rockbox/_bld/_clipp/_fw
+export RBCODEC_BLD=/home/ak/srcs/rockbox/_bld/_clipp/_fw/lib/rbcodec
 export LANGUAGE=english
 export VOICELANGUAGE=
 export MEMORYSIZE=8
@@ -70,6 +72,7 @@ export ROCKBOX_BINARY_PATH=
 export ROCKBOX_LIBRARY_PATH=
 export SDLCONFIG=
 export LCDORIENTATION=
+export ANDROID_ARCH=
 
 CONFIGURE_OPTIONS=  --target=$(MODELNAME) --ram=$(MEMORYSIZE) --rbdir=$(RBDIR) --type=N
 

@@ -34,6 +34,8 @@
 #include "bootloaderinstallbase.h"
 #include "manualwidget.h"
 #include "infowidget.h"
+#include "selectiveinstallwidget.h"
+#include "backupdialog.h"
 
 class RbUtilQt : public QMainWindow
 {
@@ -47,6 +49,8 @@ class RbUtilQt : public QMainWindow
     private:
         ManualWidget *manual;
         InfoWidget *info;
+        SelectiveInstallWidget* selectiveinstallwidget;
+        BackupDialog *backupdialog;
         Ui::RbUtilQtFrm ui;
 
         void changeEvent(QEvent *e);
@@ -79,37 +83,15 @@ class RbUtilQt : public QMainWindow
         void updateDevice(void);
         void updateSettings(void);
 
-        void completeInstall(void);
-        void smallInstall(void);
-        bool smallInstallInner(void);
         void installdone(bool error);
-
-        void installBtn(void);
-        bool installAuto(void);
-        void install(void);
-
-        void installBootloaderBtn(void);
-        bool installBootloaderAuto(void);
-        void installBootloader(void);
-        void installBootloaderPost(bool error);
-
-        void installFontsBtn(void);
-        bool installFontsAuto(void);
-        void installFonts(void);
-
-        bool hasDoom(void);
-        void installDoomBtn(void);
-        bool installDoomAuto(void);
-        void installDoom(void);
 
         void createTalkFiles(void);
         void createVoiceFile(void);
         void downloadDone(bool);
-        void downloadBleedingDone(bool);
         void downloadInfo(void);
+        void backup(void);
 
         void installVoice(void);
-        void installThemes(void);
         void uninstall(void);
         void uninstallBootloader(void);
         void installPortable(void);

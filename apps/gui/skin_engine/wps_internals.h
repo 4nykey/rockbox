@@ -112,6 +112,8 @@ struct progressbar {
     OFFSETTYPE(struct gui_img *) slider;
     bool horizontal;
     OFFSETTYPE(struct gui_img *) backdrop;
+    int setting_id; /* for the setting bar type */
+    
 };
 
 struct draw_rectangle {
@@ -215,6 +217,7 @@ struct touchregion {
         int   value;
     };
     long last_press;        /* last tick this was pressed */
+    OFFSETTYPE(struct progressbar*) bar;
 };
 
 
@@ -411,7 +414,7 @@ struct gui_wps
 
 /* gui_wps end */
 
-char *get_image_filename(const char *start, const char* bmpdir,
+void get_image_filename(const char *start, const char* bmpdir,
                                 char *buf, int buf_size);
 /***** wps_tokens.c ******/
 

@@ -28,46 +28,8 @@ ManualWidget::ManualWidget(QWidget *parent) : QWidget(parent)
 {
     ui.setupUi(this);
     ui.radioPdf->setChecked(true);
+    platform = RbSettings::value(RbSettings::Platform).toString();
     connect(ui.buttonDownloadManual, SIGNAL(clicked()), this, SLOT(downloadManual()));
-}
-
-
-QString ManualWidget::manualUrl(ManualFormat format)
-{
-    if(RbSettings::value(RbSettings::Platform).toString().isEmpty()) {
-        return QString();
-    }
-
-    QString buildservermodel = SystemInfo::value(SystemInfo::CurBuildserverModel).toString();
-    QString modelman = SystemInfo::value(SystemInfo::CurManual).toString();
-    QString manualbasename;
-
-    if(modelman.isEmpty()) {
-        manualbasename = "rockbox-" + buildservermodel;
-    }
-    else {
-        manualbasename = "rockbox-" + modelman;
-    }
-
-    QString manual = SystemInfo::value(SystemInfo::ManualUrl).toString();
-    switch(format) {
-        case ManualPdf:
-            manual.replace("%EXTENSION%", "pdf");
-            break;
-        case ManualHtml:
-            manual.replace("%EXTENSION%", "html");
-            manualbasename += "/rockbox-build";
-            break;
-        case ManualZip:
-            manual.replace("%EXTENSION%", "-html.zip");
-            manualbasename += "/rockbox-build";
-            break;
-        default:
-            break;
-    };
-
-    manual.replace("%MANUALBASENAME%", manualbasename);
-    return manual;
 }
 
 
@@ -76,9 +38,9 @@ void ManualWidget::updateManual()
     if(!RbSettings::value(RbSettings::Platform).toString().isEmpty())
     {
         ui.labelPdfManual->setText(tr("<a href='%1'>PDF Manual</a>")
-            .arg(manualUrl(ManualPdf)));
+            .arg(ServerInfo::platformValue(platform, ServerInfo::ManualPdfUrl).toString()));
         ui.labelHtmlManual->setText(tr("<a href='%1'>HTML Manual (opens in browser)</a>")
-            .arg(manualUrl(ManualHtml)));
+            .arg(ServerInfo::platformValue(platform, ServerInfo::ManualHtmlUrl).toString()));
     }
     else {
         ui.labelPdfManual->setText(tr("Select a device for a link to the correct manual"));
@@ -104,10 +66,6 @@ void ManualWidget::downloadManual(void)
         manual = "rockbox-" + SystemInfo::value(SystemInfo::CurBuildserverModel).toString();
     }
 
-    QDate date = QDate::fromString(ServerInfo::value(
-                ServerInfo::DailyDate).toString(), Qt::ISODate);
-    QString manualurl;
-
     ProgressLoggerGui* logger = new ProgressLoggerGui(this);
     logger->show();
     ZipInstaller *installer = new ZipInstaller(this);
@@ -116,19 +74,18 @@ void ManualWidget::downloadManual(void)
         installer->setCache(true);
 
     if(ui.radioPdf->isChecked()) {
-        manualurl = manualUrl(ManualPdf);
+        installer->setUrl(ServerInfo::platformValue(platform,
+                    ServerInfo::ManualPdfUrl).toString());
         installer->setLogSection("Manual (PDF)");
         installer->setTarget("/" + manual + ".pdf");
     }
     else {
-        manualurl = manualUrl(ManualZip);
+        installer->setUrl(ServerInfo::platformValue(platform,
+                    ServerInfo::ManualZipUrl).toString());
         installer->setLogSection("Manual (HTML)");
-        installer->setTarget("/" + manual + "-" + date.toString("yyyyMMdd") + "-html.zip");
+        installer->setTarget("/" + manual + "-" + "-html.zip");
     }
-    qDebug() << "[ManualWidget] Manual URL:" << manualurl;
-
-    installer->setLogVersion(ServerInfo::value(ServerInfo::DailyDate).toString());
-    installer->setUrl(manualurl);
+    installer->setLogVersion();
     installer->setUnzip(false);
 
     connect(installer, SIGNAL(logItem(QString, int)), logger, SLOT(addItem(QString, int)));
@@ -136,5 +93,16 @@ void ManualWidget::downloadManual(void)
     connect(installer, SIGNAL(done(bool)), logger, SLOT(setFinished()));
     connect(logger, SIGNAL(aborted()), installer, SLOT(abort()));
     installer->install();
+}
+
+
+void ManualWidget::changeEvent(QEvent *e)
+{
+    if(e->type() == QEvent::LanguageChange) {
+        ui.retranslateUi(this);
+        updateManual();
+    } else {
+        QWidget::changeEvent(e);
+    }
 }
 

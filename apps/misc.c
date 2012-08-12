@@ -198,6 +198,13 @@ int fast_readline(int fd, char *buf, int buf_size, void *parameters,
             next = ++p;
         }
 
+        if ( (p = strchr(buf, '\r')) != NULL)
+        {
+            *p = '\0';
+            if (!next)
+                next = ++p;
+        }
+
         rc = callback(count, buf, parameters);
         if (rc < 0)
             return rc;
@@ -953,6 +960,45 @@ void keyclick_click(bool rawbutton, int action)
 #endif
     }
 }
+
+/* Return the ReplayGain mode adjusted by other relevant settings */
+static int replaygain_setting_mode(int type)
+{
+    switch (type)
+    {
+    case REPLAYGAIN_SHUFFLE:
+        type = global_settings.playlist_shuffle ?
+            REPLAYGAIN_TRACK : REPLAYGAIN_ALBUM;
+    case REPLAYGAIN_ALBUM:
+    case REPLAYGAIN_TRACK:
+    case REPLAYGAIN_OFF:
+    default:
+        break;
+    }
+
+    return type;
+}
+
+/* Return the ReplayGain mode adjusted for display purposes */
+int id3_get_replaygain_mode(const struct mp3entry *id3)
+{
+    if (!id3)
+        return -1;
+
+    int type = global_settings.replaygain_settings.type;
+    type = replaygain_setting_mode(type);
+
+    return (type != REPLAYGAIN_TRACK && id3->album_gain != 0) ?
+        REPLAYGAIN_ALBUM : (id3->track_gain != 0 ? REPLAYGAIN_TRACK : -1);
+}
+
+/* Update DSP's replaygain from global settings */
+void replaygain_update(void)
+{
+    struct replaygain_settings settings = global_settings.replaygain_settings;
+    settings.type = replaygain_setting_mode(settings.type);
+    dsp_replaygain_set_settings(&settings);
+}
 #endif /* CONFIG_CODEC == SWCODEC */
 
 #endif /* !defined(__PCTOOL__) */
@@ -1027,6 +1073,37 @@ void format_time(char* buf, int buf_size, long t)
         snprintf(buf, buf_size, "%s%d:%02d:%02d", sign, hours, minutes,
                  seconds);
     }
+}
+
+/**
+ * Splits str at each occurence of split_char and puts the substrings into vector,
+ * but at most vector_lenght items. Empty substrings are ignored.
+ *
+ * Modifies str by replacing each split_char following a substring with nul
+ *
+ * Returns the number of substrings found, i.e. the number of valid strings
+ * in vector
+ */
+int split_string(char *str, const char split_char, char *vector[], const int vector_length)
+{
+    int i;
+    char *p = str;
+
+    /* skip leading splitters */
+    while(*p == split_char) p++;
+
+    /* *p in the condition takes care of trailing splitters */
+    for(i = 0; p && *p && i < vector_length; i++)
+    {
+        vector[i] = p;
+        if ((p = strchr(p, split_char)))
+        {
+            *p++ = '\0';
+            while(*p == split_char) p++; /* skip successive splitters */
+        }
+    }
+
+    return i;
 }
 
 

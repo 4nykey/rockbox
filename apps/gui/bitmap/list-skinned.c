@@ -20,13 +20,13 @@
  ****************************************************************************/
 
 #include "config.h"
+#include "system.h"
 #include "lcd.h"
 #include "font.h"
 #include "button.h"
 #include "string.h"
 #include "settings.h"
 #include "kernel.h"
-#include "system.h"
 #include "file.h"
 
 #include "action.h"
@@ -167,6 +167,20 @@ void skinlist_get_scrollbar(int* nb_item, int* first_shown, int* last_shown)
     }
 }
 
+bool skinlist_get_item(struct screen *display, struct gui_synclist *list, int x, int y, int *item)
+{
+    const int screen = display->screen_type;
+    if (!skinlist_is_configured(screen, list))
+        return false;
+
+    int row = y / listcfg[screen]->height;
+    int column = x / listcfg[screen]->width;
+    struct viewport *parent = (list->parent[screen]);
+    int cols = (parent->width / listcfg[screen]->width);
+    *item = row * cols+ column;
+    return true;
+}
+
 bool skinlist_draw(struct screen *display, struct gui_synclist *list)
 {
     int cur_line, display_lines;
@@ -177,6 +191,7 @@ bool skinlist_draw(struct screen *display, struct gui_synclist *list)
     struct gui_wps wps;
     if (!skinlist_is_configured(screen, list))
         return false;
+
     current_list = list;
     wps.display = display;
     wps.data = listcfg[screen]->data;
@@ -265,10 +280,6 @@ bool skinlist_draw(struct screen *display, struct gui_synclist *list)
     display->set_viewport(parent);
     display->update_viewport();
     current_drawing_line = list->selected_item;
-#if defined(HAVE_LCD_ENABLE) || defined(HAVE_LCD_SLEEP)
-    /* Abuse the callback to force the sbs to update */
-    send_event(LCD_EVENT_ACTIVATION, NULL);
-#endif
     return true;
 }
 

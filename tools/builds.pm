@@ -1,8 +1,8 @@
-$publicrelease="3.10";
-$manualrelease="3.10";
-$voicerelease="3.10";
-$releasedate="December 7, 2011";
-$releasenotes="/wiki/ReleaseNotes310";
+$publicrelease="3.11.2";
+$manualrelease="3.11.2";
+$voicerelease="3.11.2";
+$releasedate="April 12, 2012";
+$releasenotes="/wiki/ReleaseNotes3112";
 
 %builds = (
     'archosav300' => {
@@ -65,6 +65,14 @@ $releasenotes="/wiki/ReleaseNotes310";
         name => 'Philips GoGear SA9200',
         status => 2,
     },
+    'hifimanhm60x' => {
+        name => 'HiFiMAN HM-60x',
+        status => 2,
+    },
+    'hifimanhm801' => {
+        name => 'HiFiMAN HM-801',
+        status => 2,
+    },
     'iaudio7' => {
         name => 'iAudio 7',
         status => 1,
@@ -113,11 +121,15 @@ $releasenotes="/wiki/ReleaseNotes310";
     },
     'ipodnano2g' => {
         name => 'iPod Nano 2nd gen',
-        status => 3,
+        status => 2,
     },
     'ipodvideo' => {
         name => 'iPod Video',
         status => 3,
+    },
+    'ipod6g' => {
+        name => 'iPod 6th gen (Classic)',
+        status => 1,
     },
     'iriverh10' => {
         name => 'iriver H10 20GB',
@@ -171,7 +183,7 @@ $releasenotes="/wiki/ReleaseNotes310";
     },
     'mrobe100' => {
         name => 'Olympus M-Robe 100',
-        status => 3,
+        status => 2,
     },
     'mrobe500' => {
         name => 'Olympus M-Robe 500',
@@ -191,6 +203,10 @@ $releasenotes="/wiki/ReleaseNotes310";
     },
     'ondavx777' => {
         name => 'Onda VX777',
+        status => 1,
+    },
+    'rk27generic' => {
+        name => 'Rockchip rk27xx',
         status => 1,
     },
     'samsungyh820' => {
@@ -223,7 +239,7 @@ $releasenotes="/wiki/ReleaseNotes310";
     },
     'sansac200v2' => {
         name => 'SanDisk Sansa c200 v2',
-        status => 2,
+        status => 3,
         icon => 'sansac200',
     },
     'sansaclip' => {

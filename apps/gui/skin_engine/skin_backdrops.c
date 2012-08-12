@@ -60,7 +60,7 @@ static int buflib_move_callback(int handle, void* current, void* new)
         skin_backdrop_show(current_lcd_backdrop[i]);
     return BUFLIB_CB_OK;
 }
-static struct buflib_callbacks buflib_ops = {buflib_move_callback, NULL};
+static struct buflib_callbacks buflib_ops = {buflib_move_callback, NULL, NULL};
 static bool first_go = true;
 void skin_backdrop_init(void)
 {
@@ -245,7 +245,7 @@ void skin_backdrop_load_setting(void)
                     backdrops[i].buflib_handle =
                             core_alloc_ex(global_settings.backdrop_file,
                                         LCD_BACKDROP_BYTES, &buflib_ops);
-                    if (backdrops[i].buflib_handle < 0)
+                    if (backdrops[i].buflib_handle <= 0)
                         return;
                 }
                 bool loaded;
