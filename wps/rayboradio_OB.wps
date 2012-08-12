@@ -123,17 +123,17 @@
 #
 # Playing Track
 %Vl(a,172,49,143,15,1)%Vf(F58105)
-%t(6)%s%al%?it<%it|%fn>;%t(12)%al%?it<%it|%fn>
+%t(6)%s%al%?it<%?in<%in. >%it|%fn>;%t(12)%al%?it<%?in<%in. >%it|%fn>
 #
 # Artist, Album, extra info
 %Vl(a,155,66,160,15,1)%Vf(B5B5B5)
 %t(6)%al%?ia<%ia|%?d(2)<%d(2)|%(unknown artist%)>>;%t(6)%s%al%?ia<%ia|%?d(2)<%d(2)|%(unknown artist%)>>;%t(6)%al%?ia<%ia|%?d(2)<%d(2)|%(unknown artist%)>>
 %Vl(a,155,83,160,15,1)%Vf(B5B5B5)
-%t(12)%al%?id<%id|%?d(1)<%d(1)|%(unknown album%)>>;%t(6)%s%al%?id<%id|%?d(1)<%d(1)|%(unknown album%)>>
+%t(12)%al%?id<%id|%?d(1)<%d(1)|%(unknown album%)>>%?ik< %(%#%ik%)|>%?iy< [%iy]|>;%t(6)%s%al%?id<%id|%?d(1)<%d(1)|%(unknown album%)>>%?ik< %(%#%ik%)|>%?iy< [%iy]|>
 %Vl(a,155,113,160,15,1)%Vf(B5B5B5)
-%s%al%fc %?fv<~|>%fbkbps%?iy<  /  %iy |>
+%s%al%?pn<"%pn"|DPL> %#%pp/%pe%ar%pt
 %Vl(a,155,130,160,15,1)%Vf(B5B5B5)
-%t(9)%s%al%pp of %pe%?pn< in "%pn"|>;%t(9)%al%pp of %pe%?pn< in "%pn"|>
+%s%al%fc %?fv<~|>%fbk%ar%?rg<X|%rg|%rg|%rg|%rg|?>
 #
 # Next Song Icon
 %xl(N,nextSong.bmp,0,0)
@@ -156,9 +156,9 @@
 %Vl(n,10,83,300,15,1)%Vf(B5B5B5)
 %s%ac%?id<%id|%?d(1)<%d(1)|%(root%)>>%?ik< %(%#%ik%)|>%?iy< [%iy]|>
 %Vl(n,10,113,300,15,1)%Vf(B5B5B5)
-%s%al%?pn<"%pn"|DPL>: %#%pp/%pe%ar[%pt]
+%al%?pn<"%pn"|DPL>: %#%pp/%pe%ar[%px%% of %pt]
 %Vl(n,10,130,300,15,1)%Vf(B5B5B5)
-%s%al%fc: %?fv<~|>%fb kbps%ar[%?rg<RG Off|%rg|%rg|%rg|%rg|No Tag>]
+%al%fc: %?fv<~|>%fbkbps %ffHz%ar[%?rg<RG Off|%rg|%rg|%rg|%rg|No Tag>]
 %Vl(n,10,147,300,15,1)%Vf(F58105)
 %s%ac>>> %?It<%It|%Fn>
 %Vl(n,10,164,300,15,1)%Vf(B5B5B5)
