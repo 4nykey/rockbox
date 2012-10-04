@@ -7,77 +7,77 @@
         <location filename="../gui/backupdialogfrm.ui" line="14"/>
         <location filename="../gui/backupdialogfrm.ui" line="40"/>
         <source>Backup</source>
-        <translation type="unfinished">Sauvegarde</translation>
+        <translation>Sauvegarde</translation>
     </message>
     <message>
         <location filename="../gui/backupdialogfrm.ui" line="30"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This dialog will create a backup by archiving the contents of the Rockbox installation on the player into a zip file. This will include installed themes and settings stored below the .rockbox folder on the player.&lt;/p&gt;&lt;p&gt;The backup filename will be created based on the installed version. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cette fenêtre va créer une sauvegarde de votre installation de Rockbox en archivant le contenu du lecteur dans un fichier zip. Ceci inclut les thèmes installés ainsi que les fichiers de configuration stockés sous le répertoire .rocbox du lecteur.&lt;/p&gt;&lt;p&gt;Le nom du fichier de sauvegarde sera généré à partir de la version installée.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../gui/backupdialogfrm.ui" line="46"/>
         <source>Size: unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille: inconnue</translation>
     </message>
     <message>
         <location filename="../gui/backupdialogfrm.ui" line="53"/>
         <source>Backup to: unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarde sous: inconnu</translation>
     </message>
     <message>
         <location filename="../gui/backupdialogfrm.ui" line="73"/>
         <source>&amp;Change</source>
-        <translation type="unfinished">&amp;Modifier</translation>
+        <translation>&amp;Modifier</translation>
     </message>
     <message>
         <location filename="../gui/backupdialogfrm.ui" line="113"/>
         <source>&amp;Backup</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sauvegarder</translation>
     </message>
     <message>
         <location filename="../gui/backupdialogfrm.ui" line="124"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Annuler</translation>
+        <translation>&amp;Annuler</translation>
     </message>
     <message>
         <location filename="../gui/backupdialog.cpp" line="66"/>
         <source>Installation size: calculating ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille de l&apos;installation: calcul en cours...</translation>
     </message>
     <message>
         <location filename="../gui/backupdialog.cpp" line="85"/>
         <source>Select Backup Filename</source>
-        <translation type="unfinished">Sélectionnez un fichier de sauvegarde</translation>
+        <translation>Sélectionnez un fichier de sauvegarde</translation>
     </message>
     <message>
         <location filename="../gui/backupdialog.cpp" line="105"/>
         <source>Installation size: %L1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille de l&apos;installation: %L1 %2</translation>
     </message>
     <message>
         <location filename="../gui/backupdialog.cpp" line="112"/>
         <source>File exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier existant</translation>
     </message>
     <message>
         <location filename="../gui/backupdialog.cpp" line="113"/>
         <source>The selected backup file already exists. Overwrite?</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier sélectionné existe déjà. Voulez-vous vraiment l&apos;écraser ?</translation>
     </message>
     <message>
         <location filename="../gui/backupdialog.cpp" line="121"/>
         <source>Starting backup ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrage de la sauvegarder...</translation>
     </message>
     <message>
         <location filename="../gui/backupdialog.cpp" line="140"/>
         <source>Backup successful.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarde effectuée avec succès.</translation>
     </message>
     <message>
         <location filename="../gui/backupdialog.cpp" line="143"/>
         <source>Backup failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>La sauvegarde a échoué !</translation>
     </message>
 </context>
 <context>
@@ -85,7 +85,7 @@
     <message>
         <location filename="../base/bootloaderinstallams.cpp" line="32"/>
         <source>Bootloader installation requires you to provide a copy of the original Sandisk firmware (bin file). This firmware file will be patched and then installed to your player along with the rockbox bootloader. You need to download this file yourself due to legal reasons. Please browse the &lt;a href=&apos;http://forums.sandisk.com/sansa/&apos;&gt;Sansa Forums&apos;&lt;/a&gt; or refer to the &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;manual&lt;/a&gt; and the &lt;a href=&apos;http://www.rockbox.org/wiki/SansaAMS&apos;&gt;SansaAMS&lt;/a&gt; wiki page on how to obtain this file.&lt;br/&gt;Press Ok to continue and browse your computer for the firmware file.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;installation du bootloader nécessite que vous fournissiez une copie du firmware original (fichier bin). Ce firmware sera alors modifié et installé sur votre lecteur avec le bootloader de Rockbox. Vous devez télécharger ce fichier par vous-même pour des raisons légales. Veuillez vous référer au &lt;a href=&apos;http://forums.sandisk.com/sansa/&apos;&gt;Forums de Sansa&lt;/a&gt; ou au &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;manuel&lt;/a&gt; et à la page wiki &lt;a href=&apos;http://www.rockbox.org/wiki/SansaAMS&apos;&gt;SansaAMS&lt;/a&gt; pour obtenir ce fichier.&lt;br/&gt;Appuyez sur Ok pour continuer et parcourir les fichiers sur votre ordinateur pour indiquer le fichier du firmware.</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallams.cpp" line="55"/>
@@ -101,7 +101,7 @@
     <message>
         <location filename="../base/bootloaderinstallams.cpp" line="124"/>
         <source>No room to insert bootloader, try another firmware version</source>
-        <translation type="unfinished">Il n&apos;y a pas assez d&apos;espace pour insérer le bootloader, veuillez essayer une autre version du firmware</translation>
+        <translation>Il n&apos;y a pas assez d&apos;espace pour insérer le bootloader, veuillez essayer une autre version du firmware</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallams.cpp" line="134"/>
@@ -179,27 +179,27 @@
     <message>
         <location filename="../base/bootloaderinstallbase.cpp" line="221"/>
         <source>Zip file format detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier au format zip détecté</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallbase.cpp" line="234"/>
         <source>Extracting firmware %1 from archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Extraction du firmware %1 depuis l&apos;archive</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallbase.cpp" line="241"/>
         <source>Error extracting firmware from archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur lors de l&apos;extraction du firmware depuis l&apos;archive</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallbase.cpp" line="250"/>
         <source>Could not find firmware in archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver le firmware original dans l&apos;archive</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallbase.cpp" line="157"/>
         <source>Waiting for system to remount player</source>
-        <translation type="unfinished">Attend que le système ait remonté le périphérique audio</translation>
+        <translation>Attend que le système ait remonté le lecteur</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallbase.cpp" line="187"/>
@@ -222,7 +222,7 @@
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="33"/>
         <source>Bootloader installation requires you to provide a firmware file of the original firmware (HXF file). You need to download this file yourself due to legal reasons. Please refer to the &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;manual&lt;/a&gt; and the &lt;a href=&apos;http://www.rockbox.org/wiki/OndaVX747#Download_and_extract_a_recent_ve&apos;&gt;OndaVX747&lt;/a&gt; wiki page on how to obtain this file.&lt;br/&gt;Press Ok to continue and browse your computer for the firmware file.</source>
-        <translation type="unfinished">L&apos;installation du bootloader nécessite que vous fournissiez un fichier contenant le firmware original (fichier HXF). Vous devez télécharger ce fichier par vous-même pour des raisons légales. Veuillez consulter le &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;manuel&lt;/a&gt; ou la page wiki &lt;a href=&apos;http://www.rockbox.org/wiki/OndaVX747#Download_and_extract_a_recent_ve&apos;&gt;OndaVX747&lt;/a&gt; pour savoir comment obtenir ce fichier.&lt;br/&gt;Appuyez sur Ok pour continuer et parcourir les fichiers de votre ordinateur pour selectionner le fichier du firmware.</translation>
+        <translation>L&apos;installation du bootloader nécessite que vous fournissiez un fichier contenant le firmware original (fichier HXF). Vous devez télécharger ce fichier par vous-même pour des raisons légales. Veuillez consulter le &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;manuel&lt;/a&gt; ou la page wiki &lt;a href=&apos;http://www.rockbox.org/wiki/OndaVX747#Download_and_extract_a_recent_ve&apos;&gt;OndaVX747&lt;/a&gt; pour savoir comment obtenir ce fichier.&lt;br/&gt;Appuyez sur Ok pour continuer et parcourir les fichiers de votre ordinateur pour selectionner le fichier du firmware.</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="50"/>
@@ -232,67 +232,67 @@
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="75"/>
         <source>Could not open firmware file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir le fichier du firmware</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="78"/>
         <source>Could not open bootloader file</source>
-        <translation type="unfinished"></translation>
+        <translation>impossible d&apos;ouvrir le fichier du bootloader</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="81"/>
         <source>Could not allocate memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;allouer de la mémoire</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="84"/>
         <source>Could not load firmware file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de charger le fichier du firmware</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="87"/>
         <source>File is not a valid ChinaChip firmware</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce fichier n&apos;est un firmware ChinaChip valide</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="90"/>
         <source>Could not find ccpmp.bin in input file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver ccpmp.bin dans le fichier d&apos;entrée</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="93"/>
         <source>Could not open backup file for ccpmp.bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir le fichier de sauvegarder de ccpmp.bin</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="96"/>
         <source>Could not write backup file for ccpmp.bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire le fichier de sauvegarde de ccpmp.bin</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="99"/>
         <source>Could not load bootloader file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de charger le fichier du bootloader</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="102"/>
         <source>Could not get current time</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;obtenir l&apos;heure actuelle</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="105"/>
         <source>Could not open output file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir le fichier de sortie</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="108"/>
         <source>Could not write output file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;écrire le fichier de sortie</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="111"/>
         <source>Unexpected error from chinachippatcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur inattendue retournée par chinachippatcher</translation>
     </message>
 </context>
 <context>
@@ -310,12 +310,12 @@
     <message>
         <location filename="../base/bootloaderinstallfile.cpp" line="74"/>
         <source>Error accessing output folder</source>
-        <translation type="unfinished">Erreur lors de l&apos;accès au dossier de sortie</translation>
+        <translation>Erreur lors de l&apos;accès au dossier de sortie</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallfile.cpp" line="88"/>
         <source>A firmware file is already present on player</source>
-        <translation type="unfinished"></translation>
+        <translation>Un fichier contenant le firmware est déjà présent sur le lecteur</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallfile.cpp" line="93"/>
@@ -325,7 +325,7 @@
     <message>
         <location filename="../base/bootloaderinstallfile.cpp" line="96"/>
         <source>Copying modified firmware file failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur lors de la copie du firmware modifié</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallfile.cpp" line="110"/>
@@ -458,7 +458,7 @@
     <message>
         <location filename="../base/bootloaderinstallhex.cpp" line="214"/>
         <source>A firmware file is already present on player</source>
-        <translation type="unfinished"></translation>
+        <translation>Un fichier contenant le firmware est déjà présent sur le lecteur</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhex.cpp" line="219"/>
@@ -468,7 +468,7 @@
     <message>
         <location filename="../base/bootloaderinstallhex.cpp" line="222"/>
         <source>Copying modified firmware file failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur lors de la copie du firmware modifié</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhex.cpp" line="236"/>
@@ -531,47 +531,47 @@
     <message>
         <location filename="../base/bootloaderinstallimx.cpp" line="70"/>
         <source>Bootloader installation requires you to provide a copy of the original Sandisk firmware (firmware.sb file). This file will be patched with the Rockbox bootloader and installed to your player. You need to download this file yourself due to legal reasons. Please browse the &lt;a href=&apos;http://forums.sandisk.com/sansa/&apos;&gt;Sansa Forums&lt;/a&gt; or refer to the &lt;a href= &apos;http://www.rockbox.org/wiki/SansaFuzePlus&apos;&gt;SansaFuzePlus&lt;/a&gt; wiki page on how to obtain this file.&lt;br/&gt;Press Ok to continue and browse your computer for the firmware file.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;installation du bootloader nécessite que vous fournissiez une copie du firmware original de Sandisk (fichier firmware.sb). Ce firmware sera alors modifié et installé sur votre lecteur avec le bootloader de Rockbox. Vous devez télécharger ce fichier par vous-même pour des raisons légales. Veuillez vous référer au &lt;a href=&apos;http://forums.sandisk.com/sansa/&apos;&gt;Forums de Sansa&lt;/a&gt; ou à la page wiki &lt;a href=&apos;http://www.rockbox.org/wiki/SansaFuzePlus&apos;&gt;SansaFuzePlus&lt;/a&gt; pour obtenir ce fichier.&lt;br/&gt;Appuyez sur Ok pour continuer et parcourir les fichiers sur votre ordinateur pour indiquer le fichier du firmware.</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallimx.cpp" line="92"/>
         <source>Could not read original firmware file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lire le fichier du firmware original</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallimx.cpp" line="98"/>
         <source>Downloading bootloader file</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléchargement du bootloader</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallimx.cpp" line="108"/>
         <source>Patching file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Modification du firmware...</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallimx.cpp" line="135"/>
         <source>Patching the original firmware failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur lors de la modification du firmware</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallimx.cpp" line="141"/>
         <source>Succesfully patched firmware file</source>
-        <translation type="unfinished"></translation>
+        <translation>Le firmware a été modifié avec succès</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallimx.cpp" line="156"/>
         <source>Bootloader successful installed</source>
-        <translation type="unfinished">Le bootloader a été installé avec succès</translation>
+        <translation>Le bootloader a été installé avec succès</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallimx.cpp" line="162"/>
         <source>Patched bootloader could not be installed</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;installation du bootloader modifié a échouée</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallimx.cpp" line="173"/>
         <source>To uninstall, perform a normal upgrade with an unmodified original firmware.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pour le désinstaller, faites une mise à jour normale avec un firmware non modifié.</translation>
     </message>
 </context>
 <context>
@@ -703,7 +703,7 @@ Veuillez vous référer à http://www.rockbox.org/wiki/IpodConversionToFAT32</tr
     <message>
         <location filename="../base/bootloaderinstallmi4.cpp" line="65"/>
         <source>A firmware file is already present on player</source>
-        <translation type="unfinished"></translation>
+        <translation>Un fichier contenant le firmware est déjà présent sur le lecteur</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallmi4.cpp" line="70"/>
@@ -714,7 +714,7 @@ Veuillez vous référer à http://www.rockbox.org/wiki/IpodConversionToFAT32</tr
     <message>
         <location filename="../base/bootloaderinstallmi4.cpp" line="73"/>
         <source>Copying modified firmware file failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur lors de la copie du firmware modifié</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallmi4.cpp" line="90"/>
@@ -1040,13 +1040,13 @@ Rockbox ne peut fonctionner que sur un Ipod utilisant le système de fichier FAT
         <source>%1 in MTP mode found!
 You need to change your player to MSC mode for installation. </source>
         <translatorcomment>Pour effectuer l&apos;installation, il est nécessaire de mettre votre lecteur audio en mode MSC </translatorcomment>
-        <translation type="unfinished">%1 est en mode MTP!
+        <translation>%1 est en mode MTP!
 Pour effectuer l&apos;installation, il est nécessaire de mettre votre lecteur audio en mode MSC.</translation>
     </message>
     <message>
         <location filename="../configure.cpp" line="753"/>
         <source>Until you change this installation will fail!</source>
-        <translation type="unfinished">Cette installation échouera tant que vous n&apos;aurez pas modifié cela!</translation>
+        <translation>Cette installation échouera tant que vous n&apos;aurez pas modifié cela!</translation>
     </message>
     <message>
         <location filename="../configure.cpp" line="760"/>
@@ -1253,7 +1253,7 @@ Veuillez configurer le moteur TTS.</translation>
     <message>
         <location filename="../configurefrm.ui" line="58"/>
         <source>&amp;Refresh</source>
-        <translation type="unfinished">&amp;Rafraîchir</translation>
+        <translation>&amp;Rafraîchir</translation>
     </message>
     <message>
         <location filename="../configurefrm.ui" line="114"/>
@@ -1263,7 +1263,7 @@ Veuillez configurer le moteur TTS.</translation>
     <message>
         <location filename="../configurefrm.ui" line="136"/>
         <source>&amp;Proxy</source>
-        <translation type="unfinished">P&amp;roxy</translation>
+        <translation>P&amp;roxy</translation>
     </message>
     <message>
         <location filename="../configurefrm.ui" line="142"/>
@@ -1381,7 +1381,7 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
     <message>
         <location filename="../configurefrm.ui" line="455"/>
         <source>&amp;Use string corrections for TTS</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Utiliser la correction des phrases pour TTS</translation>
     </message>
     <message>
         <location filename="../configurefrm.ui" line="465"/>
@@ -1411,7 +1411,7 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
     <message>
         <location filename="../configurefrm.ui" line="152"/>
         <source>Use S&amp;ystem values</source>
-        <translation type="unfinished">Utiliser les &amp;valeurs système</translation>
+        <translation>Utiliser les &amp;valeurs système</translation>
     </message>
     <message>
         <location filename="../configurefrm.ui" line="420"/>
@@ -1459,12 +1459,12 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
     <message>
         <location filename="../createvoicefrm.ui" line="55"/>
         <source>TTS:</source>
-        <translation type="unfinished"></translation>
+        <translation>TTS:</translation>
     </message>
     <message>
         <location filename="../createvoicefrm.ui" line="101"/>
         <source>Silence threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de silence</translation>
     </message>
     <message>
         <location filename="../createvoicefrm.ui" line="163"/>
@@ -1503,7 +1503,7 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
         <location filename="../createvoicewindow.cpp" line="97"/>
         <location filename="../createvoicewindow.cpp" line="100"/>
         <source>Engine: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Moteur: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -1544,12 +1544,12 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
     <message>
         <location filename="../base/encoderexe.cpp" line="40"/>
         <source>Path to Encoder:</source>
-        <translation type="unfinished">Chemin vers le moteur d&apos;encodage:</translation>
+        <translation>Chemin vers le moteur d&apos;encodage:</translation>
     </message>
     <message>
         <location filename="../base/encoderexe.cpp" line="42"/>
         <source>Encoder options:</source>
-        <translation type="unfinished">Options du moteur d&apos;encodage:</translation>
+        <translation>Options du moteur d&apos;encodage:</translation>
     </message>
 </context>
 <context>
@@ -1558,22 +1558,22 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
         <location filename="../base/encoderlame.cpp" line="72"/>
         <location filename="../base/encoderlame.cpp" line="82"/>
         <source>LAME</source>
-        <translation type="unfinished"></translation>
+        <translation>LAME</translation>
     </message>
     <message>
         <location filename="../base/encoderlame.cpp" line="74"/>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume</translation>
     </message>
     <message>
         <location filename="../base/encoderlame.cpp" line="78"/>
         <source>Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Qualité</translation>
     </message>
     <message>
         <location filename="../base/encoderlame.cpp" line="82"/>
         <source>Could not find libmp3lame!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver libmp3lame !</translation>
     </message>
 </context>
 <context>
@@ -1581,22 +1581,22 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
     <message>
         <location filename="../base/encoderrbspeex.cpp" line="33"/>
         <source>Volume:</source>
-        <translation type="unfinished">Volume:</translation>
+        <translation>Volume:</translation>
     </message>
     <message>
         <location filename="../base/encoderrbspeex.cpp" line="35"/>
         <source>Quality:</source>
-        <translation type="unfinished">Qualité:</translation>
+        <translation>Qualité:</translation>
     </message>
     <message>
         <location filename="../base/encoderrbspeex.cpp" line="37"/>
         <source>Complexity:</source>
-        <translation type="unfinished">Complexité:</translation>
+        <translation>Complexité:</translation>
     </message>
     <message>
         <location filename="../base/encoderrbspeex.cpp" line="39"/>
         <source>Use Narrowband:</source>
-        <translation type="unfinished">Utiliser le bas débit:</translation>
+        <translation>Utiliser le bas débit:</translation>
     </message>
 </context>
 <context>
@@ -1605,13 +1605,13 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
         <location filename="../gui/infowidget.cpp" line="29"/>
         <location filename="../gui/infowidget.cpp" line="106"/>
         <source>File</source>
-        <translation type="unfinished">Fichier</translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="../gui/infowidget.cpp" line="29"/>
         <location filename="../gui/infowidget.cpp" line="106"/>
         <source>Version</source>
-        <translation type="unfinished">Version</translation>
+        <translation>Version</translation>
     </message>
 </context>
 <context>
@@ -1619,17 +1619,17 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
     <message>
         <location filename="../gui/infowidgetfrm.ui" line="14"/>
         <source>Info</source>
-        <translation type="unfinished">Information</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <location filename="../gui/infowidgetfrm.ui" line="20"/>
         <source>Currently installed packages.&lt;br/&gt;&lt;b&gt;Note:&lt;/b&gt; if you manually installed packages this might not be correct!</source>
-        <translation type="unfinished">Paquets actuellement installés.&lt;br/&gt;&lt;b&gt;Note:&lt;/b&gt;Si vous avez installé manuellement des paquets, ceci ne sera peut-être pas correct !</translation>
+        <translation>Paquets actuellement installés.&lt;br/&gt;&lt;b&gt;Note:&lt;/b&gt;Si vous avez installé manuellement des paquets, ceci ne sera peut-être pas correct !</translation>
     </message>
     <message>
         <location filename="../gui/infowidgetfrm.ui" line="34"/>
         <source>Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Paquet</translation>
     </message>
 </context>
 <context>
@@ -1667,17 +1667,17 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
     <message>
         <location filename="../installtalkfrm.ui" line="52"/>
         <source>Generate for files</source>
-        <translation type="unfinished"></translation>
+        <translation>Générer pour les fichiers</translation>
     </message>
     <message>
         <location filename="../installtalkfrm.ui" line="85"/>
         <source>Generate for folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Générer pour les dossiers</translation>
     </message>
     <message>
         <location filename="../installtalkfrm.ui" line="95"/>
         <source>Recurse into folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorer l&apos;arborescence</translation>
     </message>
     <message>
         <location filename="../installtalkfrm.ui" line="111"/>
@@ -1687,17 +1687,17 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
     <message>
         <location filename="../installtalkfrm.ui" line="118"/>
         <source>Ignore files</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorer les fichiers</translation>
     </message>
     <message>
         <location filename="../installtalkfrm.ui" line="128"/>
         <source>Skip existing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorer les existants</translation>
     </message>
     <message>
         <location filename="../installtalkfrm.ui" line="170"/>
         <source>Select folders for Talkfile generation (Ctrl for multiselect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez les dossiers pour la génération des fichiers de voix (Ctrl pour en sélectionner plusieurs)</translation>
     </message>
 </context>
 <context>
@@ -1706,7 +1706,7 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
         <location filename="../installtalkwindow.cpp" line="126"/>
         <location filename="../installtalkwindow.cpp" line="129"/>
         <source>&lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -1714,32 +1714,32 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
     <message>
         <location filename="../gui/manualwidget.cpp" line="40"/>
         <source>&lt;a href=&apos;%1&apos;&gt;PDF Manual&lt;/a&gt;</source>
-        <translation type="unfinished">&lt;a href=&apos;%1&apos;&gt;Manuel PDF&lt;/a&gt;</translation>
+        <translation>&lt;a href=&apos;%1&apos;&gt;Manuel PDF&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../gui/manualwidget.cpp" line="42"/>
         <source>&lt;a href=&apos;%1&apos;&gt;HTML Manual (opens in browser)&lt;/a&gt;</source>
-        <translation type="unfinished">&lt;a href=&apos;%1&apos;&gt;Manuel HTML (ouvre un navigateur)&lt;/a&gt;</translation>
+        <translation>&lt;a href=&apos;%1&apos;&gt;Manuel HTML (ouvre un navigateur)&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../gui/manualwidget.cpp" line="46"/>
         <source>Select a device for a link to the correct manual</source>
-        <translation type="unfinished">Sélectionnez un périphérique pour obtenir un lien vers le manuel approprié</translation>
+        <translation>Sélectionnez un périphérique pour obtenir un lien vers le manuel approprié</translation>
     </message>
     <message>
         <location filename="../gui/manualwidget.cpp" line="47"/>
         <source>&lt;a href=&apos;%1&apos;&gt;Manual Overview&lt;/a&gt;</source>
-        <translation type="unfinished">&lt;a href=&apos;%1&apos;&gt;Tous les manuels&lt;/a&gt;</translation>
+        <translation>&lt;a href=&apos;%1&apos;&gt;Tous les manuels&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../gui/manualwidget.cpp" line="58"/>
         <source>Confirm download</source>
-        <translation type="unfinished">Confirmation du téléchargement</translation>
+        <translation>Confirmation du téléchargement</translation>
     </message>
     <message>
         <location filename="../gui/manualwidget.cpp" line="59"/>
         <source>Do you really want to download the manual? The manual will be saved to the root folder of your player.</source>
-        <translation type="unfinished">Etes-vous sûr de vouloir télécharger le manuel ? Il sera sauvegardé dans le dossier racine de votre lecteur audio.</translation>
+        <translation>Etes-vous sûr de vouloir télécharger le manuel ? Il sera sauvegardé dans le dossier racine de votre lecteur audio.</translation>
     </message>
 </context>
 <context>
@@ -1747,42 +1747,42 @@ pour télécharger tous les fichiers néecessaires dans le cache.&lt;/p&gt;</tra
     <message>
         <location filename="../gui/manualwidgetfrm.ui" line="14"/>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Manuel</translation>
     </message>
     <message>
         <location filename="../gui/manualwidgetfrm.ui" line="20"/>
         <source>Read the manual</source>
-        <translation type="unfinished">Lire le manuel</translation>
+        <translation>Lire le manuel</translation>
     </message>
     <message>
         <location filename="../gui/manualwidgetfrm.ui" line="26"/>
         <source>PDF manual</source>
-        <translation type="unfinished">Manuel PDF</translation>
+        <translation>Manuel PDF</translation>
     </message>
     <message>
         <location filename="../gui/manualwidgetfrm.ui" line="39"/>
         <source>HTML manual</source>
-        <translation type="unfinished">Manuel HTML</translation>
+        <translation>Manuel HTML</translation>
     </message>
     <message>
         <location filename="../gui/manualwidgetfrm.ui" line="55"/>
         <source>Download the manual</source>
-        <translation type="unfinished">Télécharger le manuel</translation>
+        <translation>Télécharger le manuel</translation>
     </message>
     <message>
         <location filename="../gui/manualwidgetfrm.ui" line="63"/>
         <source>&amp;PDF version</source>
-        <translation type="unfinished">Version &amp;PDF</translation>
+        <translation>Version &amp;PDF</translation>
     </message>
     <message>
         <location filename="../gui/manualwidgetfrm.ui" line="70"/>
         <source>&amp;HTML version (zip file)</source>
-        <translation type="unfinished">Version &amp;HTML (fichier zip)</translation>
+        <translation>Version &amp;HTML (fichier zip)</translation>
     </message>
     <message>
         <location filename="../gui/manualwidgetfrm.ui" line="92"/>
         <source>Down&amp;load</source>
-        <translation type="unfinished">Télé&amp;charger</translation>
+        <translation>Télé&amp;charger</translation>
     </message>
 </context>
 <context>
@@ -1850,52 +1850,52 @@ This string is used to indicate the writing direction. Translate it to &quot;RTL
         <location filename="../base/system.cpp" line="384"/>
         <source>(unknown vendor name) </source>
         <translatorcomment>Je suppose que le nom du vendeur est l&apos;équivalent de la marque... nom du vendeur serait bizarre...</translatorcomment>
-        <translation type="unfinished">Marque du produit inconnue</translation>
+        <translation>(Marque du produit inconnue)</translation>
     </message>
     <message>
         <location filename="../base/system.cpp" line="402"/>
         <source>(unknown product name)</source>
-        <translation type="unfinished">Nom du produit inconnu</translation>
+        <translation>(Nom du produit inconnu)</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="80"/>
         <source>Bootloader installation is almost complete. Installation &lt;b&gt;requires&lt;/b&gt; you to perform the following steps manually:</source>
-        <translation type="unfinished">L&apos;installation du bootloader est presque complète. Vous &lt;b&gt;devez&lt;/b&gt; réaliser les étapes suivantes manuellement:</translation>
+        <translation>L&apos;installation du bootloader est presque complète. Vous &lt;b&gt;devez&lt;/b&gt; réaliser les étapes suivantes manuellement:</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="86"/>
         <source>&lt;li&gt;Safely remove your player.&lt;/li&gt;</source>
-        <translation type="unfinished">&lt;li&gt;Débranchez votre lecteur audio en toute sécurité.&lt;/li&gt;</translation>
+        <translation>&lt;li&gt;Débranchez votre lecteur audio en toute sécurité.&lt;/li&gt;</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="91"/>
         <source>&lt;li&gt;Reboot your player into the original firmware.&lt;/li&gt;&lt;li&gt;Perform a firmware upgrade using the update functionality of the original firmware. Please refer to your player&apos;s manual on details.&lt;br/&gt;&lt;b&gt;Important:&lt;/b&gt; updating the firmware is a critical process that must not be interrupted. &lt;b&gt;Make sure the player is charged before starting the firmware update process.&lt;/b&gt;&lt;/li&gt;&lt;li&gt;After the firmware has been updated reboot your player.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;Redémarrez votre lecteur audio dans le firmware original.&lt;/li&gt;&lt;li&gt;Faites une mise à jour du logiciel en utilisant la fonctionnalité du firmware original. Veuillez vous référer au manuel du lecteur pour plus de détails.&lt;br/&gt;&lt;b&gt;Note importante:&lt;/b&gt;la mise à jour du logiciel est une étape critique qui ne doit en aucun cas être interrompue. &lt;b&gt;Assurez-vous que votre lecteur audio est rechargé avant de lancer une mise à jour.&lt;/b&gt;&lt;/li&gt;&lt;li&gt;Une fois la mise à jour effectuée, redémarrez votre lecteur audio.&lt;/li&gt;</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="102"/>
         <source>&lt;li&gt;Remove any previously inserted microSD card&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;Retirez toute card microSD insérée&lt;/li&gt;</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="103"/>
         <source>&lt;li&gt;Disconnect your player. The player will reboot and perform an update of the original firmware. Please refer to your players manual on details.&lt;br/&gt;&lt;b&gt;Important:&lt;/b&gt; updating the firmware is a critical process that must not be interrupted. &lt;b&gt;Make sure the player is charged before disconnecting the player.&lt;/b&gt;&lt;/li&gt;&lt;li&gt;After the firmware has been updated reboot your player.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;Déconnectez votre lecteur audio. Celui-ci va redémarrer et faire une mise à jour du logiciel. Veuillez vous référer au manuel du lecteur pour plus de détails.&lt;br/&gt;&lt;b&gt;Note importante:&lt;/b&gt; la mise à jour du logiciel est une étape critique qui ne doit en aucun cas être interrompue. &lt;b&gt;Assurez-vous que votre lecteur est rechargé avant de le déconnecter.&lt;/b&gt;&lt;/li&gt;&lt;li&gt;Une fois la mise à jour effectuée, redémarrez votre lecteur.&lt;/li&gt;</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="114"/>
         <source>&lt;li&gt;Turn the player off&lt;/li&gt;&lt;li&gt;Insert the charger&lt;/li&gt;</source>
-        <translation type="unfinished">&lt;li&gt;Éteignez votre lecteur audio&lt;/li&gt;&lt;li&gt;Insérer le chargeur&lt;/li&gt;</translation>
+        <translation>&lt;li&gt;Éteignez votre lecteur audio&lt;/li&gt;&lt;li&gt;Insérer le chargeur&lt;/li&gt;</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="119"/>
         <source>&lt;li&gt;Unplug USB and power adaptors&lt;/li&gt;&lt;li&gt;Hold &lt;i&gt;Power&lt;/i&gt; to turn the player off&lt;/li&gt;&lt;li&gt;Toggle the battery switch on the player&lt;/li&gt;&lt;li&gt;Hold &lt;i&gt;Power&lt;/i&gt; to boot into Rockbox&lt;/li&gt;</source>
-        <translation type="unfinished">Débranchez le cable USB et celui d&apos;alimentation&lt;/li&gt;&lt;li&gt;Maintenez le &lt;i&gt;Bouton d&apos;alimentation&lt;/i&gt; pressé pour éteindre le lecteur&lt;/li&gt;&lt;li&gt;Basculez l&apos;interrupteur&lt;/li&gt;&lt;li&gt;Maintenez le &lt;i&gt;Bouton d&apos;alimentation&lt;/i&gt; pressé pour démarrer Rockbox&lt;/li&gt;</translation>
+        <translation>Débranchez le cable USB et celui d&apos;alimentation&lt;/li&gt;&lt;li&gt;Maintenez le &lt;i&gt;Bouton d&apos;alimentation&lt;/i&gt; pressé pour éteindre le lecteur&lt;/li&gt;&lt;li&gt;Basculez l&apos;interrupteur&lt;/li&gt;&lt;li&gt;Maintenez le &lt;i&gt;Bouton d&apos;alimentation&lt;/i&gt; pressé pour démarrer Rockbox&lt;/li&gt;</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="125"/>
         <source>&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; You can safely install other parts first, but the above steps are &lt;b&gt;required&lt;/b&gt; to finish the installation!&lt;/p&gt;</source>
-        <translation type="unfinished">&lt;p&gt;&lt;b&gt;Remarque:&lt;/b&gt; Vous pouvez commencer par installer d&apos;autres parties de Rockbox, mais n&apos;oubliez pas que les étapes suivantes sont &lt;b&gt;nécessaire&lt;/b&gt; pour finir l&apos;installation !&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;&lt;b&gt;Remarque:&lt;/b&gt; Vous pouvez commencer par installer d&apos;autres parties de Rockbox, mais n&apos;oubliez pas que les étapes suivantes sont &lt;b&gt;nécessaire&lt;/b&gt; pour finir l&apos;installation !&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1903,7 +1903,7 @@ This string is used to indicate the writing direction. Translate it to &quot;RTL
     <message>
         <location filename="../quazip/quazipfile.cpp" line="141"/>
         <source>ZIP/UNZIP API error %1</source>
-        <translation type="unfinished">Erreur de l&apos;API ZIP/UNZIP : %1</translation>
+        <translation>Erreur de l&apos;API ZIP/UNZIP : %1</translation>
     </message>
 </context>
 <context>
@@ -1951,12 +1951,12 @@ This string is used to indicate the writing direction. Translate it to &quot;RTL
     <message>
         <location filename="../rbutilqt.cpp" line="423"/>
         <source>No voice file available</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun fichier de voix disponible</translation>
     </message>
     <message>
         <location filename="../rbutilqt.cpp" line="424"/>
         <source>The installed version of Rockbox is a development version. Pre-built voices are only available for release versions of Rockbox. Please generate a voice yourself using the &quot;Create voice file&quot; functionality.</source>
-        <translation type="unfinished"></translation>
+        <translation>La version de Rockbox installée est une version de dévelopement. Des fichiers de voix précalculés sont uniquement disponible pour les versions stables de Rockbox. Veuillez générer des fichiers de voix en utilisant la fonctionnalité &quot;Création de fichiers de voix&quot;.</translation>
     </message>
     <message>
         <location filename="../rbutilqt.cpp" line="496"/>
@@ -1981,7 +1981,7 @@ This string is used to indicate the writing direction. Translate it to &quot;RTL
     <message>
         <location filename="../rbutilqt.cpp" line="534"/>
         <source>No Rockbox bootloader found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le bootloader de Rockbox n&apos;a pas été trouvé.</translation>
     </message>
     <message>
         <location filename="../rbutilqt.cpp" line="552"/>
@@ -2165,22 +2165,22 @@ Erreur réseau: %1. Veuillez vérifier vos paramètres réseau et proxy.</transl
     <message>
         <location filename="../rbutilqtfrm.ui" line="37"/>
         <source>mountpoint unknown or invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>point de montage inconnu ou invalide</translation>
     </message>
     <message>
         <location filename="../rbutilqtfrm.ui" line="44"/>
         <source>Mountpoint:</source>
-        <translation type="unfinished"></translation>
+        <translation>Point de montage:</translation>
     </message>
     <message>
         <location filename="../rbutilqtfrm.ui" line="51"/>
         <source>device unknown or invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>périphérique inconnu ou invalide</translation>
     </message>
     <message>
         <location filename="../rbutilqtfrm.ui" line="64"/>
         <source>Device:</source>
-        <translation type="unfinished"></translation>
+        <translation>Périphérique:</translation>
     </message>
     <message>
         <location filename="../rbutilqtfrm.ui" line="269"/>
@@ -2317,7 +2317,7 @@ Erreur réseau: %1. Veuillez vérifier vos paramètres réseau et proxy.</transl
     <message>
         <location filename="../rbutilqtfrm.ui" line="260"/>
         <source>Backup &amp;&amp; &amp;Uninstallation</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarde &amp;&amp; &amp;Désinstallation</translation>
     </message>
     <message>
         <location filename="../rbutilqtfrm.ui" line="286"/>
@@ -2332,12 +2332,12 @@ Erreur réseau: %1. Veuillez vérifier vos paramètres réseau et proxy.</transl
     <message>
         <location filename="../rbutilqtfrm.ui" line="326"/>
         <source>Backup</source>
-        <translation type="unfinished">Sauvegarde</translation>
+        <translation>Sauvegarde</translation>
     </message>
     <message>
         <location filename="../rbutilqtfrm.ui" line="343"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Backup current installation.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Create a backup by archiving the contents of the Rockbox installation folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Sauvegarder l&apos;installation courante.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Créé une sauvegarde en archivant le contenu du dossier de Rockbox.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../rbutilqtfrm.ui" line="515"/>
@@ -2410,234 +2410,233 @@ Erreur réseau: %1. Veuillez vérifier vos paramètres réseau et proxy.</transl
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="20"/>
         <source>Selective Installation</source>
-        <translation type="unfinished"></translation>
+        <translation>Installation personnalisée</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="26"/>
         <source>Rockbox version to install</source>
-        <translation type="unfinished"></translation>
+        <translation>Version de Rockbox à installer</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="35"/>
         <source>Version information not available yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les informations de version ne sont pas encore disponibles.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="54"/>
         <source>Rockbox components to install</source>
-        <translation type="unfinished"></translation>
+        <translation>Composants de Rockbox à installer</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="60"/>
         <source>&amp;Bootloader</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bootloader</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="80"/>
         <source>The main Rockbox firmware.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le logiciel principal de Rockbox.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="90"/>
         <source>Fonts</source>
-        <translation type="unfinished"></translation>
+        <translation>Polices</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="104"/>
         <source>&amp;Rockbox</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rockbox</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="124"/>
         <source>Some game plugins require additional files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Certains plugins de jeu nécessitent des fichiers additionnels.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="140"/>
         <source>Additional fonts for the User Interface.</source>
-        <translation type="unfinished"></translation>
+        <translation>Polices additionnelles pour l&apos;interface utilisateur.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="156"/>
         <source>The bootloader is required for starting Rockbox. Only necessary for first time install.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le bootloader est nécessaire pour démarrer Rockbox. Son installation n&apos;est nécessaire que lors de la première installation.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="166"/>
         <source>Game Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers de jeux</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="177"/>
         <source>Customize</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnaliser</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="184"/>
         <source>Themes</source>
-        <translation type="unfinished"></translation>
+        <translation>Thèmes</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="201"/>
         <source>Themes allow adjusting the user interface of Rockbox. Use &quot;Customize&quot; to select themes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les thèmes permettent de modifier l&apos;interface utilisateur de Rockbox. Utilisez &quot;Personnaliser&quot; pour sélectionner les thèmes.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="246"/>
         <source>&amp;Install</source>
-        <translation type="unfinished">&amp;Installer</translation>
+        <translation>&amp;Installer</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="64"/>
         <source>This is the latest stable release available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ceci est la dernière version stable de Rockbox disponible.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="67"/>
         <source>The development version is updated on every code change. Last update was on %1</source>
-        <translation type="unfinished"></translation>
+        <translation>La version de dévelopment est mise à jour à chaque changement du code. La dernière mise à jour a eu lieu le %1</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="71"/>
         <source>This will eventually become the next Rockbox version. Install it to help testing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cette version est vouée à devenir la prochaine version stable. Installez-là pour la tester.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="97"/>
         <source>Stable Release (Version %1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Version stable (Version %1)</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="101"/>
         <source>Development Version (Revison %1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Version de dévelopement (Révision %1)</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="105"/>
         <source>Release Candidate (Revison %1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Version pré-stable (Révision %1)</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="127"/>
         <source>The selected player doesn&apos;t need a bootloader.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le lecteur audio sélectionné ne nécessite pas l&apos;installation d&apos;un bootloader.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="132"/>
         <source>The bootloader is required for starting Rockbox. Installation of the bootloader is only necessary on first time installation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le bootloader est nécessaire pour démarrer Rockbox. Son installation n&apos;est nécessaire que lors de la première installation.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="165"/>
         <source>Mountpoint is wrong</source>
-        <translation type="unfinished"></translation>
+        <translation>Le point de montage est erroné</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="219"/>
         <source>No install method known.</source>
-        <translation type="unfinished">Aucune méthode d&apos;installation n&apos;est connue.</translation>
+        <translation>Aucune méthode d&apos;installation n&apos;est connue.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="246"/>
         <source>Bootloader detected</source>
-        <translation type="unfinished">Le bootloader a été détecté</translation>
+        <translation>Le bootloader a été détecté</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="247"/>
         <source>Bootloader already installed. Do you want to reinstall the bootloader?</source>
-        <translation type="unfinished">Le bootloader est déjà installé. Voulez-vous le réinstaller ?</translation>
+        <translation>Le bootloader est déjà installé. Voulez-vous le réinstaller ?</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="251"/>
         <source>Bootloader installation skipped</source>
-        <translation type="unfinished">Installation du bootloader ignorée</translation>
+        <translation>Installation du bootloader ignorée</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="264"/>
         <source>Create Bootloader backup</source>
-        <translation type="unfinished">Sauvegarde du bootloader</translation>
+        <translation>Sauvegarde du bootloader</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="265"/>
         <source>You can create a backup of the original bootloader file. Press &quot;Yes&quot; to select an output folder on your computer to save the file to. The file will get placed in a new folder &quot;%1&quot; created below the selected folder.
 Press &quot;No&quot; to skip this step.</source>
-        <translation type="unfinished">Vous pouvez créer une sauvegarde du bootloader original. Appuyez sur &quot;Oui&quot; pour sélectionner un dossier de sortie sur votre ordinateur où le fichier sera enregistré. Le fichier sera placé dans le sous-dossier &quot;%1&quot;.
-Appuyez sur &quot;Non&quot; pour ignorez cette étape.</translation>
+        <translation>Vous pouvez créer une sauvegarde du bootloader original. Appuyez sur &quot;Oui&quot; pour sélectionner un dossier de sortie sur votre ordinateur où le fichier sera enregistré. Le fichier sera placé dans un nouveau sous-dossier &quot;%1&quot; créé dans le dossier sélectionné. Appuyez sur &quot;Non&quot; pour ignorez cette étape.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="272"/>
         <source>Browse backup folder</source>
-        <translation type="unfinished">Parcourir le dossier de sauvegarde</translation>
+        <translation>Parcourir le dossier de sauvegarde</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="284"/>
         <source>Prerequisites</source>
-        <translation type="unfinished">Prérequis</translation>
+        <translation>Prérequis</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="289"/>
         <source>Bootloader installation aborted</source>
-        <translation type="unfinished">Installation du bootloader annulée</translation>
+        <translation>Installation du bootloader annulée</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="299"/>
         <source>Bootloader files (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers du bootloader (%1)</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="301"/>
         <source>All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tous les fichiers (*)</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="303"/>
         <source>Select firmware file</source>
-        <translation type="unfinished">Sélectionnez le fichier firmware</translation>
+        <translation>Sélectionnez le fichier firmware</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="305"/>
         <source>Error opening firmware file</source>
-        <translation type="unfinished">Impossible d&apos;ouvrir le fichier firmware</translation>
+        <translation>Impossible d&apos;ouvrir le fichier firmware</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="311"/>
         <source>Error reading firmware file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lire le fichier firmware</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="321"/>
         <source>Backup error</source>
-        <translation type="unfinished">Erreur de la sauvegarde</translation>
+        <translation>Erreur de la sauvegarde</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="322"/>
         <source>Could not create backup file. Continue?</source>
-        <translation type="unfinished">Impossible de créer une sauvegarde. Voulez-vous poursuivre ?</translation>
+        <translation>Impossible de créer une sauvegarde. Voulez-vous poursuivre ?</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="346"/>
         <source>Manual steps required</source>
-        <translation type="unfinished">Des étapes manuelles sont nécessaires</translation>
+        <translation>Des étapes manuelles sont nécessaires</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="366"/>
         <source>Continue with installation?</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuer l&apos;installation ?</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="367"/>
         <source>Really continue?</source>
-        <translation type="unfinished">Êtes vous sûr de vouloir poursuivre ?</translation>
+        <translation>Êtes vous sûr de vouloir poursuivre ?</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="371"/>
         <source>Aborted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulé !</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="485"/>
         <source>Your installation doesn&apos;t require game files, skipping.</source>
-        <translation type="unfinished"></translation>
+        <translation>Votre installation ne nécessite pas de fichier de jeu, étape ignorée.</translation>
     </message>
 </context>
 <context>
@@ -2740,32 +2739,32 @@ Appuyez sur &quot;Non&quot; pour ignorez cette étape.</translation>
     <message>
         <location filename="../sysinfo.cpp" line="65"/>
         <source>Mountpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Point de montage</translation>
     </message>
     <message>
         <location filename="../sysinfo.cpp" line="65"/>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Libellé</translation>
     </message>
     <message>
         <location filename="../sysinfo.cpp" line="66"/>
         <source>Free</source>
-        <translation type="unfinished"></translation>
+        <translation>Libre</translation>
     </message>
     <message>
         <location filename="../sysinfo.cpp" line="66"/>
         <source>Total</source>
-        <translation type="unfinished"></translation>
+        <translation>Total</translation>
     </message>
     <message>
         <location filename="../sysinfo.cpp" line="67"/>
         <source>Cluster Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille des clusters</translation>
     </message>
     <message>
         <location filename="../sysinfo.cpp" line="69"/>
         <source>&lt;tr&gt;&lt;td&gt;%1&lt;/td&gt;&lt;td&gt;%4&lt;/td&gt;&lt;td&gt;%2 GiB&lt;/td&gt;&lt;td&gt;%3 GiB&lt;/td&gt;&lt;td&gt;%5&lt;/td&gt;&lt;/tr&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;tr&gt;&lt;td&gt;%1&lt;/td&gt;&lt;td&gt;%4&lt;/td&gt;&lt;td&gt;%2 Gio&lt;/td&gt;&lt;td&gt;%3 Gio&lt;/td&gt;&lt;td&gt;%5&lt;/td&gt;&lt;/tr&gt;</translation>
     </message>
 </context>
 <context>
@@ -2820,32 +2819,32 @@ Appuyez sur &quot;Non&quot; pour ignorez cette étape.</translation>
     <message>
         <location filename="../base/ttsbase.cpp" line="40"/>
         <source>Espeak TTS Engine</source>
-        <translation type="unfinished">Synthèse vocale basée sur Espeak</translation>
+        <translation>Synthèse vocale basée sur Espeak</translation>
     </message>
     <message>
         <location filename="../base/ttsbase.cpp" line="42"/>
         <source>Flite TTS Engine</source>
-        <translation type="unfinished">Synthèse vocale basée sur Flite</translation>
+        <translation>Synthèse vocale basée sur Flite</translation>
     </message>
     <message>
         <location filename="../base/ttsbase.cpp" line="43"/>
         <source>Swift TTS Engine</source>
-        <translation type="unfinished">Synthèse vocale basée sur Swift</translation>
+        <translation>Synthèse vocale basée sur Swift</translation>
     </message>
     <message>
         <location filename="../base/ttsbase.cpp" line="45"/>
         <source>SAPI TTS Engine</source>
-        <translation type="unfinished">Synthèse vocale basée sur SAPI</translation>
+        <translation>Synthèse vocale basée sur SAPI</translation>
     </message>
     <message>
         <location filename="../base/ttsbase.cpp" line="48"/>
         <source>Festival TTS Engine</source>
-        <translation type="unfinished">Synthèse vocale basée sur Festival</translation>
+        <translation>Synthèse vocale basée sur Festival</translation>
     </message>
     <message>
         <location filename="../base/ttsbase.cpp" line="51"/>
         <source>OS X System Engine</source>
-        <translation type="unfinished">Synthèse vocale basée sur le système OS X</translation>
+        <translation>Synthèse vocale basée sur le système OS X</translation>
     </message>
 </context>
 <context>
@@ -2863,7 +2862,7 @@ Appuyez sur &quot;Non&quot; pour ignorez cette étape.</translation>
     <message>
         <location filename="../base/ttscarbon.cpp" line="151"/>
         <source>Pitch (0 for default):</source>
-        <translation type="unfinished">Hauteur de ton  (0 est la valeur par defaut) :</translation>
+        <translation>Hauteur de ton  (0 est la valeur par defaut) :</translation>
     </message>
     <message>
         <location filename="../base/ttscarbon.cpp" line="221"/>
@@ -2947,12 +2946,12 @@ Appuyez sur &quot;Non&quot; pour ignorez cette étape.</translation>
     <message>
         <location filename="../base/ttssapi.cpp" line="110"/>
         <source>Could not copy the SAPI script</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de copy the script SAPI</translation>
     </message>
     <message>
         <location filename="../base/ttssapi.cpp" line="131"/>
         <source>Could not start SAPI process</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible lancer le processus SAPI</translation>
     </message>
 </context>
 <context>
@@ -2985,7 +2984,7 @@ Appuyez sur &quot;Non&quot; pour ignorez cette étape.</translation>
     <message>
         <location filename="../base/talkfile.cpp" line="35"/>
         <source>Starting Talk file generation for folder %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Début de la génération des fichiers de voix pour le dossier %1</translation>
     </message>
     <message>
         <location filename="../base/talkfile.cpp" line="79"/>
@@ -3165,7 +3164,7 @@ Veuillez vérifier vos paramètres réseau et proxy.</translation>
     <message>
         <location filename="../themesinstallwindow.cpp" line="291"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner</translation>
     </message>
     <message>
         <location filename="../themesinstallwindow.cpp" line="295"/>
@@ -3175,7 +3174,7 @@ Veuillez vérifier vos paramètres réseau et proxy.</translation>
     <message>
         <location filename="../themesinstallwindow.cpp" line="324"/>
         <source>No themes selected, skipping</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun thème sélectionné, étape ignorée</translation>
     </message>
     <message>
         <location filename="../themesinstallwindow.cpp" line="354"/>
@@ -3297,7 +3296,7 @@ Les privilèges administrateur sont requis.&lt;/li&gt;</translation>
     <message>
         <location filename="../base/utils.cpp" line="322"/>
         <source>&lt;li&gt;Target mismatch detected.&lt;br/&gt;Installed target: %1&lt;br/&gt;Selected target: %2.&lt;/li&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;li&gt;Incompatibilité de modèles détectée. &lt;br/&gt;Modèle installé: %1&lt;br/&gt;Modèle sélectionné: %2&lt;/li&gt;</translation>
     </message>
     <message>
         <location filename="../base/utils.cpp" line="329"/>
@@ -3315,17 +3314,17 @@ Les privilèges administrateur sont requis.&lt;/li&gt;</translation>
     <message>
         <location filename="../base/voicefile.cpp" line="89"/>
         <source>Extracted voice strings from installation</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers de voix extrait depuis l&apos;installation</translation>
     </message>
     <message>
         <location filename="../base/voicefile.cpp" line="99"/>
         <source>Extracted voice strings incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Les fichiers de voix extraits sont incompatibles</translation>
     </message>
     <message>
         <location filename="../base/voicefile.cpp" line="144"/>
         <source>Could not retrieve strings from installation, downloading</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;extraire les fichiers de voix depuis l&apos;installation, téléchargement</translation>
     </message>
     <message>
         <location filename="../base/voicefile.cpp" line="170"/>
@@ -3413,7 +3412,7 @@ Les privilèges administrateur sont requis.&lt;/li&gt;</translation>
     <message>
         <location filename="../base/zipinstaller.cpp" line="66"/>
         <source>Package installation finished successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le paquet a été installé avec succès.</translation>
     </message>
     <message>
         <location filename="../base/zipinstaller.cpp" line="78"/>
@@ -3448,7 +3447,7 @@ Les privilèges administrateur sont requis.&lt;/li&gt;</translation>
     <message>
         <location filename="../base/zipinstaller.cpp" line="150"/>
         <source>Extraction failed!</source>
-        <translation type="unfinished">L&apos;extraction a échoué !</translation>
+        <translation>L&apos;extraction a échoué !</translation>
     </message>
     <message>
         <location filename="../base/zipinstaller.cpp" line="159"/>
@@ -3476,17 +3475,17 @@ Les privilèges administrateur sont requis.&lt;/li&gt;</translation>
     <message>
         <location filename="../base/ziputil.cpp" line="124"/>
         <source>Creating output path failed</source>
-        <translation type="unfinished">La création du chemin d&apos;installation a échoué</translation>
+        <translation>La création du chemin d&apos;installation a échoué</translation>
     </message>
     <message>
         <location filename="../base/ziputil.cpp" line="131"/>
         <source>Creating output file failed</source>
-        <translation type="unfinished">la création du fichier à installer a échoué</translation>
+        <translation>La création du fichier à installer a échoué</translation>
     </message>
     <message>
         <location filename="../base/ziputil.cpp" line="140"/>
         <source>Error during Zip operation</source>
-        <translation type="unfinished">Erreur lors de l&apos;utilisation de Zip</translation>
+        <translation>Erreur lors de l&apos;utilisation de Zip</translation>
     </message>
 </context>
 <context>
@@ -3519,7 +3518,7 @@ Les privilèges administrateur sont requis.&lt;/li&gt;</translation>
     <message>
         <location filename="../aboutbox.ui" line="132"/>
         <source>&amp;Speex License</source>
-        <translation type="unfinished"></translation>
+        <translation>Licence de &amp;Speex</translation>
     </message>
     <message>
         <location filename="../aboutbox.ui" line="158"/>

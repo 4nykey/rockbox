@@ -123,6 +123,7 @@ void SelectiveInstallWidget::updateVersion(void)
     // well as if the selected player doesn't need a bootloader.
     if(m_blmethod == "none") {
         ui.bootloaderCheckbox->setEnabled(false);
+        ui.bootloaderCheckbox->setChecked(false);
         ui.bootloaderLabel->setEnabled(false);
         ui.bootloaderLabel->setText(tr("The selected player doesn't need a bootloader."));
     }
@@ -132,12 +133,12 @@ void SelectiveInstallWidget::updateVersion(void)
         ui.bootloaderLabel->setText(tr("The bootloader is required for starting "
                     "Rockbox. Installation of the bootloader is only necessary "
                     "on first time installation."));
+        // check if Rockbox is installed by looking after rockbox-info.txt.
+        // If installed uncheck bootloader installation.
+        RockboxInfo info(m_mountpoint);
+        ui.bootloaderCheckbox->setChecked(!info.success());
     }
 
-    // check if Rockbox is installed by looking after rockbox-info.txt.
-    // If installed uncheck bootloader installation.
-    RockboxInfo info(m_mountpoint);
-    ui.bootloaderCheckbox->setChecked(!info.success());
 
 }
 
@@ -157,9 +158,23 @@ void SelectiveInstallWidget::startInstall(void)
 {
     qDebug() << "[SelectiveInstallWidget] starting installation";
     saveSettings();
+
     m_installStage = 0;
     if(m_logger != NULL) delete m_logger;
     m_logger = new ProgressLoggerGui(this);
+    QString warning = Utils::checkEnvironment(false);
+    if(!warning.isEmpty())
+    {
+        warning += "<br/>" + tr("Continue with installation?");
+        if(QMessageBox::warning(this, tr("Really continue?"), warning,
+                    QMessageBox::Ok | QMessageBox::Abort, QMessageBox::Abort)
+                == QMessageBox::Abort)
+        {
+            emit installSkipped(true);
+            return;
+        }
+    }
+
     m_logger->show();
     if(!QFileInfo(m_mountpoint).isDir()) {
         m_logger->addItem(tr("Mountpoint is wrong"), LOGERROR);
@@ -195,10 +210,12 @@ void SelectiveInstallWidget::continueInstall(bool error)
     if(m_installStage > 6) {
         qDebug() << "[SelectiveInstallWidget] All install stages done.";
         m_logger->setFinished();
-        // check if Rockbox is installed by looking after rockbox-info.txt.
-        // If installed uncheck bootloader installation.
-        RockboxInfo info(m_mountpoint);
-        ui.bootloaderCheckbox->setChecked(!info.success());
+        if(m_blmethod != "none") {
+            // check if Rockbox is installed by looking after rockbox-info.txt.
+            // If installed uncheck bootloader installation.
+            RockboxInfo info(m_mountpoint);
+            ui.bootloaderCheckbox->setChecked(!info.success());
+        }
     }
 }
 
@@ -359,21 +376,6 @@ void SelectiveInstallWidget::installRockbox(void)
         QString selected = ui.selectedVersion->itemData(ui.selectedVersion->currentIndex()).toString();
         RbSettings::setValue(RbSettings::Build, selected);
         RbSettings::sync();
-
-        QString warning = Utils::checkEnvironment(false);
-        if(!warning.isEmpty())
-        {
-            warning += "<br/>" + tr("Continue with installation?");
-            if(QMessageBox::warning(this, tr("Really continue?"), warning,
-                        QMessageBox::Ok | QMessageBox::Abort, QMessageBox::Abort)
-                    == QMessageBox::Abort)
-            {
-                m_logger->addItem(tr("Aborted!"),LOGERROR);
-                m_logger->setFinished();
-                emit installSkipped(true);
-                return;
-            }
-        }
 
         if(selected == "release") url = ServerInfo::platformValue(m_target,
                 ServerInfo::CurReleaseUrl).toString();

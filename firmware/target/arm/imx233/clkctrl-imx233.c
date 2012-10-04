@@ -150,7 +150,7 @@ void imx233_clkctrl_set_fractional_divisor(enum imx233_clock_t clk, int fracdiv)
     if(fracdiv != 0)
         *REG = fracdiv;
     else
-        *REG = HW_CLKCTRL_FRAC_XX__CLKGATEXX;;
+        *REG = HW_CLKCTRL_FRAC_XX__CLKGATEXX;
 }
 
 int imx233_clkctrl_get_fractional_divisor(enum imx233_clock_t clk)
@@ -225,8 +225,11 @@ bool imx233_clkctrl_is_usb_pll_enabled(void)
 
 void imx233_clkctrl_set_auto_slow_divisor(enum imx233_as_div_t div)
 {
-    __REG_CLR(HW_CLKCTRL_HBUS) = HW_CLKCTRL_HBUS__SLOW_DIV_BM;
-    __REG_SET(HW_CLKCTRL_HBUS) = div;
+    /* the SLOW_DIV must only be set when auto-slow is disabled */
+    bool old_status = imx233_clkctrl_is_auto_slow_enabled();
+    imx233_clkctrl_enable_auto_slow(false);
+    __FIELD_SET(HW_CLKCTRL_HBUS, SLOW_DIV, div);
+    imx233_clkctrl_enable_auto_slow(old_status);
 }
 
 enum imx233_as_div_t imx233_clkctrl_get_auto_slow_divisor(void)
@@ -237,9 +240,9 @@ enum imx233_as_div_t imx233_clkctrl_get_auto_slow_divisor(void)
 void imx233_clkctrl_enable_auto_slow(bool enable)
 {
     if(enable)
-        __REG_CLR(HW_CLKCTRL_HBUS) = HW_CLKCTRL_HBUS__AUTO_SLOW_MODE;
-    else
         __REG_SET(HW_CLKCTRL_HBUS) = HW_CLKCTRL_HBUS__AUTO_SLOW_MODE;
+    else
+        __REG_CLR(HW_CLKCTRL_HBUS) = HW_CLKCTRL_HBUS__AUTO_SLOW_MODE;
 }
 
 bool imx233_clkctrl_is_auto_slow_enabled(void)
@@ -258,6 +261,11 @@ void imx233_clkctrl_enable_auto_slow_monitor(enum imx233_as_monitor_t monitor, b
 bool imx233_clkctrl_is_auto_slow_monitor_enabled(enum imx233_as_monitor_t monitor)
 {
     return HW_CLKCTRL_HBUS & monitor;
+}
+
+bool imx233_clkctrl_is_emi_sync_enabled(void)
+{
+    return !!(HW_CLKCTRL_EMI & HW_CLKCTRL_EMI__SYNC_MODE_EN);
 }
 
 unsigned imx233_clkctrl_get_clock_freq(enum imx233_clock_t clk)
