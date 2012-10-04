@@ -200,19 +200,29 @@ void udelay(unsigned usecs)
     );
 }
 
-void commit_discard_idcache(void)
+/* Invalidating both cache lines from single function
+ * gives sometimes strange data aborts.
+ * This version resembles how OF invalidates cache.
+ * noinline attribute is to guarantee that future
+ * gcc change will not decide to inline this call (although
+ * current arm-eabi version from our toolchain doesn't do that
+ */
+static void __attribute__((noinline)) cache_invalidate_way(int way)
 {
-    /* invalidate cache way 0 */
-    CACHEOP = 0x02;
+    /* Issue invalidata way command to the cache controler */
+    CACHEOP = ((way<<31)|0x2);
 
     /* wait for invalidate process to complete */
     while (CACHEOP & 0x03);
+}
+
+void commit_discard_idcache(void)
+{
+    /* invalidate cache way 0 */
+    cache_invalidate_way(0);
 
     /* invalidate cache way 1 */
-    CACHEOP = 0x80000002;
-
-    /* wait for invalidate process to complete */
-    while (CACHEOP & 0x03);   
+    cache_invalidate_way(1);
 }
 void commit_discard_dcache (void) __attribute__((alias("commit_discard_idcache")));
 
@@ -231,3 +241,58 @@ void commit_discard_dcache_range (const void *base, unsigned int size)
         opcode += 32;
     }
 }
+
+#ifdef HAVE_ADJUSTABLE_CPU_FREQ
+static inline void set_sdram_timing(int ahb_freq)
+{
+    MCSDR_T_REF = (125*ahb_freq/1000000) >> 3;
+    MCSDR_T_RFC = (64*ahb_freq/1000000)/1000;
+}
+
+void set_cpu_frequency(long frequency)
+{
+    if (cpu_frequency == frequency)
+        return;
+
+    set_sdram_timing(12000000);
+
+    if (frequency == CPUFREQ_MAX)
+    {
+        /* PLL set to 200 Mhz
+         * PLL:ARM = 1:1
+         * ARM:AHB = 2:1
+         * AHB:APB = 2:1
+         */
+        SCU_DIVCON1 = (SCU_DIVCON1 &~ 0x1f) | (1<<3)|1;
+        SCU_PLLCON1 = ((1<<24)|(1<<23)|(5<<16)|(49<<4)); /*((24/6)*50)/1*/
+
+        /* wait for PLL lock ~0.3 ms */
+        while (!(SCU_STATUS & 1));
+
+        /* leave SLOW mode */
+        SCU_DIVCON1 &= ~1;
+
+        set_sdram_timing(CPUFREQ_MAX/2);
+    }
+    else
+    {
+        /* PLL set to 100 MHz
+         * PLL:ARM = 2:1
+         * ARM:AHB = 1:1
+         * AHB:APB = 1:1
+         */
+        SCU_DIVCON1 = (SCU_DIVCON1 & ~0x1f) | (1<<2)|1;
+        SCU_PLLCON1 = ((1<<24)|(1<<23)|(5<<16)|(49<<4)|(1<<1)); /*((24/6)*50)/2*/
+
+        /* wait for PLL lock ~0.3 ms */
+        while (!(SCU_STATUS & 1));
+
+        /* leave SLOW mode */
+        SCU_DIVCON1 &= ~1;
+
+        set_sdram_timing(CPUFREQ_NORMAL);
+    }
+
+    cpu_frequency = frequency;
+}
+#endif
