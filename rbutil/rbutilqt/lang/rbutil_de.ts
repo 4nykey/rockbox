@@ -12,7 +12,7 @@
     <message>
         <location filename="../gui/backupdialogfrm.ui" line="30"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This dialog will create a backup by archiving the contents of the Rockbox installation on the player into a zip file. This will include installed themes and settings stored below the .rockbox folder on the player.&lt;/p&gt;&lt;p&gt;The backup filename will be created based on the installed version. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Erzeugt eine Sicherungskopie durch Archivieren der Rockbox-Installation in einer Zip-Datei. Dies schließt Themen und Einstellungen ein die im .rockbox-Ordner gespeichert sind.&lt;/p&gt;&lt;p&gt;Der Dateiname für die Sicherung wird anhand der installierten Version vorgeschlagen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Erzeugt eine Sicherungskopie durch Archivieren der Rockbox-Installation in einer Zip-Datei. Dies schließt Themen und Einstellungen ein, die im .rockbox-Ordner gespeichert sind.&lt;/p&gt;&lt;p&gt;Der Dateiname für die Sicherung wird anhand der installierten Version vorgeschlagen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../gui/backupdialogfrm.ui" line="46"/>
@@ -85,7 +85,7 @@
     <message>
         <location filename="../base/bootloaderinstallams.cpp" line="32"/>
         <source>Bootloader installation requires you to provide a copy of the original Sandisk firmware (bin file). This firmware file will be patched and then installed to your player along with the rockbox bootloader. You need to download this file yourself due to legal reasons. Please browse the &lt;a href=&apos;http://forums.sandisk.com/sansa/&apos;&gt;Sansa Forums&apos;&lt;/a&gt; or refer to the &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;manual&lt;/a&gt; and the &lt;a href=&apos;http://www.rockbox.org/wiki/SansaAMS&apos;&gt;SansaAMS&lt;/a&gt; wiki page on how to obtain this file.&lt;br/&gt;Press Ok to continue and browse your computer for the firmware file.</source>
-        <translation>Die Bootloader-Installation erfordert Originalfirmware-Datei (bin-Datei). Die Firmware-Datei wird angepasst und auf dem Gerät mit dem Rockbox-Bootloader installiert. Aus rechtlichen Gründen muss diese Datei separat heruntergeladen werden. Die Datei ist im &lt;a href=&apos;http://forums.sandisk.com/sansa/&apos;&gt;Sansa-Forum&lt;/a&gt; zu finden sowie im &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;Handbuch&lt;/a&gt; und auf der &lt;a href=&apos;http://www.rockbox.org/wiki/SansaAMS&apos;&gt;SansaAMS&lt;/a&gt; Wiki-Seite beschrieben.&lt;br/&gt;OK um fortzufahren und die Datei auf dem Computer auszuwählen.</translation>
+        <translation>Die Bootloader-Installation erfordert Originalfirmware-Datei (bin-Datei). Die Firmware-Datei wird angepasst und auf dem Gerät mit dem Rockbox-Bootloader installiert. Aus rechtlichen Gründen muss diese Datei separat heruntergeladen werden. Die Datei ist im &lt;a href=&apos;http://forums.sandisk.com/sansa/&apos;&gt;Sansa-Forum&lt;/a&gt; zu finden sowie im &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;Handbuch&lt;/a&gt; und auf der &lt;a href=&apos;http://www.rockbox.org/wiki/SansaAMS&apos;&gt;SansaAMS&lt;/a&gt; Wiki-Seite beschrieben.&lt;br/&gt;OK, um fortzufahren und die Datei auf dem Computer auszuwählen.</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallams.cpp" line="55"/>
@@ -101,7 +101,7 @@
     <message>
         <location filename="../base/bootloaderinstallams.cpp" line="124"/>
         <source>No room to insert bootloader, try another firmware version</source>
-        <translation>Kein Platz um den Bootloader einzufügen. Bitte mit anderer Firmware-Version versuchen</translation>
+        <translation>Kein Platz, um den Bootloader einzufügen. Bitte mit anderer Firmware-Version versuchen</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallams.cpp" line="134"/>
@@ -222,7 +222,7 @@
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="33"/>
         <source>Bootloader installation requires you to provide a firmware file of the original firmware (HXF file). You need to download this file yourself due to legal reasons. Please refer to the &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;manual&lt;/a&gt; and the &lt;a href=&apos;http://www.rockbox.org/wiki/OndaVX747#Download_and_extract_a_recent_ve&apos;&gt;OndaVX747&lt;/a&gt; wiki page on how to obtain this file.&lt;br/&gt;Press Ok to continue and browse your computer for the firmware file.</source>
-        <translation>Die Bootloader-Installation erfordert eine Firmware-Datei der Originalfirmware (HXF-Datei). Diese Datei muss aus rechtlichen Gründen separat heruntergeladen werden. Wie diese Datei zu beziehen ist ist im &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;Handbuch&lt;/a&gt; und auf der &lt;a href=&apos;http://www.rockbox.org/wiki/OndaVX747#Download_and_extract_a_recent_ve&apos;&gt;OndaVX747&lt;/a&gt; Wiki-Seite beschrieben.&lt;br/&gt;OK um fortzufahren und die Datei auf dem Computer auszuwählen.</translation>
+        <translation>Die Bootloader-Installation erfordert eine Firmware-Datei der Originalfirmware (HXF-Datei). Diese Datei muss aus rechtlichen Gründen separat heruntergeladen werden. Wie diese Datei zu beziehen ist, ist im &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;Handbuch&lt;/a&gt; und auf der &lt;a href=&apos;http://www.rockbox.org/wiki/OndaVX747#Download_and_extract_a_recent_ve&apos;&gt;OndaVX747&lt;/a&gt; Wiki-Seite beschrieben.&lt;br/&gt;OK, um fortzufahren und die Datei auf dem Computer auszuwählen.</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallchinachip.cpp" line="50"/>
@@ -523,7 +523,7 @@
     <message>
         <location filename="../base/bootloaderinstallhex.cpp" line="49"/>
         <source>Bootloader installation requires you to provide a firmware file of the original firmware (hex file). You need to download this file yourself due to legal reasons. Please refer to the &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;manual&lt;/a&gt; and the &lt;a href=&apos;http://www.rockbox.org/wiki/IriverBoot#Download_and_extract_a_recent_ve&apos;&gt;IriverBoot&lt;/a&gt; wiki page on how to obtain this file.&lt;br/&gt;Press Ok to continue and browse your computer for the firmware file.</source>
-        <translation>Die Bootloader-Installation benötigt eine Firmware-Datei der originalen Firmware (Hex-Datei). Diese Datei muss aus rechtlichen Gründen separat heruntergeladen werden. Informationen wie diese Datei heruntergeladen werden kann sind im &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;Handbuch&lt;/a&gt; und der Wiki-Seite &lt;a href=&apos;http://www.rockbox.org/wiki/IriverBoot#Download_and_extract_a_recent_ve&apos;&gt;IriverBoot&lt;/a&gt; aufgeführt.&lt;br/&gt;OK um fortzufahren und die Datei auf dem Computer auszuwählen.</translation>
+        <translation>Die Bootloader-Installation benötigt eine Firmware-Datei der originalen Firmware (Hex-Datei). Diese Datei muss aus rechtlichen Gründen separat heruntergeladen werden. Informationen, wie diese Datei heruntergeladen werden kann, sind im &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;Handbuch&lt;/a&gt; und der Wiki-Seite &lt;a href=&apos;http://www.rockbox.org/wiki/IriverBoot#Download_and_extract_a_recent_ve&apos;&gt;IriverBoot&lt;/a&gt; aufgeführt.&lt;br/&gt;OK, um fortzufahren und die Datei auf dem Computer auszuwählen.</translation>
     </message>
 </context>
 <context>
@@ -531,7 +531,7 @@
     <message>
         <location filename="../base/bootloaderinstallimx.cpp" line="70"/>
         <source>Bootloader installation requires you to provide a copy of the original Sandisk firmware (firmware.sb file). This file will be patched with the Rockbox bootloader and installed to your player. You need to download this file yourself due to legal reasons. Please browse the &lt;a href=&apos;http://forums.sandisk.com/sansa/&apos;&gt;Sansa Forums&lt;/a&gt; or refer to the &lt;a href= &apos;http://www.rockbox.org/wiki/SansaFuzePlus&apos;&gt;SansaFuzePlus&lt;/a&gt; wiki page on how to obtain this file.&lt;br/&gt;Press Ok to continue and browse your computer for the firmware file.</source>
-        <translation>Die Bootloader-Installation erfordert eine Datei der Originalfirmware (firmware.sb-Datei). Die Firmware-Datei wird angepasst und auf dem Gerät mit dem Rockbox-Bootloader installiert. Aus rechtlichen Gründen muss diese Datei separat heruntergeladen werden. Diese Datei ist im &lt;a href=&apos;http://forums.sandisk.com/sansa/&apos;&gt;Sansa-Forum&lt;/a&gt; zu finden und auf der &lt;a href=&apos;http://www.rockbox.org/wiki/SansaFuzePlus&apos;&gt;SansaFuzePlus&lt;/a&gt; Wiki-Seite beschrieben.&lt;br/&gt;OK um fortzufahren und die Datei auf dem Computer auszuwählen.</translation>
+        <translation>Die Bootloader-Installation erfordert eine Datei der Originalfirmware (firmware.sb-Datei). Die Firmware-Datei wird angepasst und auf dem Gerät mit dem Rockbox-Bootloader installiert. Aus rechtlichen Gründen muss diese Datei separat heruntergeladen werden. Diese Datei ist im &lt;a href=&apos;http://forums.sandisk.com/sansa/&apos;&gt;Sansa-Forum&lt;/a&gt; zu finden und auf der &lt;a href=&apos;http://www.rockbox.org/wiki/SansaFuzePlus&apos;&gt;SansaFuzePlus&lt;/a&gt; Wiki-Seite beschrieben.&lt;br/&gt;OK, um fortzufahren und die Datei auf dem Computer auszuwählen.</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallimx.cpp" line="92"/>
@@ -746,7 +746,7 @@ Siehe http://www.rockbox.org/wiki/IpodConversionToFAT32</translation>
     <message>
         <location filename="../base/bootloaderinstallmpio.cpp" line="33"/>
         <source>Bootloader installation requires you to provide a firmware file of the original firmware (bin file). You need to download this file yourself due to legal reasons. Please refer to the &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;manual&lt;/a&gt; and the &lt;a href=&apos;http://www.rockbox.org/wiki/MPIOHD200Port&apos;&gt;MPIOHD200Port&lt;/a&gt; wiki page on how to obtain this file.&lt;br/&gt;Press Ok to continue and browse your computer for the firmware file.</source>
-        <translation>Die Bootloader-Installation benötigt eine Firmware-Datei der originalen Firmware (bin-Datei). Diese Datei muss aus rechtlichen Gründen separat heruntergeladen werden. Informationen wie diese Datei heruntergeladen werden kann ist im &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;Handbuch&lt;/a&gt; und der Wiki-Seite &lt;a href=&apos;http://www.rockbox.org/wiki/MPIO200Port&apos;&gt;MPIO200Port&lt;/a&gt; aufgeführt.&lt;br/&gt;OK um fortzufahren und die Datei auf dem Computer auszuwählen.</translation>
+        <translation>Die Bootloader-Installation benötigt eine Firmware-Datei der originalen Firmware (bin-Datei). Diese Datei muss aus rechtlichen Gründen separat heruntergeladen werden. Informationen, wie diese Datei heruntergeladen werden kann, ist im &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;Handbuch&lt;/a&gt; und der Wiki-Seite &lt;a href=&apos;http://www.rockbox.org/wiki/MPIO200Port&apos;&gt;MPIO200Port&lt;/a&gt; aufgeführt.&lt;br/&gt;OK, um fortzufahren und die Datei auf dem Computer auszuwählen.</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallmpio.cpp" line="52"/>
@@ -836,7 +836,7 @@ Siehe http://www.rockbox.org/wiki/IpodConversionToFAT32</translation>
         <source>Permission for disc access denied!
 This is required to install the bootloader</source>
         <translation>Direkter Laufwerkszugriff verweigert!
-Der Zugriff ist notwendig um den Bootloader zu installieren</translation>
+Der Zugriff ist notwendig, um den Bootloader zu installieren</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallsansa.cpp" line="73"/>
@@ -857,7 +857,7 @@ sansapatcher for the first time.
 See http://www.rockbox.org/wiki/SansaE200Install
 </source>
         <translation>ALTE ROCKBOX-INSTALLATION ERKANNT, ABBRUCH.
-Die Original-Sansa-Firmware muss neu installiert werden
+Die Original-Sansa-Firmware muss neu installiert werden,
 bevor sansapatcher zum ersten Mal verwendet werden kann.
 Siehe http://www.rockbox.org/wiki/SansaE200Install
 </translation>
@@ -949,7 +949,7 @@ Siehe http://www.rockbox.org/wiki/SansaE200Install
     <message>
         <location filename="../base/bootloaderinstalltcc.cpp" line="33"/>
         <source>Bootloader installation requires you to provide a firmware file of the original firmware (bin file). You need to download this file yourself due to legal reasons. Please refer to the &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;manual&lt;/a&gt; and the &lt;a href=&apos;http://www.rockbox.org/wiki/CowonD2Info&apos;&gt;CowonD2Info&lt;/a&gt; wiki page on how to obtain the file.&lt;br/&gt;Press Ok to continue and browse your computer for the firmware file.</source>
-        <translation>Die Bootloader-Installation benötigt eine Firmware-Datei der originalen Firmware (bin-Datei). Diese Datei muss aus rechtlichen Gründen separat heruntergeladen werden. Informationen wie diese Datei heruntergeladen werden kann sind im &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;Handbuch&lt;/a&gt; und der Wiki-Seite &lt;a href=&apos;http://www.rockbox.org/wiki/CowonD2Info&apos;&gt;CowonD2Info&lt;/a&gt; aufgeführt.&lt;br/&gt;OK um fortzufahren und die Datei auf dem Computer auszuwählen.</translation>
+        <translation>Die Bootloader-Installation benötigt eine Firmware-Datei der originalen Firmware (bin-Datei). Diese Datei muss aus rechtlichen Gründen separat heruntergeladen werden. Informationen, wie diese Datei heruntergeladen werden kann, sind im &lt;a href=&apos;http://www.rockbox.org/manual.shtml&apos;&gt;Handbuch&lt;/a&gt; und der Wiki-Seite &lt;a href=&apos;http://www.rockbox.org/wiki/CowonD2Info&apos;&gt;CowonD2Info&lt;/a&gt; aufgeführt.&lt;br/&gt;OK, um fortzufahren und die Datei auf dem Computer auszuwählen.</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstalltcc.cpp" line="50"/>
@@ -1028,7 +1028,7 @@ Bitte Gerät und Einhängepunt manuell auswählen.</translation>
     <message>
         <location filename="../configure.cpp" line="798"/>
         <source>Do you really want to delete the cache? Make absolutely sure this setting is correct as it will remove &lt;b&gt;all&lt;/b&gt; files in this folder!</source>
-        <translation>Cache wirklich löschen? Unbedingt sicherstellen dass die Enstellungen korrekt sind, dies löscht &lt;b&gt;alle&lt;/b&gt; Dateien im Cache-Ordner!</translation>
+        <translation>Cache wirklich löschen? Unbedingt sicherstellen, dass die Enstellungen korrekt sind, dies löscht &lt;b&gt;alle&lt;/b&gt; Dateien im Cache-Ordner!</translation>
     </message>
     <message>
         <location filename="../configure.cpp" line="806"/>
@@ -1095,7 +1095,7 @@ Bitte Gerät und Einhängepunt manuell auswählen.</translation>
     <message>
         <location filename="../configure.cpp" line="195"/>
         <source>Cache path not writeable. Leave path empty to default to systems temporary path.</source>
-        <translation>Cache-Pfad ist nicht schreibbar. Um auf den temporären Pfad des Systems zurückzusetzen den Pfad leer lassen.</translation>
+        <translation>Cache-Pfad ist nicht schreibbar. Um auf den temporären Pfad des Systems zurückzusetzen, den Pfad leer lassen.</translation>
     </message>
     <message>
         <location filename="../configure.cpp" line="215"/>
@@ -1115,7 +1115,7 @@ Bitte Gerät und Einhängepunt manuell auswählen.</translation>
     <message>
         <location filename="../configure.cpp" line="316"/>
         <source>You just enabled showing targets that are marked disabled. Disabled targets are not recommended to end users. Please use this option only if you know what you are doing.</source>
-        <translation>Deaktivierte Geräte werden jetzt angezeigt. Deaktivierte Geräte sind nicht für Anwender gedacht. Bitte diese Option nur benutzen wenn die Folgen klar sind.</translation>
+        <translation>Deaktivierte Geräte werden jetzt angezeigt. Deaktivierte Geräte sind nicht für Anwender gedacht. Bitte diese Option nur benutzen, wenn die Folgen klar sind.</translation>
     </message>
     <message>
         <location filename="../configure.cpp" line="498"/>
@@ -1127,7 +1127,7 @@ Bitte Gerät und Einhängepunt manuell auswählen.</translation>
         <source>The System Proxy settings are invalid!
 Rockbox Utility can&apos;t work with this proxy settings. Make sure the system proxy is set correctly. Note that &quot;proxy auto-config (PAC)&quot; scripts are not supported by Rockbox Utility. If your system uses this you need to use manual proxy settings.</source>
         <translation>Die System-Proxy-Werte sind ungültig!
-Rockbox Utility kann mit diesen Proxy-Einstellungen nicht arbeiten. Bitte sicherstellen dass die Proxy-Einstellungen im System korrekt sind. Hinweis: &quot;Proxy Auto-Konfiguration (PAC)&quot;-Skripte werden von Rockbox Utility nicht unterstützt. Sofern das System dies benutzt muss der Proxy manuell angegeben werden.</translation>
+Rockbox Utility kann mit diesen Proxy-Einstellungen nicht arbeiten. Bitte sicherstellen, dass die Proxy-Einstellungen im System korrekt sind. Hinweis: &quot;Proxy Auto-Konfiguration (PAC)&quot;-Skripte werden von Rockbox Utility nicht unterstützt. Sofern das System dies benutzt, muss der Proxy manuell angegeben werden.</translation>
     </message>
     <message>
         <location filename="../configure.cpp" line="612"/>
@@ -1151,7 +1151,7 @@ Das Gerät muss für die Installation im MSC-Modus sein.</translation>
     <message>
         <location filename="../configure.cpp" line="753"/>
         <source>Until you change this installation will fail!</source>
-        <translation>Solange dies nicht geändert ist wird die Installation fehlschlagen!</translation>
+        <translation>Solange dies nicht geändert ist, wird die Installation fehlschlagen!</translation>
     </message>
     <message>
         <location filename="../configure.cpp" line="760"/>
@@ -1335,7 +1335,7 @@ Please configure TTS engine.</source>
     <message>
         <location filename="../configurefrm.ui" line="276"/>
         <source>Rockbox Utility uses a local download cache to save network traffic. You can change the path to the cache and use it as local repository by enabling Offline mode.</source>
-        <translation>Rockbox Utility verwendet einen lokalen Download-Cache um die übertragene Datenmenge zu begrenzen. Der Pfad zum Cache kann geändert sowie im Offline-Modus als lokales Repository verwenden werden.</translation>
+        <translation>Rockbox Utility verwendet einen lokalen Download-Cache, um die übertragene Datenmenge zu begrenzen. Der Pfad zum Cache kann geändert sowie im Offline-Modus als lokales Repository verwenden werden.</translation>
     </message>
     <message>
         <location filename="../configurefrm.ui" line="286"/>
@@ -1370,7 +1370,7 @@ Please configure TTS engine.</source>
     <message>
         <location filename="../configurefrm.ui" line="334"/>
         <source>&lt;p&gt;This will try to use all information from the cache, even information about updates. Only use this option if you want to install without network connection. Note: you need to do the same install you want to perform later with network access first to download all required files to the cache.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Dies versucht alle Informationen aus dem Cache zu beziehen, selbst die Informationen über Updates. Diese Option nur benutzen um ohne Internetverbindung zu installieren. Hinweis: die gleiche Installation, die später durchgeführt werden soll, muss einmal mit Netzwerkverbindung durchführt werden, damit die notwendigen Dateien im Cache gespeichert sind.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Dies versucht, alle Informationen aus dem Cache zu beziehen, selbst die Informationen über Updates. Diese Option nur benutzen, um ohne Internetverbindung zu installieren. Hinweis: die gleiche Installation, die später durchgeführt werden soll, muss einmal mit Netzwerkverbindung durchführt werden, damit die notwendigen Dateien im Cache gespeichert sind.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../configurefrm.ui" line="388"/>
@@ -1618,7 +1618,7 @@ Please configure TTS engine.</source>
     <message>
         <location filename="../gui/infowidgetfrm.ui" line="20"/>
         <source>Currently installed packages.&lt;br/&gt;&lt;b&gt;Note:&lt;/b&gt; if you manually installed packages this might not be correct!</source>
-        <translation>Aktuell installierte Pakete.&lt;br/&gt;&lt;b&gt;Hinweis:&lt;/b&gt; wenn Pakete manuell installiert wurden kann die Anzeige fehlerhaft sein!</translation>
+        <translation>Aktuell installierte Pakete.&lt;br/&gt;&lt;b&gt;Hinweis:&lt;/b&gt; wenn Pakete manuell installiert wurden, kann die Anzeige fehlerhaft sein!</translation>
     </message>
     <message>
         <location filename="../gui/infowidgetfrm.ui" line="34"/>
@@ -1853,7 +1853,7 @@ This string is used to indicate the writing direction. Translate it to &quot;RTL
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="80"/>
         <source>Bootloader installation is almost complete. Installation &lt;b&gt;requires&lt;/b&gt; you to perform the following steps manually:</source>
-        <translation>Installation des Bootloader ist fast abgeschlossen. Zum Abschluss der Installation ist es &lt;b&gt;notwendig&lt;/b&gt; die folgenden Schritte manuell auszuführen:</translation>
+        <translation>Installation des Bootloader ist fast abgeschlossen. Zum Abschluss der Installation ist es &lt;b&gt;notwendig&lt;/b&gt;, die folgenden Schritte manuell auszuführen:</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="86"/>
@@ -1863,7 +1863,7 @@ This string is used to indicate the writing direction. Translate it to &quot;RTL
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="91"/>
         <source>&lt;li&gt;Reboot your player into the original firmware.&lt;/li&gt;&lt;li&gt;Perform a firmware upgrade using the update functionality of the original firmware. Please refer to your player&apos;s manual on details.&lt;br/&gt;&lt;b&gt;Important:&lt;/b&gt; updating the firmware is a critical process that must not be interrupted. &lt;b&gt;Make sure the player is charged before starting the firmware update process.&lt;/b&gt;&lt;/li&gt;&lt;li&gt;After the firmware has been updated reboot your player.&lt;/li&gt;</source>
-        <translation>&lt;li&gt;Gerät mit der Original-Firmware starten.&lt;/li&gt;&lt;li&gt;Ein Firmware-Update mit der Update-Funktion der Original-Firmware entsprechend der Anleitung des Geräts durchführen.&lt;/li&gt;&lt;b&gt;Wichtig:&lt;/b&gt;Das Firmware-Update ist ein kritischer Prozess der nicht unterbrochen werden darf. &lt;b&gt;Bitte darauf achten dass der Akku vor dem Starten des Updates geladen ist.&lt;/b&gt;&lt;/li&gt;&lt;li&gt;Nach Abschluß des Updates das Gerät neu starten.&lt;/li&gt;</translation>
+        <translation>&lt;li&gt;Gerät mit der Original-Firmware starten.&lt;/li&gt;&lt;li&gt;Ein Firmware-Update mit der Update-Funktion der Original-Firmware entsprechend der Anleitung des Geräts durchführen.&lt;/li&gt;&lt;b&gt;Wichtig:&lt;/b&gt;Das Firmware-Update ist ein kritischer Prozess, der nicht unterbrochen werden darf. &lt;b&gt;Bitte darauf achten, dass der Akku vor dem Starten des Updates geladen ist.&lt;/b&gt;&lt;/li&gt;&lt;li&gt;Nach Abschluß des Updates das Gerät neu starten.&lt;/li&gt;</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="102"/>
@@ -1873,7 +1873,7 @@ This string is used to indicate the writing direction. Translate it to &quot;RTL
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="103"/>
         <source>&lt;li&gt;Disconnect your player. The player will reboot and perform an update of the original firmware. Please refer to your players manual on details.&lt;br/&gt;&lt;b&gt;Important:&lt;/b&gt; updating the firmware is a critical process that must not be interrupted. &lt;b&gt;Make sure the player is charged before disconnecting the player.&lt;/b&gt;&lt;/li&gt;&lt;li&gt;After the firmware has been updated reboot your player.&lt;/li&gt;</source>
-        <translation>&lt;li&gt;Das Gerät entfernen. Es wird einen Neustart und ein Update der Original-Firmware durchführen. Für Details bitte das Handbuch des Gerätes beachten.&lt;br/&gt;&lt;b&gt;Wichtig:&lt;/b&gt;Das Firmware-Update ist ein kritischer Prozess der nicht unterbrochen werden darf. &lt;b&gt;Unbedingt vor dem Trennen darauf achten dass das Gerät aufgeladen ist.&lt;/b&gt;&lt;/li&gt;&lt;li&gt;Nach Abschluß des Updates das Gerät neu starten.&lt;/li&gt;</translation>
+        <translation>&lt;li&gt;Das Gerät entfernen. Es wird einen Neustart und ein Update der Original-Firmware durchführen. Für Details bitte das Handbuch des Gerätes beachten.&lt;br/&gt;&lt;b&gt;Wichtig:&lt;/b&gt;Das Firmware-Update ist ein kritischer Prozess, der nicht unterbrochen werden darf. &lt;b&gt;Unbedingt vor dem Trennen darauf achten dass das Gerät aufgeladen ist.&lt;/b&gt;&lt;/li&gt;&lt;li&gt;Nach Abschluß des Updates das Gerät neu starten.&lt;/li&gt;</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="114"/>
@@ -1883,12 +1883,12 @@ This string is used to indicate the writing direction. Translate it to &quot;RTL
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="119"/>
         <source>&lt;li&gt;Unplug USB and power adaptors&lt;/li&gt;&lt;li&gt;Hold &lt;i&gt;Power&lt;/i&gt; to turn the player off&lt;/li&gt;&lt;li&gt;Toggle the battery switch on the player&lt;/li&gt;&lt;li&gt;Hold &lt;i&gt;Power&lt;/i&gt; to boot into Rockbox&lt;/li&gt;</source>
-        <translation>&lt;li&gt;USB und Stromkabel abziehen&lt;/li&gt;&lt;li&gt;&lt;i&gt;Power&lt;/i&gt; gedrückt halten um das Gerät auszuschalten&lt;/li&gt;&lt;li&gt;Batterieschalter am Gerät umlegen&lt;/li&gt;&lt;li&gt;&lt;i&gt;Power&lt;/i&gt; halten um Rockbox zu booten&lt;/li&gt;</translation>
+        <translation>&lt;li&gt;USB und Stromkabel abziehen&lt;/li&gt;&lt;li&gt;&lt;i&gt;Power&lt;/i&gt; gedrückt halten, um das Gerät auszuschalten&lt;/li&gt;&lt;li&gt;Batterieschalter am Gerät umlegen&lt;/li&gt;&lt;li&gt;&lt;i&gt;Power&lt;/i&gt; halten, um Rockbox zu booten&lt;/li&gt;</translation>
     </message>
     <message>
         <location filename="../base/bootloaderinstallhelper.cpp" line="125"/>
         <source>&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; You can safely install other parts first, but the above steps are &lt;b&gt;required&lt;/b&gt; to finish the installation!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;Hinweis:&lt;/b&gt; andere Teile von Rockbox können problemlos vorher installiert werden, aber die genannten Schritte sind &lt;b&gt;notwendig&lt;/b&gt; um die Installation abzuschließen!&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;&lt;b&gt;Hinweis:&lt;/b&gt; andere Teile von Rockbox können problemlos vorher installiert werden, aber die genannten Schritte sind &lt;b&gt;notwendig&lt;/b&gt;, um die Installation abzuschließen!&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -2015,7 +2015,7 @@ This string is used to indicate the writing direction. Translate it to &quot;RTL
     <message>
         <location filename="../rbutilqt.cpp" line="623"/>
         <source>Your configuration is invalid. Please go to the configuration dialog and make sure the selected values are correct.</source>
-        <translation>Die Konfiguration ist ungültig. Bitte im Konfigurationsdialog sicherstellen dass die Einstellungen korrekt sind.</translation>
+        <translation>Die Konfiguration ist ungültig. Bitte im Konfigurationsdialog sicherstellen, dass die Einstellungen korrekt sind.</translation>
     </message>
     <message>
         <location filename="../rbutilqt.cpp" line="314"/>
@@ -2030,7 +2030,7 @@ This string is used to indicate the writing direction. Translate it to &quot;RTL
     <message>
         <location filename="../rbutilqt.cpp" line="105"/>
         <source>It seems you are trying to run this program under Wine. Please don&apos;t do this, running under Wine will fail. Use the native Linux binary instead.</source>
-        <translation>Es scheint so als ob dieses Programm mit Wine ausgeführt wird. Dies wird fehlschlagen. Unter Linux bitte die native Linux-Version verwenden.</translation>
+        <translation>Es scheint so, als ob dieses Programm mit Wine ausgeführt wird. Dies wird fehlschlagen. Unter Linux bitte die native Linux-Version verwenden.</translation>
     </message>
     <message>
         <location filename="../rbutilqt.cpp" line="225"/>
@@ -2295,7 +2295,7 @@ Netzwerkfehler: %1. Bitte Netzwerk- und Proxy-Einstellungen überprüfen.</trans
         <location filename="../rbutilqtfrm.ui" line="248"/>
         <source>&lt;b&gt;Create Voice file&lt;/b&gt;&lt;br/&gt;Voice files are needed to make Rockbox speak the  user interface. Speaking is enabled by default, so
  if you installed the voice file Rockbox will speak.</source>
-        <translation>&lt;b&gt;Erzeuge Sprachdatei&lt;/b&gt;&lt;br&gt; Sprachdateien werden benötigt, damit Rockbox seine Benutzeroberfläche vorlesen kann. Sprachausgabe ist Standardmäßig angeschaltet, sobald sie eine Sprachdatei installieren wird Rockbox sprechen.</translation>
+        <translation>&lt;b&gt;Erzeuge Sprachdatei&lt;/b&gt;&lt;br&gt; Sprachdateien werden benötigt, damit Rockbox seine Benutzeroberfläche vorlesen kann. Sprachausgabe ist Standardmäßig angeschaltet. Sobald Sie eine Sprachdatei installieren, wird Rockbox sprechen.</translation>
     </message>
     <message>
         <location filename="../rbutilqtfrm.ui" line="260"/>
@@ -2453,7 +2453,7 @@ Netzwerkfehler: %1. Bitte Netzwerk- und Proxy-Einstellungen überprüfen.</trans
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="156"/>
         <source>The bootloader is required for starting Rockbox. Only necessary for first time install.</source>
-        <translation>Der Bootloader ist notwendig um Rockbox zu starten. Die Installation ist nur beim ersten Mal notwendig.</translation>
+        <translation>Der Bootloader ist notwendig, um Rockbox zu starten. Die Installation ist nur beim ersten Mal notwendig.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidgetfrm.ui" line="166"/>
@@ -2493,7 +2493,7 @@ Netzwerkfehler: %1. Bitte Netzwerk- und Proxy-Einstellungen überprüfen.</trans
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="71"/>
         <source>This will eventually become the next Rockbox version. Install it to help testing.</source>
-        <translation>Dies wird die Basis der nächsten Rockbox-Version. Um testen zu helfen diese Version installieren.</translation>
+        <translation>Dies wird die Basis der nächsten Rockbox-Version. Um testen zu helfen, diese Version installieren.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="97"/>
@@ -2518,7 +2518,7 @@ Netzwerkfehler: %1. Bitte Netzwerk- und Proxy-Einstellungen überprüfen.</trans
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="132"/>
         <source>The bootloader is required for starting Rockbox. Installation of the bootloader is only necessary on first time installation.</source>
-        <translation>Der Bootloader ist notwendig um Rockbox zu starten. Die Installation ist nur einmalig notwendig.</translation>
+        <translation>Der Bootloader ist notwendig, um Rockbox zu starten. Die Installation ist nur einmalig notwendig.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="165"/>
@@ -2554,8 +2554,8 @@ Netzwerkfehler: %1. Bitte Netzwerk- und Proxy-Einstellungen überprüfen.</trans
         <location filename="../gui/selectiveinstallwidget.cpp" line="265"/>
         <source>You can create a backup of the original bootloader file. Press &quot;Yes&quot; to select an output folder on your computer to save the file to. The file will get placed in a new folder &quot;%1&quot; created below the selected folder.
 Press &quot;No&quot; to skip this step.</source>
-        <translation>Es kann eine Sicherungskopie der originalen Bootloader-Datei erstellt werden. &quot;Ja&quot; um einen Zielordner auf dem Computer auszuwählen. Die Datei wird in einem neuen Unterordner &quot;%1&quot; im gewählten Ordner abgelegt.
-&quot;Nein&quot; um diesen Schritt zu überspringen.</translation>
+        <translation>Es kann eine Sicherungskopie der originalen Bootloader-Datei erstellt werden. &quot;Ja&quot;, um einen Zielordner auf dem Computer auszuwählen. Die Datei wird in einem neuen Unterordner &quot;%1&quot; im gewählten Ordner abgelegt.
+&quot;Nein&quot;, um diesen Schritt zu überspringen.</translation>
     </message>
     <message>
         <location filename="../gui/selectiveinstallwidget.cpp" line="272"/>
@@ -2963,7 +2963,7 @@ Press &quot;No&quot; to skip this step.</source>
     <message>
         <location filename="../base/talkfile.cpp" line="41"/>
         <source>Reading Filelist...</source>
-        <translation>Lese Dateiliste ...</translation>
+        <translation>Lese Dateiliste...</translation>
     </message>
     <message>
         <location filename="../base/talkfile.cpp" line="256"/>
@@ -3085,7 +3085,7 @@ Press &quot;No&quot; to skip this step.</source>
     <message>
         <location filename="../themesinstallfrm.ui" line="93"/>
         <source>Hold Ctrl to select multiple item, Shift for a range</source>
-        <translation>Strg halten um mehrer Einträge, Umschalt einen Bereich auszuwählen</translation>
+        <translation>Strg halten, um mehrere Einträge, Umschalt, um einen Bereich auszuwählen</translation>
     </message>
 </context>
 <context>
@@ -3226,7 +3226,7 @@ HTTP Antwortcode: %1</translation>
     <message>
         <location filename="../uninstallfrm.ui" line="58"/>
         <source>Smart Uninstallation</source>
-        <translation>Intelligente Entfernen</translation>
+        <translation>Intelligentes Entfernen</translation>
     </message>
     <message>
         <location filename="../uninstallfrm.ui" line="68"/>

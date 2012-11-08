@@ -50,13 +50,13 @@ export PROFILE_OPTS=
 export APP_TYPE=android
 export APPLICATION=yes
 export SIMDIR=$(ROOTDIR)/uisimulator/sdl
-export GCCOPTS=-W -Wall  -O   -Wstrict-prototypes -pipe -std=gnu99 -march=armv5te -mtune=xscale -msoft-float -fomit-frame-pointer 		--sysroot=/opt/android-ndk/platforms/android-5/arch-arm  -Wno-pointer-sign -Wno-override-init
+export GCCOPTS=-W -Wall  -O   -Wstrict-prototypes -pipe -std=gnu99 -march=armv5te -mtune=xscale -msoft-float -fomit-frame-pointer                     --sysroot=/opt/android-ndk/platforms/android-5/arch-arm  -Wno-pointer-sign -Wno-override-init
 export TARGET_INC=-I$(FIRMDIR)/target/hosted/android/app -I$(FIRMDIR)/target/hosted/android -I$(FIRMDIR)/target/hosted
 export LOADADDRESS=
-export SHARED_LDFLAG=-shared
+export SHARED_LDFLAG=
 export SHARED_CFLAGS=
-export LDOPTS=-shared -ldl -llog --sysroot=/opt/android-ndk/platforms/android-5/arch-arm 
-export GLOBAL_LDOPTS=-Wl,-z,defs -Wl,-z,noexecstack
+export LDOPTS= -Wl,-soname,librockbox.so -shared -ldl -llog --sysroot=/opt/android-ndk/platforms/android-5/arch-arm
+export GLOBAL_LDOPTS=-Wl,-z,defs -Wl,-z,noexecstack -shared
 export GCCVER=4.4.3
 export GCCNUM=404
 export UNAME=Linux

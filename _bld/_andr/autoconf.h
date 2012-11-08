@@ -28,7 +28,7 @@
 
 /* Define target machine architecture */
 #define ARCH arch_arm
-/* Optinally define architecture version */
+/* Optionally define architecture version */
 #define ARCH_VERSION 5
 
 /* Define endianess for the target or simulator platform */

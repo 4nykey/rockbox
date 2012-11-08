@@ -21,6 +21,7 @@
 #ifndef TTSEXES_H
 #define TTSEXES_H
 
+#include <QtCore>
 #include "ttsbase.h"
 
 class TTSExes : public TTSBase
@@ -33,7 +34,7 @@ class TTSExes : public TTSBase
 
     Q_OBJECT
     public:
-        TTSExes(QString name,QObject* parent=NULL);
+        TTSExes(QObject* parent=NULL);
         TTSStatus voice(QString text, QString wavfile, QString *errStr);
         bool start(QString *errStr);
         bool stop() {return true;}
@@ -47,11 +48,14 @@ class TTSExes : public TTSBase
 
     private:
         void loadSettings(void);
+
+    protected:
+        QString m_TTSTemplate;
+        QString m_TTSSpeakTemplate;
         QString m_name;
         QString m_TTSexec;
         QString m_TTSOpts;
-        QString m_TTSTemplate;
-        QMap<QString,QString> m_TemplateMap;
+        TTSBase::Capabilities m_capabilities;
 };
 
 #endif
