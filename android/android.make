@@ -28,7 +28,7 @@ $(CPUFEAT_BUILD)/cpu-features.o: $(CPUFEAT)/cpu-features.c
 .PHONY: apk classes clean dex dirs libs jar
 
 # API version
-ANDROID_PLATFORM_VERSION=15
+ANDROID_PLATFORM_VERSION=14
 ANDROID_PLATFORM=$(ANDROID_SDK_PATH)/platforms/android-$(ANDROID_PLATFORM_VERSION)
 
 # android tools
@@ -149,7 +149,7 @@ endif
 	$(call PRINTS,SIGN $(subst $(BUILDDIR)/,,$@))jarsigner \
 		-keystore "$(KEYSTORE)" -storepass "android" -keypass "android" \
 		-signedjar $(TEMP_APK2) $(TEMP_APK) "androiddebugkey" \
-		-sigalg MD5withRSA -digestalg SHA1
+		-sigalg SHA1withDSA -digestalg SHA1
 	$(SILENT)$(ZIPALIGN) -v 4 $(TEMP_APK2) $@ > /dev/null
 
 $(DIRS):

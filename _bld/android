@@ -1,0 +1,23 @@
+#!/bin/sh
+if false; then
+/opt/crystax-ndk/build/tools/make-standalone-toolchain.sh\
+ --ndk-dir=/opt/crystax-ndk\
+ --install-dir=/home/ak/binaries/crystax-ndk\
+ --platform=android-14
+fi
+
+export ANDROID_SDK_PATH=/opt/android-sdk-update-manager
+export ANDROID_NDK_PATH=/home/ak/binaries/crystax-ndk
+
+pushd _andr
+../../tools/configure --target=201 --type=n --lcdwidth=480 --lcdheight=800
+
+make veryclean
+
+make -j4 V=1 zip
+
+make apk
+
+popd
+
+echo "${ANDROID_SDK_PATH}/platform-tools/adb install -r _andr/rockbox.apk"
