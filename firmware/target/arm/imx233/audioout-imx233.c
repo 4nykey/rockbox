@@ -24,6 +24,15 @@
 #include "pcm_sampr.h"
 
 static int hp_vol_l, hp_vol_r;
+static struct timeout hp_unmute_oneshort;
+
+static int hp_unmute_cb(struct timeout *tmo)
+{
+    (void) tmo;
+    /* unmute HP */
+    __REG_CLR(HW_AUDIOOUT_HPVOL) = HW_AUDIOOUT_HPVOL__MUTE;
+    return 0;
+}
 
 void imx233_audioout_preinit(void)
 {
@@ -41,21 +50,37 @@ void imx233_audioout_preinit(void)
     __REG_CLR(HW_AUDIOOUT_PWRDN) = HW_AUDIOOUT_PWRDN__DAC;
     /* Hold HP to ground to avoid pop, then release and power up HP */
     __REG_SET(HW_AUDIOOUT_ANACTRL) = HW_AUDIOOUT_ANACTRL__HP_HOLD_GND;
-    __REG_SET(HW_RTC_PERSISTENT0) = HW_RTC_PERSISTENT0__SPARE__RELEASE_GND;
     __REG_CLR(HW_AUDIOOUT_PWRDN) = HW_AUDIOOUT_PWRDN__HEADPHONE;
     /* Set HP mode to AB */
     __REG_SET(HW_AUDIOOUT_ANACTRL) = HW_AUDIOOUT_ANACTRL__HP_CLASSAB;
+    /* change biais to -50% */
+    __REG_CLR(HW_AUDIOOUT_TEST) = HW_AUDIOOUT_TEST__HP_I1_ADJ_BM;
+    __REG_SET(HW_AUDIOOUT_TEST) = HW_AUDIOOUT_TEST__HP_I1_ADJ_M_50;
+    __REG_CLR(HW_AUDIOOUT_REFCTRL) = HW_AUDIOOUT_REFCTRL__BIAS_CTRL_BM;
+    __REG_SET(HW_AUDIOOUT_REFCTRL) = 1 << HW_AUDIOOUT_REFCTRL__BIAS_CTRL_BP;
+    __REG_SET(HW_AUDIOOUT_REFCTRL) = HW_AUDIOOUT_REFCTRL__RAISE_REF;
+    __REG_SET(HW_AUDIOOUT_REFCTRL) = HW_AUDIOOUT_REFCTRL__XTAL_BGR_BIAS;
     /* Stop holding to ground */
     __REG_CLR(HW_AUDIOOUT_ANACTRL) = HW_AUDIOOUT_ANACTRL__HP_HOLD_GND;
     /* Set dmawait count to 31 (see errata, workaround random stop) */
     __REG_CLR(HW_AUDIOOUT_CTRL) = HW_AUDIOOUT_CTRL__DMAWAIT_COUNT_BM;
     __REG_SET(HW_AUDIOOUT_CTRL) = 31 << HW_AUDIOOUT_CTRL__DMAWAIT_COUNT_BP;
+    /* start converting audio */
+    __REG_SET(HW_AUDIOOUT_CTRL) = HW_AUDIOOUT_CTRL__RUN;
+    /* unmute DAC */
+    __REG_CLR(HW_AUDIOOUT_DACVOLUME) = HW_AUDIOOUT_DACVOLUME__MUTE_LEFT |
+        HW_AUDIOOUT_DACVOLUME__MUTE_RIGHT;
+    /* send a few samples to avoid pop */
+    HW_AUDIOOUT_DATA = 0;
+    HW_AUDIOOUT_DATA = 0;
+    HW_AUDIOOUT_DATA = 0;
+    HW_AUDIOOUT_DATA = 0;
+    /* wait for everything to stabilize before unmuting */
+    timeout_register(&hp_unmute_oneshort, hp_unmute_cb, HZ / 2, 0);
 }
 
 void imx233_audioout_postinit(void)
 {
-    /* start converting audio */
-    __REG_SET(HW_AUDIOOUT_CTRL) = HW_AUDIOOUT_CTRL__RUN;
 }
 
 void imx233_audioout_close(void)
