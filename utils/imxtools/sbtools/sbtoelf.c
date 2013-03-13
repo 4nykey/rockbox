@@ -231,6 +231,7 @@ static void usage(void)
     printf("  -2/--v2\tForce to read file as a version 2 file\n");
     printf("  -s/--no-simpl\tPrevent elf files from being simplified*\n");
     printf("  -x\t\tUse default sb1 key\n");
+    printf("  -b\tBrute force key\n");
     printf("Options marked with a * are for debug purpose only\n");
     exit(1);
 }
@@ -283,12 +284,20 @@ enum sb_version_guess_t guess_sb_version(const char *filename)
         ret(SB_VERSION_UNK);
     if(hdr_size == 0x34)
         ret(SB_VERSION_1);
-    // check header size (v2)
-    if(fseek(f, 32, SEEK_SET))
+    // check header params relationship
+    struct
+    {
+        uint16_t nr_keys; /* Number of encryption keys */
+        uint16_t key_dict_off; /* Offset to key dictionary (in blocks) */
+        uint16_t header_size; /* In blocks */
+        uint16_t nr_sections; /* Number of sections */
+        uint16_t sec_hdr_size; /* Section header size (in blocks) */
+    } __attribute__((packed)) u;
+    if(fseek(f, 0x28, SEEK_SET))
         ret(SB_VERSION_UNK);
-    if(fread(&hdr_size, 4, 1, f) != 1)
+    if(fread(&u, sizeof(u), 1, f) != 1)
         ret(SB_VERSION_UNK);
-    if(hdr_size == 0xc)
+    if(u.sec_hdr_size == 1 && u.header_size == 6 && u.key_dict_off == u.header_size + u.nr_sections)
         ret(SB_VERSION_2);
     ret(SB_VERSION_UNK);
 #undef ret
@@ -300,6 +309,7 @@ int main(int argc, char **argv)
     const char *loopback = NULL;
     bool force_sb1 = false;
     bool force_sb2 = false;
+    bool brute_force = false;
 
     while(1)
     {
@@ -317,7 +327,7 @@ int main(int argc, char **argv)
             {0, 0, 0, 0}
         };
 
-        int c = getopt_long(argc, argv, "?do:k:zra:nl:f12xs", long_options, NULL);
+        int c = getopt_long(argc, argv, "?do:k:zra:nl:f12xsb", long_options, NULL);
         if(c == -1)
             break;
         switch(c)
@@ -383,6 +393,9 @@ int main(int argc, char **argv)
             case 's':
                 g_elf_simplify = false;
                 break;
+            case 'b':
+                brute_force = true;
+                break;
             default:
                 abort();
         }
@@ -434,6 +447,33 @@ int main(int argc, char **argv)
     }
     else if(force_sb1 || ver == SB_VERSION_1)
     {
+        if(brute_force)
+        {
+            struct crypto_key_t key;
+            enum sb1_error_t err;
+            if(!sb1_brute_force(sb_filename, NULL, sb_printf, &err, &key))
+            {
+                color(OFF);
+                printf("Brute force failed: %d\n", err);
+                return 1;
+            }
+            color(RED);
+            printf("Key found:");
+            color(YELLOW);
+            for(int i = 0; i < 32; i++)
+                printf(" %08x", key.u.xor_key[i / 16].k[i % 16]);
+            color(OFF);
+            printf("\n");
+            color(RED);
+            printf("Key: ");
+            color(YELLOW);
+            for(int i = 0; i < 128; i++)
+                printf("%02x", key.u.xor_key[i / 64].key[i % 64]);
+            color(OFF);
+            printf("\n");
+            add_keys(&key, 1);
+        }
+
         enum sb1_error_t err;
         struct sb1_file_t *file = sb1_read_file(sb_filename, NULL, sb_printf, &err);
         if(file == NULL)
