@@ -7,10 +7,7 @@
  *                     \/            \/     \/    \/            \/
  * $Id$
  *
- * Copyright (C) 2012 by amaury Pouly
- *
- * Based on Rockbox iriver bootloader by Linus Nielsen Feltzing
- * and the ipodlinux bootloader by Daniel Palffy and Bernard Leach
+ * Copyright (C) 2012 by Amaury Pouly
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,6 +43,7 @@ static int stfm1000_read_reg(uint8_t reg, uint32_t *val)
     return ret;
 }
 
+#if 0
 static int stfm1000_write_reg(uint8_t reg, uint32_t val)
 {
     uint8_t buf[5];
@@ -54,6 +52,7 @@ static int stfm1000_write_reg(uint8_t reg, uint32_t val)
     buf[3] = (val >> 16) & 0xff; buf[4] = (val >> 24) & 0xff;
     return fmradio_i2c_write(STFM100_I2C_ADDR, buf, 5);
 }
+#endif
 
 void stfm1000_dbg_info(struct stfm1000_dbg_info *nfo)
 {

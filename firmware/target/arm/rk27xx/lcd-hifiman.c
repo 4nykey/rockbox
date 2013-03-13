@@ -30,6 +30,15 @@
 
 static bool display_on = false;
 
+static void reset_lcd(void)
+{
+    GPIO_PCCON |= (1<<7);
+    GPIO_PCDR &= ~(1<<7);
+    udelay(10);
+    GPIO_PCDR |= (1<<7);
+    udelay(5000);
+}
+
 void lcd_v1_display_init(void)
 {
     unsigned int x, y;
@@ -286,6 +295,7 @@ static void lcd_v2_update_rect(int x, int y, int width, int height)
 
 void lcd_display_init(void)
 {
+    reset_lcd();
     identify_lcd();
     if (lcd_type == LCD_V1)
         lcd_v1_display_init();
@@ -323,6 +333,7 @@ void lcd_update_rect(int x, int y, int width, int height)
 
 void lcd_display_init(void)
 {
+    reset_lcd();
     lcd_v1_display_init();
 }
 
@@ -350,7 +361,10 @@ bool lcd_active()
     return display_on;
 }
 
-/* Blit a YUV bitmap directly to the LCD */
+/* Blit a YUV bitmap directly to the LCD
+ * provided by generic fallback in lcd-16bit-common.c
+ */
+#if 0
 void lcd_blit_yuv(unsigned char * const src[3],
                   int src_x, int src_y, int stride,
                   int x, int y, int width, int height)
@@ -364,3 +378,4 @@ void lcd_blit_yuv(unsigned char * const src[3],
     (void)width;
     (void)height;
 }
+#endif

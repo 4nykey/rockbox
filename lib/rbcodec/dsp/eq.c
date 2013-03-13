@@ -32,7 +32,7 @@
 #include <string.h>
 
 /**
- * Current setup is one lowshelf filters three peaking filters and one
+ * Current setup is one lowshelf filters eight peaking filters and one
  *  highshelf filter. Varying the number of shelving filters make no sense,
  *  but adding peaking filters is possible. Check EQ_NUM_BANDS to have
  *  2 shelving filters and EQ_NUM_BANDS-2 peaking filters.
@@ -71,15 +71,6 @@ void dsp_set_eq_precut(int precut)
 /* Update the filter configuration for the band */
 void dsp_set_eq_coefs(int band, const struct eq_band_setting *setting)
 {
-    static void (* const coef_gen[EQ_NUM_BANDS])(unsigned long cutoff,
-                                                 unsigned long Q, long db,
-                                                 struct dsp_filter *f) =
-    {
-        [0]                    = filter_ls_coefs,
-        [1 ... EQ_NUM_BANDS-2] = filter_pk_coefs, 
-        [EQ_NUM_BANDS-1]       = filter_hs_coefs,
-    };
-
     if (band < 0 || band >= EQ_NUM_BANDS)
         return;
 
@@ -98,8 +89,17 @@ void dsp_set_eq_coefs(int band, const struct eq_band_setting *setting)
 
         /* Convert user settings to format required by coef generator
            functions */
-        coef_gen[band](0xffffffff / NATIVE_FREQUENCY * setting->cutoff,
-                       setting->q ?: 1, setting->gain, filter);
+        void (* coef_gen)(unsigned long cutoff, unsigned long Q, long db,
+                          struct dsp_filter *f) = filter_pk_coefs;
+
+        /* Only first and last bands are not peaking filters */
+        if (band == 0)
+            coef_gen = filter_ls_coefs;
+        else if (band == EQ_NUM_BANDS-1)
+            coef_gen = filter_hs_coefs;
+
+        coef_gen(0xffffffff / NATIVE_FREQUENCY * setting->cutoff,
+                 setting->q ?: 1, setting->gain, filter);
     }
 
     if (mask == eq_data.enabled)

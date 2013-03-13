@@ -84,6 +84,26 @@ void *augment_array(void *arr, size_t elem_sz, size_t cnt, void *aug, size_t aug
     return p;
 }
 
+void augment_array_ex(void **arr, size_t elem_sz, int *cnt, int *capacity,
+    void *aug, int aug_cnt)
+{
+    /* if capacity is not large enough, double it */
+    if(*cnt + aug_cnt > *capacity)
+    {
+        if(*capacity == 0)
+            *capacity = 1;
+        while(*cnt + aug_cnt > *capacity)
+            *capacity *= 2;
+        void *p = xmalloc(elem_sz * (*capacity));
+        memcpy(p, *arr, elem_sz * (*cnt));
+        free(*arr);
+        *arr = p;
+    }
+    /* copy elements */
+    memcpy(*arr + elem_sz * (*cnt), aug, elem_sz * aug_cnt);
+    *cnt += aug_cnt;
+}
+
 /**
  * Key file parsing
  */
@@ -97,8 +117,23 @@ bool parse_key(char **pstr, struct crypto_key_t *key)
     while(isspace(*str))
         str++;
     /* CRYPTO_KEY: 32 hex characters
-     * CRYPTO_USBOTP: usbotp(vid:pid) where vid and pid are hex numbers */
-    if(isxdigit(str[0]))
+     * CRYPTO_USBOTP: usbotp(vid:pid) where vid and pid are hex numbers
+     * CRYPTO_XOR_KEY: 256 hex characters */
+    if(isxdigit(str[0]) && strlen(str) >= 256 && isxdigit(str[32]))
+    {
+        for(int j = 0; j < 128; j++)
+        {
+            byte a, b;
+            if(convxdigit(str[2 * j], &a) || convxdigit(str[2 * j + 1], &b))
+                return false;
+            key->u.xor_key[j / 64].key[j % 64] = (a << 4) | b;
+        }
+        /* skip key */
+        *pstr = str + 256;
+        key->method = CRYPTO_XOR_KEY;
+        return true;
+    }
+    else if(isxdigit(str[0]))
     {
         if(strlen(str) < 32)
             return false;
@@ -239,6 +274,12 @@ void print_key(struct crypto_key_t *key, bool newline)
         case CRYPTO_NONE:
             printf("none");
             break;
+        case CRYPTO_XOR_KEY:
+            print_hex(&key->u.xor_key[0].key[0], 64, false);
+            print_hex(&key->u.xor_key[1].key[0], 64, false);
+            break;
+        default:
+            printf("unknown");
     }
     if(newline)
         printf("\n");

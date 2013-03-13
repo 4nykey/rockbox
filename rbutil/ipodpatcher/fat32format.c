@@ -36,6 +36,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <inttypes.h>
 
 #include "ipodio.h"
 
@@ -86,9 +87,6 @@ static uint32_t rb_htole32(uint32_t x)
     }
 }
 
-
-/* A large aligned buffer for disk I/O */
-extern unsigned char* ipod_sectorbuf;
 
 /* TODO: Pass these as parameters to the various create_ functions */
 
@@ -166,7 +164,7 @@ static int zero_sectors(struct ipod_t* ipod, uint64_t sector, int count)
         return -1;
     }
 
-    memset(ipod_sectorbuf, 0, 128 * ipod->sector_size);
+    memset(ipod->sectorbuf, 0, 128 * ipod->sector_size);
 
     /* Write 128 sectors at a time */
     while (count) {
@@ -175,7 +173,7 @@ static int zero_sectors(struct ipod_t* ipod, uint64_t sector, int count)
         else
             n = count;
 
-        if (ipod_write(ipod,ipod_sectorbuf,n * ipod->sector_size) < 0) {
+        if (ipod_write(ipod,n * ipod->sector_size) < 0) {
             perror("[ERR]  Write failed in zero_sectors\n");
             return -1;
         }
@@ -468,7 +466,8 @@ int format_partition(struct ipod_t* ipod, int partition)
      */
     
     fprintf(stderr,"[INFO] Heads - %d, sectors/track = %d\n",ipod->num_heads,ipod->sectors_per_track);
-    fprintf(stderr,"[INFO] Size : %lluGB %u sectors\n", ((uint64_t)ipod->pinfo[partition].size * (uint64_t)ipod->sector_size) / (1000*1000*1000), TotalSectors );
+    fprintf(stderr,"[INFO] Size : %" PRIu64 "GB %u sectors\n",
+            ((uint64_t)ipod->pinfo[partition].size * (uint64_t)ipod->sector_size) / (1000*1000*1000), TotalSectors );
     fprintf(stderr,"[INFO] %d Bytes Per Sector, Cluster size %d bytes\n", BytesPerSect, SectorsPerCluster*BytesPerSect );
     fprintf(stderr,"[INFO] Volume ID is %x:%x\n", VolumeId>>16, VolumeId&0xffff );
     fprintf(stderr,"[INFO] %d Reserved Sectors, %d Sectors per FAT, %d fats\n", ReservedSectCount, FatSize, NumFATs );
@@ -484,15 +483,15 @@ int format_partition(struct ipod_t* ipod, int partition)
     fprintf(stderr,"[INFO] Initialising reserved sectors and FATs...\n" );
 
     /* Create the boot sector structure */
-    create_boot_sector(ipod_sectorbuf, ipod, partition);
-    create_fsinfo(ipod_sectorbuf + 512);
+    create_boot_sector(ipod->sectorbuf, ipod, partition);
+    create_fsinfo(ipod->sectorbuf + 512);
 
     /* Write boot sector and fsinfo at start of partition */
     if (ipod_seek(ipod, ipod->pinfo[partition].start * ipod->sector_size) < 0) {
         fprintf(stderr,"[ERR]  Seek failed\n");
         return -1;
     }
-    if (ipod_write(ipod,ipod_sectorbuf,512 * 2) < 0) {
+    if (ipod_write(ipod,512 * 2) < 0) {
         perror("[ERR]  Write failed (first copy of bootsect/fsinfo)\n");
         return -1;
     }
@@ -502,13 +501,13 @@ int format_partition(struct ipod_t* ipod, int partition)
         fprintf(stderr,"[ERR]  Seek failed\n");
         return -1;
     }
-    if (ipod_write(ipod,ipod_sectorbuf,512 * 2) < 0) {
+    if (ipod_write(ipod,512 * 2) < 0) {
         perror("[ERR]  Write failed (first copy of bootsect/fsinfo)\n");
         return -1;
     }
 
     /* Create the first FAT sector */
-    create_firstfatsector(ipod_sectorbuf);
+    create_firstfatsector(ipod->sectorbuf);
     
     /* Write the first fat sector in the right places */
     for ( i=0; i<NumFATs; i++ ) {
@@ -519,7 +518,7 @@ int format_partition(struct ipod_t* ipod, int partition)
             return -1;
         }
 
-        if (ipod_write(ipod,ipod_sectorbuf,512) < 0) {
+        if (ipod_write(ipod,512) < 0) {
             perror("[ERR]  Write failed (first copy of bootsect/fsinfo)\n");
             return -1;
         }

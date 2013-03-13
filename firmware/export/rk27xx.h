@@ -124,7 +124,54 @@
 #define SCU_PLLCON3            (*(volatile unsigned long *)(APB0_SCU + 0x10))
 #define SCU_DIVCON1            (*(volatile unsigned long *)(APB0_SCU + 0x14))
 #define SCU_CLKCFG             (*(volatile unsigned long *)(APB0_SCU + 0x18))
+#define CLKCFG_OTP             (1<<0)
+#define CLKCFG_DSP             (1<<1)
+#define CLKCFG_SDRAM           (1<<2)
+#define CLKCFG_HDMA            (1<<3)
+#define CLKCFG_DWDMA           (1<<4)
+#define CLKCFG_UHC             (1<<5)
+#define CLKCFG_UDC             (1<<6)
+/* 7 - 8 reserved */
+#define CLKCFG_NAND            (1<<9)
+#define CLKCFG_A2A             (1<<10)
+#define CLKCFG_SRAM            (1<<11)
+#define CLKCFG_HCLK_LCDC       (1<<12)
+#define CLKCFG_LCDC            (1<<13)
+#define CLKCFG_HCLK_VIP        (1<<14)
+#define CLKCFG_VIP             (1<<15)
+#define CLKCFG_I2S             (1<<16)
+#define CLKCFG_PCLK_I2S        (1<<17)
+#define CLKCFG_UART0           (1<<18)
+#define CLKCFG_UART1           (1<<19)
+#define CLKCFG_I2C             (1<<20)
+#define CLKCFG_SPI             (1<<21)
+#define CLKCFG_SD              (1<<22)
+#define CLKCFG_PCLK_LSADC      (1<<23)
+#define CLKCFG_LSADC           (1<<24)
+#define CLKCFG_HCLK_HSADC      (1<<25)
+#define CLKCFG_HSADC           (1<<26)
+#define CLKCFG_GPIO            (1<<27)
+#define CLKCFG_TIMER           (1<<28)
+#define CLKCFG_PWM             (1<<29)
+#define CLKCFG_RTC             (1<<30)
+#define CLKCFG_WDT             (1<<31)
+
 #define SCU_RSTCFG             (*(volatile unsigned long *)(APB0_SCU + 0x1C))
+#define RSTCFG_UHC             (1<<0)
+#define RSTCFG_UDC             (1<<1)
+#define RSTCFG_LCDC            (1<<2)
+#define RSTCFG_VIP             (1<<3)
+#define RSTCFG_DSP_CORE        (1<<4)
+#define RSTCFG_DSP_PERI        (1<<5)
+#define RSTCFG_CODEC           (1<<6)
+#define RSTCFG_LSADC           (1<<7)
+#define RSTCFG_HSADC           (1<<8)
+#define RSTCFG_SD              (1<<9)
+#define RSTCFG_MAILBOX         (1<<10)
+#define RSTCFG_ECT             (1<<11)
+#define RSTCFG_ARM_CORE        (1<<12)
+/* 13 - 31 reserved */
+
 #define SCU_PWM                (*(volatile unsigned long *)(APB0_SCU + 0x20))
 #define SCU_CPUPD              (*(volatile unsigned long *)(APB0_SCU + 0x24))
 #define SCU_CHIPCFG            (*(volatile unsigned long *)(APB0_SCU + 0x28))
@@ -442,6 +489,39 @@
 #define INTC_ICCR              (*(volatile unsigned long *)(AHB0_INTC + 0x118))
 #define INTC_ISCR              (*(volatile unsigned long *)(AHB0_INTC + 0x11C))
 
+#define IRQ_ARM_UART0          (1<<0)
+#define IRQ_ARM_UART1          (1<<1)
+#define IRQ_ARM_TIMER0         (1<<2)
+#define IRQ_ARM_TIMER1         (1<<3)
+#define IRQ_ARM_TIMER2         (1<<4)
+#define IRQ_ARM_GPIO0          (1<<5)
+#define IRQ_ARM_SW             (1<<6)
+#define IRQ_ARM_MAILBOX        (1<<7)
+#define IRQ_ARM_RTC            (1<<8)
+#define IRQ_ARM_SCU            (1<<9)
+#define IRQ_ARM_SD             (1<<10)
+#define IRQ_ARM_SPI            (1<<11)
+#define IRQ_ARM_HDMA           (1<<12)
+#define IRQ_ARM_A2A            (1<<13)
+#define IRQ_ARM_I2C            (1<<14)
+#define IRQ_ARM_I2S            (1<<15)
+#define IRQ_ARM_UDC            (1<<16)
+#define IRQ_ARM_UHC            (1<<17)
+#define IRQ_ARM_PWM0           (1<<18)
+#define IRQ_ARM_PWM1           (1<<19)
+#define IRQ_ARM_PWM2           (1<<20)
+#define IRQ_ARM_PWM3           (1<<21)
+#define IRQ_ARM_ADC            (1<<22)
+#define IRQ_ARM_GPIO1          (1<<23)
+#define IRQ_ARM_VIP            (1<<24)
+#define IRQ_ARM_DWDMA          (1<<25)
+#define IRQ_ARM_NANDC          (1<<26)
+#define IRQ_ARM_LCDC           (1<<27)
+#define IRQ_ARM_DSP            (1<<28)
+#define IRQ_ARM_SW1            (1<<29)
+#define IRQ_ARM_SW2            (1<<30)
+#define IRQ_ARM_SW3            (1<<31)
+
 #define INTC_TEST              (*(volatile unsigned long *)(AHB0_INTC + 0x124))
 
 /* Bus arbiter module */
@@ -555,8 +635,19 @@
 #define PHY_TEST_EN            (*(volatile unsigned long *)(AHB0_UDC + 0x00))
 #define PHY_TEST               (*(volatile unsigned long *)(AHB0_UDC + 0x04))
 #define DEV_CTL                (*(volatile unsigned long *)(AHB0_UDC + 0x08))
+#define DEV_RMTWKP             (1<<2)
+#define DEV_SELF_PWR           (1<<3)
+#define DEV_SOFT_CN            (1<<4)
+#define DEV_RESUME             (1<<5)
+#define DEV_PHY16BIT           (1<<6)
+#define SOFT_POR               (1<<7)
+#define CSR_DONE               (1<<8)
 
 #define DEV_INFO               (*(volatile unsigned long *)(AHB0_UDC + 0x10))
+#define DEV_EN                 (1<<7)
+#define VBUS_STS               (1<<20)
+#define DEV_SPEED              (3<<21)
+
 #define EN_INT                 (*(volatile unsigned long *)(AHB0_UDC + 0x14))
 #define EN_SOF_INTR            (1<<0)
 #define EN_SETUP_INTR          (1<<1)
@@ -592,7 +683,7 @@
 #define USBRST_INTR           (1<<4)
 #define RESUME_INTR           (1<<5)
 #define SUSP_INTR             (1<<6)
-/* bit 7 reserved */
+#define CONN_INTR             (1<<7) /* marked as reserved in DS */
 #define BOUT1_INTR            (1<<8)
 #define BIN2_INTR             (1<<9)
 #define IIN3_INTR             (1<<10)
@@ -612,44 +703,21 @@
 /* bits 27-31 reserved */
 
 #define INTCON                 (*(volatile unsigned long *)(AHB0_UDC + 0x1C))
+#define UDC_INTEN              (1<<0)
+#define UDC_INTEDGE_TRIG       (1<<1)
+#define UDC_INTHIGH_ACT        (1<<2)
+
 #define SETUP1                 (*(volatile unsigned long *)(AHB0_UDC + 0x20))
 #define SETUP2                 (*(volatile unsigned long *)(AHB0_UDC + 0x24))
 #define AHBCON                 (*(volatile unsigned long *)(AHB0_UDC + 0x28))
-
 #define RX0STAT                (*(volatile unsigned long *)(AHB0_UDC + 0x30))
 #define RX0CON                 (*(volatile unsigned long *)(AHB0_UDC + 0x34))
-#define RX0FFRC                (1<<0)
-#define RX0CLR                 (1<<1)
-#define RX0STALL               (1<<2)
-#define RX0NAK                 (1<<3)
-#define EP0EN                  (1<<4)
-#define RX0VOIDINTEN           (1<<5)
-#define RX0ERRINTEN            (1<<6)
-#define RX0ACKINTEN            (1<<7)
-/* bits 8-31 reserved */
-
 #define RX0DMACTLO             (*(volatile unsigned long *)(AHB0_UDC + 0x38))
 #define RX0DMAOUTLMADDR        (*(volatile unsigned long *)(AHB0_UDC + 0x3C))
 #define TX0STAT                (*(volatile unsigned long *)(AHB0_UDC + 0x40))
 #define TX0CON                 (*(volatile unsigned long *)(AHB0_UDC + 0x44))
-#define TX0CLR                 (1<<0)
-#define TX0STALL               (1<<1)
-#define TX0NAK                 (1<<2)
-/* bit 3 reserved */
-#define TX0VOIDINTEN           (1<<4)
-#define TX0ERRINTEN            (1<<5)
-#define TX0ACKINTEN            (1<<6)
-/* bits 7-31 reserved */
-
 #define TX0BUF                 (*(volatile unsigned long *)(AHB0_UDC + 0x48))
-#define TX0FULL                (1<<0)
-#define TX0URF                 (1<<1)
-/* bits 2-31 reserved */
-
 #define TX0DMAINCTL            (*(volatile unsigned long *)(AHB0_UDC + 0x4C))
-#define TX0DMAINSTA            (1<<0)
-/* bits 1-31 reserved */
-
 #define TX0DMALM_IADDR         (*(volatile unsigned long *)(AHB0_UDC + 0x50))
 #define RX1STAT                (*(volatile unsigned long *)(AHB0_UDC + 0x54))
 #define RX1CON                 (*(volatile unsigned long *)(AHB0_UDC + 0x58))
@@ -721,6 +789,62 @@
 #define TX15BUF                (*(volatile unsigned long *)(AHB0_UDC + 0x160))
 #define TX15DMAINCTL           (*(volatile unsigned long *)(AHB0_UDC + 0x164))
 #define TX15DMALM_IADDR        (*(volatile unsigned long *)(AHB0_UDC + 0x168))
+
+/* RXnSTAT bits */
+/* bits 10:0 RXLEN */
+/* bits 15:11 reserved */
+#define RXVOID                 (1<<16)
+#define RXERR                  (1<<17)
+#define RXACK                  (1<<18)
+#define RXCFINT                (1<<19) /* reserved for EP0 */
+/* bits 23:20 reserved */
+#define RXFULL                 (1<<24)
+#define RXOVF                  (1<<25)
+/* bits 31:26 reserved */
+
+/* RXnCON bits */
+#define RXFFRC                 (1<<0)
+#define RXCLR                  (1<<1)
+#define RXSTALL                (1<<2)
+#define RXNAK                  (1<<3)
+#define RXEPEN                 (1<<4)
+#define RXVOIDINTEN            (1<<5)
+#define RXERRINTEN             (1<<6)
+#define RXACKINTEN             (1<<7)
+/* bits 31:8 reserved for EP0 */
+/* bits 31:14 reserved for others */
+
+/* TxnSTAT */
+/* bits 10:0 TXLEN */
+/* bits 15:11 reserved */
+#define TXVOID                 (1<<16)
+#define TXERR                  (1<<17)
+#define TXACK                  (1<<18)
+#define TXDMADN                (1<<19) /* reserved for EP0 */
+#define TXCFINT                (1<<20) /* reserved for EP0 */
+/* bits 31:21 reserved */
+
+/* TXnCON bits */
+#define TXCLR                  (1<<0)
+#define TXSTALL                (1<<1)
+#define TXNAK                  (1<<2)
+#define TXEPEN                 (1<<3) /* reserved for EP0 */
+#define TXVOIDINTEN            (1<<4)
+#define TXERRINTEN             (1<<5)
+#define TXACKINTEN             (1<<6)
+#define TXDMADNEN              (1<<7) /* reserved for EP0 */
+/* bits 31:8 reserved */
+
+/* TXnBUF bits */
+#define TXFULL                 (1<<0)
+#define TXURF                  (1<<1)
+#define TXDS0                  (1<<2) /* reserved for EP0 */
+#define TXDS1                  (1<<3) /* reserved for EP0 */
+/* bits 31:4 reserved */
+
+/* DMA bits */
+#define DMA_START              (1<<0)
+/* bits 31:1 reserved */
 
 /* USB host controller */
 #define AHB0_UHC               (ARM_BUS0_BASE + 0x000A4000)

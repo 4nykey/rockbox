@@ -9,6 +9,7 @@ This plugin opens image files from the \setting{File Browser} to display them\no
     BMP         & \fname{.bmp}                  \\
     JPEG        & \fname{.jpg, .jpe, .jpeg}     \\
     PNG         & \fname{.png}                  \\
+    GIF         & \fname{.gif}                  \\
     \opt{lcd_color}{
       PPM         & \fname{.ppm}                  \\
     }
@@ -28,14 +29,15 @@ view a bigger file you may need to stop playback.}
 
 \begin{btnmap}
     \opt{RECORDER_PAD,ONDIO_PAD,IRIVER_H100_PAD,IRIVER_H300_PAD,IAUDIO_X5_PAD%
-      ,SANSA_E200_PAD,SANSA_FUZE_PAD,SANSA_C200_PAD,GIGABEAT_PAD,GIGABEAT_S_PAD%
-      ,MROBE100_PAD,PBELL_VIBE500_PAD}
+      ,SANSA_E200_PAD,SANSA_FUZE_PAD,SANSA_C200_PAD,SANSA_CLIP_PAD,GIGABEAT_PAD,GIGABEAT_S_PAD%
+      ,MROBE100_PAD,PBELL_VIBE500_PAD,SANSA_FUZEPLUS_PAD}
       {\ButtonUp\ / \ButtonDown}%
     \opt{IPOD_4G_PAD,IPOD_3G_PAD}{\ButtonMenu\ / \ButtonPlay}%
     \opt{IRIVER_H10_PAD}{\ButtonScrollUp\ / \ButtonScrollDown} %
     \opt{RECORDER_PAD,ONDIO_PAD,IRIVER_H100_PAD,IRIVER_H300_PAD,IAUDIO_X5_PAD%
-      ,SANSA_E200_PAD,SANSA_FUZE_PAD,SANSA_C200_PAD,GIGABEAT_PAD,GIGABEAT_S_PAD%
-      ,MROBE100_PAD,IPOD_4G_PAD,IPOD_3G_PAD,IRIVER_H10_PAD,PBELL_VIBE500_PAD}
+      ,SANSA_E200_PAD,SANSA_FUZE_PAD,SANSA_C200_PAD,SANSA_CLIP_PAD,GIGABEAT_PAD,GIGABEAT_S_PAD%
+      ,MROBE100_PAD,IPOD_4G_PAD,IPOD_3G_PAD,IRIVER_H10_PAD,PBELL_VIBE500_PAD%
+      ,SANSA_FUZEPLUS_PAD}
       {/ \ButtonLeft\ / \ButtonRight}
     \opt{MPIO_HD200_PAD}{\ButtonVolDown / \ButtonVolUp /%
                          \ButtonRec + \ButtonRew / \ButtonRec + \ButtonFF}
@@ -47,10 +49,10 @@ view a bigger file you may need to stop playback.}
     \opt{RECORDER_PAD}{\ButtonPlay}
     \opt{ONDIO_PAD}{\ButtonMenu}
     \opt{IRIVER_H100_PAD,IRIVER_H300_PAD,IAUDIO_X5_PAD,SANSA_E200_PAD%
-        ,SANSA_FUZE_PAD,SANSA_C200_PAD,MROBE100_PAD}{\ButtonSelect}
+        ,SANSA_FUZE_PAD,SANSA_C200_PAD,SANSA_CLIP_PAD,MROBE100_PAD}{\ButtonSelect}
     \opt{IPOD_4G_PAD,IPOD_3G_PAD}{\ButtonScrollFwd}
     \opt{IRIVER_H10_PAD}{\ButtonPlay}
-    \opt{GIGABEAT_PAD,GIGABEAT_S_PAD}{\ButtonVolUp}
+    \opt{GIGABEAT_PAD,GIGABEAT_S_PAD,SANSA_FUZEPLUS_PAD}{\ButtonVolUp}
     \opt{PBELL_VIBE500_PAD}{\ButtonRec+\ButtonUp}
     \opt{MPIO_HD200_PAD,MPIO_HD300_PAD}{\ButtonPlay}
     \opt{touchscreen}{\TouchTopRight}
@@ -60,9 +62,9 @@ view a bigger file you may need to stop playback.}
     \opt{ONDIO_PAD}{\ButtonMenu+\ButtonDown}
     \opt{IRIVER_H100_PAD,IRIVER_H300_PAD}{\ButtonMode}
     \opt{IPOD_4G_PAD,IPOD_3G_PAD}{\ButtonScrollBack}
-    \opt{IAUDIO_X5_PAD,SANSA_E200_PAD,SANSA_FUZE_PAD,SANSA_C200_PAD}{Long \ButtonSelect}
+    \opt{IAUDIO_X5_PAD,SANSA_E200_PAD,SANSA_FUZE_PAD,SANSA_C200_PAD,SANSA_CLIP_PAD}{Long \ButtonSelect}
     \opt{IRIVER_H10_PAD}{Long \ButtonPlay}
-    \opt{GIGABEAT_PAD,GIGABEAT_S_PAD}{\ButtonVolDown}
+    \opt{GIGABEAT_PAD,GIGABEAT_S_PAD,SANSA_FUZEPLUS_PAD}{\ButtonVolDown}
     \opt{MROBE100_PAD}{\ButtonPlay}
     \opt{PBELL_VIBE500_PAD}{\ButtonRec+\ButtonDown}
     \opt{MPIO_HD200_PAD,MPIO_HD300_PAD}{\ButtonRec}
@@ -75,9 +77,10 @@ view a bigger file you may need to stop playback.}
     \opt{IRIVER_H300_PAD}{\ButtonRec}
     \opt{IPOD_4G_PAD,IPOD_3G_PAD}{\ButtonSelect+\ButtonRight}
     \opt{IAUDIO_X5_PAD}{\ButtonPlay}
+    \opt{SANSA_FUZEPLUS_PAD}{\ButtonBottomRight}
     \opt{IRIVER_H10_PAD}{\ButtonFF}
     \opt{SANSA_E200_PAD,SANSA_FUZE_PAD}{\ButtonScrollFwd}
-    \opt{SANSA_C200_PAD}{\ButtonVolUp}
+    \opt{SANSA_C200_PAD,SANSA_CLIP_PAD}{\ButtonVolUp}
     \opt{GIGABEAT_PAD}{\ButtonA+\ButtonRight}
     \opt{GIGABEAT_S_PAD}{\ButtonNext}
     \opt{MROBE100_PAD}{\ButtonDisplay+\ButtonRight}
@@ -94,7 +97,8 @@ view a bigger file you may need to stop playback.}
     \opt{IPOD_4G_PAD,IPOD_3G_PAD}{\ButtonSelect+\ButtonLeft}
     \opt{IRIVER_H10_PAD}{\ButtonRew}
     \opt{SANSA_E200_PAD,SANSA_FUZE_PAD}{\ButtonScrollBack}
-    \opt{SANSA_C200_PAD}{\ButtonVolDown}
+    \opt{SANSA_C200_PAD,SANSA_CLIP_PAD}{\ButtonVolDown}
+    \opt{SANSA_FUZEPLUS_PAD}{\ButtonBottomLeft}
     \opt{GIGABEAT_PAD}{\ButtonA+\ButtonLeft}
     \opt{GIGABEAT_S_PAD}{\ButtonPrev}
     \opt{MROBE100_PAD}{\ButtonDisplay+\ButtonLeft}
@@ -104,19 +108,22 @@ view a bigger file you may need to stop playback.}
     \opt{touchscreen}{\TouchBottomLeft}
        \opt{HAVEREMOTEKEYMAP}{& }
     & Previous image in directory\\
-    \opt{SANSA_E200_PAD,SANSA_C200_PAD}{%currently only defined for the sansa pads
-        \ButtonRec
-       \opt{HAVEREMOTEKEYMAP}{& }
+    \opt{SANSA_E200_PAD,SANSA_C200_PAD,SANSA_CLIP_PAD,SANSA_FUZEPLUS_PAD}{%currently only defined for the sansa pads
+       \opt{SANSA_E200_PAD,SANSA_C200_PAD}{\ButtonRec}
+       \opt{SANSA_CLIP_PAD}{\ButtonHome}
+       \opt{SANSA_FUZEPLUS_PAD}{\ButtonPlay}
+         \opt{HAVEREMOTEKEYMAP}{& }
         & Toggle slide show mode\\
     }
     \opt{RECORDER_PAD,ONDIO_PAD,IRIVER_H100_PAD,IRIVER_H300_PAD}{\ButtonOff}
     \opt{IPOD_4G_PAD,IPOD_3G_PAD}{\ButtonSelect+\ButtonMenu}
-    \opt{IAUDIO_X5_PAD,IRIVER_H10_PAD,SANSA_E200_PAD,SANSA_C200_PAD}{\ButtonPower}
+    \opt{IAUDIO_X5_PAD,IRIVER_H10_PAD,SANSA_E200_PAD,SANSA_C200_PAD,SANSA_CLIP_PAD}{\ButtonPower}
     \opt{SANSA_FUZE_PAD}{Long \ButtonHome}
     \opt{GIGABEAT_PAD,GIGABEAT_S_PAD,MROBE100_PAD,PBELL_VIBE500_PAD}{\ButtonMenu}
     \opt{MPIO_HD200_PAD}{\ButtonFunc}
     \opt{MPIO_HD300_PAD}{\ButtonEnter}
     \opt{touchscreen}{\TouchCenter}
+    \opt{SANSA_FUZEPLUS_PAD}{\ButtonSelect}
        \opt{HAVEREMOTEKEYMAP}{&
           \opt{IRIVER_RC_H100_PAD}{\ButtonRCStop}
        }
@@ -128,6 +135,7 @@ view a bigger file you may need to stop playback.}
         \opt{PBELL_VIBE500_PAD}{\ButtonCancel}
         \opt{MPIO_HD200_PAD}{\ButtonRec + \ButtonPlay}
         \opt{MPIO_HD300_PAD}{Long \ButtonMenu}
+        \opt{SANSA_FUZEPLUS_PAD}{\ButtonBack}
             \opt{HAVEREMOTEKEYMAP}{& }
         & Quit the viewer \\
     }

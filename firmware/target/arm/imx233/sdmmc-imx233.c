@@ -170,6 +170,8 @@ static unsigned _mmc_num_drives;
 static int mmc_map[SDMMC_NUM_DRIVES]; /* mmc->sdmmc map */
 #endif
 
+static int init_drive(int drive);
+
 /* WARNING NOTE BUG FIXME
  * There are three numbering schemes involved in the driver:
  * - the sdmmc indexes into sdmmc_config[]
@@ -502,13 +504,6 @@ static int __xfer_sectors(int drive, unsigned long start, int count, void *buf, 
     return ret;
 }
 
-static void do_led(int delta)
-{
-    static int level = 0;
-    level += delta;
-    led(level > 0);
-}
-
 static int transfer_sectors(int drive, unsigned long start, int count, void *buf, bool read)
 {
     int ret = 0;
@@ -520,13 +515,13 @@ static int transfer_sectors(int drive, unsigned long start, int count, void *buf
     mutex_lock(&mutex[drive]);
 
     /* update led status */
-    do_led(1);
+    led(true);
 
     /* for SD cards, init if necessary */
 #if CONFIG_STORAGE & STORAGE_SD
     if(SDMMC_MODE(drive) == SD_MODE && SDMMC_INFO(drive).initialized <= 0)
     {
-        ret = init_sd_card(drive);
+        ret = init_drive(drive);
         if(SDMMC_INFO(drive).initialized <= 0)
             goto Lend;
     }
@@ -553,7 +548,7 @@ static int transfer_sectors(int drive, unsigned long start, int count, void *buf
         goto Ldeselect;
 
     /**
-     * NOTE: we need to make sure dma transfers are aligned. This handled
+     * NOTE: we need to make sure dma transfers are aligned. This is handled
      * differently for read and write transfers. We do not repeat it each
      * time but it should be noted that all transfers are limited by
      * IMX233_MAX_SINGLE_DMA_XFER_SIZE and thus need to be split if needed.
@@ -616,7 +611,7 @@ static int transfer_sectors(int drive, unsigned long start, int count, void *buf
         ret = -23;
     Lend:
     /* update led status */
-    do_led(-1);
+    led(false);
     /* release per-drive mutex */
     mutex_unlock(&mutex[drive]);
     return ret;

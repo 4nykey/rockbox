@@ -29,19 +29,29 @@
 #include "pinctrl-imx233.h"
 #include "dcp-imx233.h"
 #include "logf.h"
+#ifndef BOOTLOADER
+#include "button.h"
+#include "font.h"
+#include "action.h"
+#endif
 
 #ifdef HAVE_LCD_ENABLE
 static bool lcd_on;
 #endif
 static unsigned lcd_yuv_options = 0;
 static int lcd_dcp_channel = -1;
+#ifdef HAVE_LCD_INVERT
+static int lcd_reg_0x61_val = 1; /* used to invert display */
+#endif
+#ifdef HAVE_LCD_FLIP
+static int lcd_reg_3_val = 0x1030; /* controls to flip display */
+#endif
 
 static enum lcd_kind_t
 {
     LCD_KIND_7783 = 0x7783,
     LCD_KIND_9325 = 0x9325,
-    LCD_KIND_OTHER = 0,
-} lcd_kind = LCD_KIND_OTHER;
+} lcd_kind = LCD_KIND_7783;
 
 static void setup_parameters(void)
 {
@@ -49,6 +59,7 @@ static void setup_parameters(void)
     imx233_lcdif_set_lcd_databus_width(HW_LCDIF_CTRL__LCD_DATABUS_WIDTH_18_BIT);
     imx233_lcdif_set_word_length(HW_LCDIF_CTRL__WORD_LENGTH_18_BIT);
     imx233_lcdif_set_timings(1, 2, 2, 2);
+    imx233_lcdif_enable_underflow_recover(true);
 }
 
 static void setup_lcd_pins(bool use_lcdif)
@@ -205,6 +216,7 @@ static uint32_t i80_read_register(uint32_t data_out)
 static void lcd_write_reg(uint32_t reg, uint32_t data)
 {
     uint32_t old_reg = reg;
+    imx233_lcdif_wait_ready();
     /* get back to 18-bit word length */
     imx233_lcdif_set_word_length(HW_LCDIF_CTRL__WORD_LENGTH_18_BIT);
     reg = encode_16_to_18(reg);
@@ -360,6 +372,16 @@ static void lcd_init_seq_9325(void)
     _end_seq()
 }
 
+static void lcd_sync_settings(void)
+{
+#ifdef HAVE_LCD_INVERT
+    lcd_write_reg(0x61, lcd_reg_0x61_val);
+#endif
+#ifdef HAVE_LCD_FLIP
+    lcd_write_reg(3, lcd_reg_3_val);
+#endif
+}
+
 void lcd_init_device(void)
 {
     lcd_dcp_channel = imx233_dcp_acquire_channel(TIMEOUT_NOBLOCK);
@@ -390,6 +412,8 @@ void lcd_init_device(void)
             lcd_kind = LCD_KIND_7783;
             lcd_init_seq_7783(); break;
     }
+
+    lcd_sync_settings();
 
 #ifdef HAVE_LCD_ENABLE
     lcd_on = true;
@@ -491,10 +515,40 @@ void lcd_enable(bool enable)
     {
         case LCD_KIND_7783: lcd_enable_7783(enable); break;
         case LCD_KIND_9325: lcd_enable_9325(enable); break;
-        default: lcd_enable_7783(enable); break;
     }
     if(!enable)
         common_lcd_enable(false);
+    else
+    {
+        lcd_sync_settings();
+        send_event(LCD_EVENT_ACTIVATION, NULL);
+    }
+}
+#endif
+
+#ifdef HAVE_LCD_INVERT
+void lcd_set_invert_display(bool yesno)
+{
+    lcd_reg_0x61_val = yesno ? 0 : 1;
+    #ifdef HAVE_LCD_ENABLE
+    if(!lcd_on)
+        return;
+    #endif
+    /* same for both kinds */
+    lcd_write_reg(0x61, lcd_reg_0x61_val);
+}
+#endif
+
+#ifdef HAVE_LCD_FLIP
+void lcd_set_flip(bool yesno)
+{
+    lcd_reg_3_val = yesno ? 0x1000 : 0x1030;
+    #ifdef HAVE_LCD_ENABLE
+    if(!lcd_on)
+        return;
+    #endif
+    /* same for both kinds */
+    lcd_write_reg(3, lcd_reg_3_val);
 }
 #endif
 
@@ -762,3 +816,36 @@ void lcd_blit_yuv(unsigned char * const src[3],
     lcd_update_rect(LCD_WIDTH - y - height, x, height, width);
     #endif
 }
+
+#ifndef BOOTLOADER
+bool lcd_debug_screen(void)
+{
+    lcd_setfont(FONT_SYSFIXED);
+
+    while(1)
+    {
+        int button = get_action(CONTEXT_STD, HZ / 10);
+        switch(button)
+        {
+            case ACTION_STD_NEXT:
+            case ACTION_STD_PREV:
+            case ACTION_STD_OK:
+            case ACTION_STD_MENU:
+                lcd_setfont(FONT_UI);
+                return true;
+            case ACTION_STD_CANCEL:
+                lcd_setfont(FONT_UI);
+                return false;
+        }
+
+        lcd_clear_display();
+        lcd_putsf(0, 0, "lcd kind: %s",
+            lcd_kind == LCD_KIND_7783 ? "st7783" :
+            lcd_kind == LCD_KIND_9325 ? "ili9325" : "unknown");
+        lcd_update();
+        yield();
+    }
+
+    return true;
+}
+#endif

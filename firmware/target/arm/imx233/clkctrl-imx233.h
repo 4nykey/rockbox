@@ -81,6 +81,7 @@
 #define HW_CLKCTRL_EMI__DIV_XTAL_BP 8
 #define HW_CLKCTRL_EMI__DIV_XTAL_BM (0xf << 8)
 #define HW_CLKCTRL_EMI__BUSY_REF_EMI    (1 << 28)
+#define HW_CLKCTRL_EMI__BUSY_REF_XTAL   (1 << 29)
 #define HW_CLKCTRL_EMI__SYNC_MODE_EN    (1 << 30)
 #define HW_CLKCTRL_EMI__CLKGATE     (1 << 31)
 
@@ -124,7 +125,7 @@ enum imx233_clock_t
     CLK_HBUS, /* freq, div, frac */
     CLK_PLL, /* freq, enable */
     CLK_XTAL, /* freq */
-    CLK_EMI, /* freq, div, frac, bypass (NOTE: don't modify directly EMI) */
+    CLK_EMI, /* freq, div, frac, bypass */
     CLK_XBUS, /* freq, div */
 };
 
@@ -139,6 +140,7 @@ enum imx233_xtal_clk_t
 /* Auto-Slow monitoring */
 enum imx233_as_monitor_t
 {
+    AS_NONE = 0, /* Do not monitor any activity */
     AS_CPU_INSTR = 1 << 21, /* Monitor CPU instruction access to AHB */
     AS_CPU_DATA = 1 << 22, /* Monitor CPU data access to AHB */
     AS_TRAFFIC = 1 << 23, /* Monitor AHB master activity */
@@ -147,6 +149,7 @@ enum imx233_as_monitor_t
     AS_APBHDMA = 1 << 26, /* Monitor APBH DMA activity */
     AS_PXP = 1 << 27, /* Monitor PXP activity */
     AS_DCP = 1 << 28, /* Monitor DCP activity */
+    AS_ALL = 0xff << 21, /* Monitor all activity */
 };
 
 enum imx233_as_div_t
@@ -183,6 +186,7 @@ void imx233_clkctrl_set_auto_slow_divisor(enum imx233_as_div_t div);
 enum imx233_as_div_t imx233_clkctrl_get_auto_slow_divisor(void);
 void imx233_clkctrl_enable_auto_slow(bool enable);
 bool imx233_clkctrl_is_auto_slow_enabled(void);
+/* can use a mask of clocks */
 void imx233_clkctrl_enable_auto_slow_monitor(enum imx233_as_monitor_t monitor, bool enable);
 bool imx233_clkctrl_is_auto_slow_monitor_enabled(enum imx233_as_monitor_t monitor);
 

@@ -7,10 +7,7 @@
  *                     \/            \/     \/    \/            \/
  * $Id$
  *
- * Copyright (C) 2011 by amaury Pouly
- *
- * Based on Rockbox iriver bootloader by Linus Nielsen Feltzing
- * and the ipodlinux bootloader by Daniel Palffy and Bernard Leach
+ * Copyright (C) 2011 by Amaury Pouly
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -128,7 +125,7 @@ struct apb_dma_command_t
     uint32_t cmd;
     void *buffer;
     /* PIO words follow */
-};
+} __attribute__((packed));
 
 #define DMA_INFO_CURCMDADDR (1 << 0)
 #define DMA_INFO_NXTCMDADDR (1 << 1)

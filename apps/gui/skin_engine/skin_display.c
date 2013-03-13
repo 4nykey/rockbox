@@ -207,27 +207,25 @@ void draw_progressbar(struct gui_wps *gwps, int line, struct progressbar *pb)
         /* clear the slider */
         screen_clear_area(display, x, y, width, height);
 
-        /* shrink the bar so the slider is inside bounds */
+        /* account for the sliders width in the progressbar */
         if (flags&HORIZONTAL)
         {
             width -= img->bm.width;
-            x += img->bm.width / 2;
         }
         else
         {
             height -= img->bm.height;
-            y += img->bm.height / 2;
         }
     }
-    
+
     if (SKINOFFSETTOPTR(get_skin_buffer(gwps->data), pb->backdrop))
     {
         struct gui_img *img = SKINOFFSETTOPTR(get_skin_buffer(gwps->data), pb->backdrop);
         img->bm.data = core_get_data(img->buflib_handle);
-        display->bmp_part(&img->bm, 0, 0, x, y, width, height);
+        display->bmp_part(&img->bm, 0, 0, x, y, pb->width, height);
         flags |= DONT_CLEAR_EXCESS;
     }
-    
+
     if (!pb->nobar)
     {
         struct gui_img *img = SKINOFFSETTOPTR(get_skin_buffer(gwps->data), pb->image);
@@ -257,7 +255,6 @@ void draw_progressbar(struct gui_wps *gwps, int line, struct progressbar *pb)
             xoff = width * end / length;
             if (flags&INVERTFILL)
                 xoff = width - xoff;
-            xoff -= w / 2;
         }
         else
         {
@@ -265,7 +262,6 @@ void draw_progressbar(struct gui_wps *gwps, int line, struct progressbar *pb)
             yoff = height * end / length;
             if (flags&INVERTFILL)
                 yoff = height - yoff;
-            yoff -= h / 2;
         }
         display->bmp_part(&img->bm, 0, 0, x + xoff, y + yoff, w, h);
     }
@@ -302,16 +298,19 @@ void clear_image_pos(struct gui_wps *gwps, struct gui_img *img)
     gwps->display->set_drawmode(DRMODE_SOLID);
 }
 
-void wps_draw_image(struct gui_wps *gwps, struct gui_img *img, int subimage)
+void wps_draw_image(struct gui_wps *gwps, struct gui_img *img,
+                    int subimage, struct viewport* vp)
 {
     struct screen *display = gwps->display;
     img->bm.data = core_get_data(img->buflib_handle);
     display->set_drawmode(DRMODE_SOLID);
 
-    display->bmp_part(&img->bm, 0, img->subimage_height * subimage,
-                      img->x, img->y, img->bm.width, img->subimage_height);
+    if (img->is_9_segment)
+        display->nine_segment_bmp(&img->bm, 0, 0, vp->width, vp->height);
+    else
+        display->bmp_part(&img->bm, 0, img->subimage_height * subimage,
+                          img->x, img->y, img->bm.width, img->subimage_height);
 }
-
 
 void wps_display_images(struct gui_wps *gwps, struct viewport* vp)
 {
@@ -334,7 +333,7 @@ void wps_display_images(struct gui_wps *gwps, struct viewport* vp)
         {
             if (img->display >= 0)
             {
-                wps_draw_image(gwps, img, img->display);
+                wps_draw_image(gwps, img, img->display, vp);
             }
         }
         list = SKINOFFSETTOPTR(get_skin_buffer(data), list->next);

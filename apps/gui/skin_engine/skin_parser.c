@@ -83,6 +83,7 @@ static char* skin_buffer = NULL;
 #if (LCD_DEPTH > 1) || (defined(HAVE_REMOTE_LCD) && (LCD_REMOTE_DEPTH > 1))
 static char *backdrop_filename;
 #endif
+static struct skin_stats *_stats = NULL;
 
 static bool isdefault(struct skin_tag_parameter *param)
 {
@@ -344,6 +345,9 @@ static int parse_image_display(struct skin_element *element,
         token->type = SKIN_TOKEN_IMAGE_DISPLAY_LISTICON;
     }
 
+    if (token->type == SKIN_TOKEN_IMAGE_DISPLAY_9SEGMENT)
+        img->is_9_segment = true;
+
     if (element->params_count > 1)
     {
         if (get_param(element, 1)->type == CODE)
@@ -417,6 +421,7 @@ static int parse_image_load(struct skin_element *element,
     img->display = -1;
     img->using_preloaded_icons = false;
     img->buflib_handle = -1;
+    img->is_9_segment = false;
 
     /* save current viewport */
     img->vp = PTRTOSKINOFFSET(skin_buffer, &curr_vp->vp);
@@ -460,7 +465,7 @@ static int parse_font_load(struct skin_element *element,
     if (id < 2)
     {
         DEBUGF("font id must be >= 2 (%d)\n", id);
-        return 1;
+        return -1;
     }
 #if defined(DEBUG) || defined(SIMULATOR)
     if (skinfonts[id-2].name != NULL)
@@ -538,7 +543,7 @@ static int parse_listitem(struct skin_element *element,
     (void)wps_data;
     struct listitem *li = skin_buffer_alloc(sizeof(*li));
     if (!li)
-        return 1;
+        return -1;
     token->value.data = PTRTOSKINOFFSET(skin_buffer, li);
     if (element->params_count == 0)
         li->offset = 0;
@@ -1193,16 +1198,12 @@ static int parse_albumart_load(struct skin_element* element,
     /* if we got here, we parsed everything ok .. ! */
     if (aa->width < 0)
         aa->width = 0;
-    else if (aa->width > LCD_WIDTH)
-        aa->width = LCD_WIDTH;
 
     if (aa->height < 0)
         aa->height = 0;
-    else if (aa->height > LCD_HEIGHT)
-        aa->height = LCD_HEIGHT;
 
     if (swap_for_rtl)
-        aa->x = LCD_WIDTH - (aa->x + aa->width);
+        aa->x = (curr_vp->vp.width - aa->width - aa->x);
 
     aa->state = WPS_ALBUMART_LOAD;
     wps_data->albumart = PTRTOSKINOFFSET(skin_buffer, aa);
@@ -1766,6 +1767,8 @@ static int load_skin_bmp(struct wps_data *wps_data, struct bitmap *bitmap, char*
         close(fd);
         return handle;
     }
+    _stats->buflib_handles++;
+    _stats->images_size += buf_size;
     lseek(fd, 0, SEEK_SET);
     lock_handle(handle);
     bitmap->data = core_get_data(handle);
@@ -2181,6 +2184,7 @@ static int skin_element_callback(struct skin_element* element, void* data)
                     token->value.data = get_param(element, 0)->data.text;
                     break;
                 case SKIN_TOKEN_IMAGE_PRELOAD_DISPLAY:
+                case SKIN_TOKEN_IMAGE_DISPLAY_9SEGMENT:
                     function = parse_image_display;
                     break;
                 case SKIN_TOKEN_IMAGE_PRELOAD:
@@ -2223,7 +2227,7 @@ static int skin_element_callback(struct skin_element* element, void* data)
             }
             if (function)
             {
-                if (function(element, token, wps_data) < 0)
+                if (function(element, token, wps_data) != 0)
                     return CALLBACK_ERROR;
             }
             /* tags that start with 'F', 'I' or 'D' are for the next file */
@@ -2277,7 +2281,7 @@ static int skin_element_callback(struct skin_element* element, void* data)
 /* to setup up the wps-data from a format-buffer (isfile = false)
    from a (wps-)file (isfile = true)*/
 bool skin_data_load(enum screen_type screen, struct wps_data *wps_data,
-                    const char *buf, bool isfile)
+                    const char *buf, bool isfile, struct skin_stats *stats)
 {
     char *wps_buffer = NULL;
     if (!wps_data || !buf)
@@ -2310,8 +2314,9 @@ bool skin_data_load(enum screen_type screen, struct wps_data *wps_data,
     }
 #endif
 
-
-        /* get buffer space from the plugin buffer */
+    _stats = stats;
+    skin_clear_stats(stats);
+    /* get buffer space from the plugin buffer */
     size_t buffersize = 0;
     wps_buffer = (char *)plugin_get_buffer(&buffersize);
 
@@ -2421,6 +2426,8 @@ bool skin_data_load(enum screen_type screen, struct wps_data *wps_data,
         wps_data->wps_loaded = true;
         memcpy(core_get_data(wps_data->buflib_handle), skin_buffer,
                 skin_buffer_usage());
+        stats->buflib_handles++;
+        stats->tree_size = skin_buffer_usage();
     }
 #else
     wps_data->wps_loaded = wps_data->tree >= 0;

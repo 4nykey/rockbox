@@ -17,7 +17,8 @@
  ****************************************************************************/
 
 
-#include <QtGui>
+#include <QCoreApplication>
+#include <QSettings>
 #include "rbutilqt.h"
 #include "systrace.h"
 
@@ -29,7 +30,11 @@ Q_IMPORT_PLUGIN(qtaccessiblewidgets)
 
 
 int main( int argc, char ** argv ) {
+#if QT_VERSION < 0x050000
     qInstallMsgHandler(SysTrace::debug);
+#else
+    qInstallMessageHandler(SysTrace::debug);
+#endif
     QApplication app( argc, argv );
 #if defined(Q_OS_MAC)
     QDir dir(QApplication::applicationDirPath());

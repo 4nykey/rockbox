@@ -289,6 +289,8 @@ extern void lcd_jump_scroll_delay(int ms);
 #define DRMODE_FG         2
 #define DRMODE_SOLID      3
 #define DRMODE_INVERSEVID 4 /* used as bit modifier for basic modes */
+/* Internal drawmode modifiers. DO NOT use with set_drawmode() */
+#define DRMODE_INT_MOD  8
 
 /* Low-level drawing function types */
 typedef void lcd_pixelfunc_type(int x, int y);
@@ -568,6 +570,8 @@ extern void lcd_bitmap_transparent(const fb_data *src, int x, int y,
 extern void lcd_bmp_part(const struct bitmap* bm, int src_x, int src_y,
                             int x, int y, int width, int height);
 extern void lcd_bmp(const struct bitmap* bm, int x, int y);
+extern void lcd_nine_segment_bmp(const struct bitmap* bm, int x, int y,
+                                int width, int height);
 #endif /* HAVE_LCD_BITMAP */
 
 

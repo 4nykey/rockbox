@@ -142,7 +142,7 @@ struct custom_setting {
 
 #define F_NVRAM_BYTES_MASK     0xE0000 /*0-4 bytes can be stored */
 #define F_NVRAM_MASK_SHIFT     17
-#define NVRAM_CONFIG_VERSION 6
+#define NVRAM_CONFIG_VERSION 7
 /* Above define should be bumped if
 - a new NVRAM setting is added between 2 other NVRAM settings
 - number of bytes for a NVRAM setting is changed
@@ -152,10 +152,10 @@ struct custom_setting {
 #define F_PADTITLE   0x800 /* pad the title with spaces to force it to scroll */
 #define F_NO_WRAP     0x1000 /* used if the list should not wrap */
 
-#define F_BANFROMQS 0x80000000 /* ban the setting from the quickscreen items */
-
+#define F_BANFROMQS     0x80000000 /* ban the setting from the quickscreen items */
+#define F_DEPRECATED    0x40000000 /* DEPRECATED setting, don't write to .cfg */
 struct settings_list {
-    uint32_t             flags;   /* B___ _SER TFFF NNN_ _ATW PTVC IFRB STTT */
+    uint32_t             flags;   /* BD__ _SER TFFF NNN_ _ATW PTVC IFRB STTT */
     void                *setting;
     int                  lang_id; /* -1 for none */
     union storage_type   default_val;

@@ -102,6 +102,10 @@
 //#define AB_REPEAT_ENABLE
 //#define ACTION_WPSAB_SINGLE ACTION_WPS_BROWSE
 
+/* define this if you have a disk storage, i.e. something
+   that needs spinups and can cause skips when shaked */
+#define HAVE_DISK_STORAGE
+
 /* Define this to enable morse code input */
 #define HAVE_MORSE_INPUT
 
@@ -147,8 +151,8 @@
 #define CONFIG_CHARGING CHARGING_MONITOR
 
 /* define current usage levels */
-//TODO: #define CURRENT_NORMAL     21  /* playback @48MHz clock, backlight off */
-//TODO: #define CURRENT_BACKLIGHT  23  /* maximum brightness */
+#define CURRENT_NORMAL     18  /* playback @48MHz clock, backlight off */
+#define CURRENT_BACKLIGHT  23  /* maximum brightness */
 
 /* define this if the unit can be powered or charged via USB */
 #define HAVE_USB_POWER
